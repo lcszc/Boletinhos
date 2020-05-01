@@ -1,0 +1,56 @@
+import config.AppConfig
+import config.Androidx
+import config.Kotlinx
+import config.Testing
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'com.adarshr.test-logger'
+
+androidExtensions {
+    features = ["parcelize"]
+}
+
+android {
+    compileSdkVersion AppConfig.Sdk.compile
+
+    defaultConfig {
+        minSdkVersion AppConfig.Sdk.min
+        targetSdkVersion AppConfig.Sdk.target
+
+        versionCode AppConfig.Version.code
+        versionName AppConfig.Version.toString()
+
+        testInstrumentationRunner AppConfig.testRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(":domain")
+
+    [
+        Androidx.appCompat,
+        Androidx.Room.core,
+        Kotlinx.stbLib
+    ].forEach { dependency ->
+        implementation dependency
+    }
+
+    [
+        Androidx.Room.testing,
+        Testing.junit,
+        Testing.assertK
+    ].forEach { dependency ->
+        testImplementation dependency
+    }
+}
