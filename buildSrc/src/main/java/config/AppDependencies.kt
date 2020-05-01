@@ -9,6 +9,8 @@ object Androidx {
         const val compiler = "androidx.room:room-compiler:2.2.5"
         const val testing = "androidx.room:room-testing:2.2.5"
     }
+
+    const val test = "androidx.test:core:1.0.0"
 }
 
 object Kotlinx {
@@ -16,12 +18,14 @@ object Kotlinx {
 
     object Coroutines {
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"
+        const val test = "org.jetbrains.kotlinx:kotlinx-coroutines-test:1.3.5"
     }
 }
 
 object Testing {
     const val junit = "junit:junit:4.12"
     const val assertK = "com.willowtreeapps.assertk:assertk-jvm:0.22"
+    const val robolectric = "org.robolectric:robolectric:4.3"
 }
 
 object ThreeTen {
