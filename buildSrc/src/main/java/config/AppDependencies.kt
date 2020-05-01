@@ -23,3 +23,7 @@ object Testing {
     const val junit = "junit:junit:4.12"
     const val assertK = "com.willowtreeapps.assertk:assertk-jvm:0.22"
 }
+
+object ThreeTen {
+    const val abp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
+}
