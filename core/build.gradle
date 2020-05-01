@@ -39,13 +39,14 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":domain")
 
-    def androidDeps = [Androidx.appCompat, Androidx.Room.core]
-    def kotlinDeps = [Kotlinx.stbLib, Kotlinx.Coroutines.android]
-    def utilDeps = [ThreeTen.abp]
+    implementation(Androidx.appCompat)
+    implementation(Kotlinx.stbLib, Kotlinx.Coroutines.android)
+    implementation(ThreeTen.abp)
 
-    def mainDeps = androidDeps + kotlinDeps + utilDeps
-    mainDeps.forEach { dependency -> implementation dependency }
+    implementation(Androidx.Room.core)
+    kapt(Androidx.Room.compiler)
 
-    def testingDeps = [Androidx.Room.testing, Testing.junit, Testing.assertK]
-    testingDeps.forEach { dependency -> testImplementation dependency }
+    testImplementation(Testing.junit, Testing.assertK, Testing.robolectric)
+    testImplementation(Androidx.Room.testing, Androidx.test)
+    testImplementation(Kotlinx.Coroutines.test)
 }
