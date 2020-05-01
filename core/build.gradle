@@ -2,6 +2,7 @@ import config.AppConfig
 import config.Androidx
 import config.Kotlinx
 import config.Testing
+import config.ThreeTen
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -40,8 +41,9 @@ dependencies {
 
     def androidDeps = [Androidx.appCompat, Androidx.Room.core]
     def kotlinDeps = [Kotlinx.stbLib, Kotlinx.Coroutines.android]
+    def utilDeps = [ThreeTen.abp]
 
-    def mainDeps = androidDeps + kotlinDeps
+    def mainDeps = androidDeps + kotlinDeps + utilDeps
     mainDeps.forEach { dependency -> implementation dependency }
 
     def testingDeps = [Androidx.Room.testing, Testing.junit, Testing.assertK]
