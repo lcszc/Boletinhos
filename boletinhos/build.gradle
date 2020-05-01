@@ -1,18 +1,25 @@
+import config.Androidx
+import config.AppConfig
+import config.Kotlinx
+
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion AppConfig.Sdk.compile
 
     defaultConfig {
-        applicationId "dev.itscorey.boletinhos"
-        minSdkVersion 19
-        targetSdkVersion 29
-        versionCode 1
-        versionName "1.0"
+        applicationId AppConfig.id
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion AppConfig.Sdk.min
+        targetSdkVersion AppConfig.Sdk.target
+
+        versionCode AppConfig.Version.code
+        versionName AppConfig.Version.toString()
+
+        testInstrumentationRunner AppConfig.testRunner
+        vectorDrawables.useSupportLibrary = true
     }
 
     buildTypes {
@@ -25,11 +32,9 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+
+    [Androidx.core, Androidx.appCompat, Kotlinx.stbLib].forEach { dependency ->
+        implementation dependency
+    }
 
 }
