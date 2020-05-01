@@ -1,3 +1,4 @@
 rootProject.name = "Boletinhos"
 
 include ':boletinhos'
+include ':domain'
