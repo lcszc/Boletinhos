@@ -38,19 +38,12 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":domain")
 
-    [
-        Androidx.appCompat,
-        Androidx.Room.core,
-        Kotlinx.stbLib
-    ].forEach { dependency ->
-        implementation dependency
-    }
+    def androidDeps = [Androidx.appCompat, Androidx.Room.core]
+    def kotlinDeps = [Kotlinx.stbLib, Kotlinx.Coroutines.android]
 
-    [
-        Androidx.Room.testing,
-        Testing.junit,
-        Testing.assertK
-    ].forEach { dependency ->
-        testImplementation dependency
-    }
+    def mainDeps = androidDeps + kotlinDeps
+    mainDeps.forEach { dependency -> implementation dependency }
+
+    def testingDeps = [Androidx.Room.testing, Testing.junit, Testing.assertK]
+    testingDeps.forEach { dependency -> testImplementation dependency }
 }
