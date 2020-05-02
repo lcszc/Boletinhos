@@ -5,7 +5,7 @@ import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
 
 object LocalDateTypeConverter {
-    private val formatter = DateTimeFormatter.ISO_LOCAL_DATE
+    private val formatter = DateTimeFormatter.ofPattern("d/M/yyyy")
 
     @TypeConverter
     @JvmStatic
