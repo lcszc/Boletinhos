@@ -1,5 +1,6 @@
 import config.AppConfig
 import config.Androidx
+import config.DI
 import config.Kotlinx
 import config.Testing
 import config.ThreeTen
@@ -60,6 +61,9 @@ dependencies {
 
     implementation(Androidx.Room.core)
     kapt(Androidx.Room.compiler)
+
+    implementation(DI.dagger)
+    kapt(DI.compiler)
 
     testImplementation(Testing.junit, Testing.assertK, Testing.robolectric)
     testImplementation(Androidx.Room.testing, Androidx.test)
