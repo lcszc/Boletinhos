@@ -11,3 +11,12 @@ fun BillEntity.toDomain() = Bill(
     dueDate,
     status
 )
+
+fun Bill.toEntity() = BillEntity(
+    name,
+    description,
+    value,
+    paymentDate,
+    dueDate,
+    status
+).also { entity -> entity.uid = id }
