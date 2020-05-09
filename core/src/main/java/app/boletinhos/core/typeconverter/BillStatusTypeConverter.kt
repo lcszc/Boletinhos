@@ -1,7 +1,7 @@
 package app.boletinhos.core.typeconverter
 
 import androidx.room.TypeConverter
-import app.boletinhos.core.bills.BillStatus
+import app.boletinhos.domain.BillStatus
 
 object BillStatusTypeConverter {
     @TypeConverter

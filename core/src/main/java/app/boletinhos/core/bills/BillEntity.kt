@@ -2,13 +2,11 @@ package app.boletinhos.core.bills
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import androidx.room.TypeConverters
-import app.boletinhos.core.typeconverter.BillStatusTypeConverter
-import app.boletinhos.core.typeconverter.LocalDateTypeConverter
+import app.boletinhos.domain.BillStatus
 import org.threeten.bp.LocalDate
 
 @Entity(tableName = "bills")
-data class Bill(
+data class BillEntity(
     val name: String,
     val description: String,
     val value: Long,
