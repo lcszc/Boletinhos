@@ -1,12 +1,11 @@
 package app.boletinhos.core.factory
 
-import app.boletinhos.core.bills.Bill
-import app.boletinhos.core.bills.BillStatus
+import app.boletinhos.core.bills.BillEntity
 import org.threeten.bp.LocalDate
 import org.threeten.bp.Month
 
 object BillsFactory {
-    val unpaid = Bill(
+    val unpaid = BillEntity(
         name = "Unpaid bill",
         description = "unpaid",
         value = 200_00,
@@ -15,7 +14,7 @@ object BillsFactory {
         status = BillStatus.UNPAID
     )
 
-    val paid = Bill(
+    val paid = BillEntity(
         name = "paid bill",
         description = "paid",
         value = 200_00,
@@ -24,7 +23,7 @@ object BillsFactory {
         status = BillStatus.PAID
     )
 
-    val overdue = Bill(
+    val overdue = BillEntity(
         name = "overdue bill",
         description = "overdue",
         value = 200_00,

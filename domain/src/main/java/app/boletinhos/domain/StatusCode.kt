@@ -1,3 +1,3 @@
-package app.boletinhos.core.bills
+package app.boletinhos.domain
 
 inline class StatusCode(val value: Int)
