@@ -3,7 +3,7 @@ package app.boletinhos.core.bills
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import app.boletinhos.domain.BillStatus
-import org.threeten.bp.LocalDate
+import java.time.LocalDate
 
 @Entity(tableName = "bills")
 data class BillEntity(

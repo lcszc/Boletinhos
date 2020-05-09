@@ -3,6 +3,7 @@ package app.boletinhos.core.bills
 import app.boletinhos.core.factory.BillsFactory
 import app.boletinhos.core.testutil.AppDatabaseTest
 import app.boletinhos.core.testutil.runBlocking
+import app.boletinhos.domain.BillStatus
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlinx.coroutines.cancelAndJoin
