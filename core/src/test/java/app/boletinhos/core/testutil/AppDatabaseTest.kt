@@ -14,11 +14,8 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 
 @RunWith(RobolectricTestRunner::class)
-@Config(manifest = Config.NONE)
-abstract class AppDatabaseTest {
-    @get:Rule
-    val mainCoroutineRule = MainCoroutineRule()
-
+@Config(manifest = Config.NONE, sdk = [23])
+abstract class AppDatabaseTest : CoroutineTest() {
     private lateinit var appDatabase: AppDatabase
     internal lateinit var billsDao: BillsDao
 

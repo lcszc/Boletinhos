@@ -13,7 +13,7 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
 class BillsDaoTest : AppDatabaseTest() {
-    @Test fun `should insert and get inserted bill`() = mainCoroutineRule.runBlocking { scope ->
+    @Test fun `should insert and get inserted bill`() = mainCoroutineRule.runBlocking {
         // @given a unpaid bill
         val expected = BillsFactory.unpaid
 
@@ -21,13 +21,9 @@ class BillsDaoTest : AppDatabaseTest() {
         billsDao.insert(expected)
 
         // @then it should be added in the database
-        val job = scope.launch {
-            billsDao.getAll().take(1).collect { bills ->
-                assertThat(bills.first()).isEqualTo(expected)
-            }
+        billsDao.getAll().take(1).test { actual ->
+            assertThat(actual.first()).isEqualTo(expected)
         }
-
-        job.cancelAndJoin()
     }
 
     @Test fun `should get bills by its status`() = runBlockingTest {
