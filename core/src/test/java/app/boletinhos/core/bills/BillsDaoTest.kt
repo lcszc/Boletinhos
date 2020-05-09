@@ -6,10 +6,7 @@ import app.boletinhos.core.testutil.runBlocking
 import app.boletinhos.domain.BillStatus
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import kotlinx.coroutines.cancelAndJoin
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.take
-import kotlinx.coroutines.launch
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
