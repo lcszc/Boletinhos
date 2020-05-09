@@ -1,8 +1,9 @@
 package app.boletinhos.core.factory
 
 import app.boletinhos.core.bills.BillEntity
-import org.threeten.bp.LocalDate
-import org.threeten.bp.Month
+import app.boletinhos.domain.BillStatus
+import java.time.LocalDate
+import java.time.Month
 
 object BillsFactory {
     val unpaid = BillEntity(

@@ -3,7 +3,7 @@ import config.Androidx
 import config.DI
 import config.Kotlinx
 import config.Testing
-import config.ThreeTen
+import config.Tools
 
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
@@ -26,6 +26,10 @@ android {
         versionName AppConfig.Version.toString()
 
         testInstrumentationRunner AppConfig.testRunner
+
+        // Needed to use Java 8 desugaring with minSdk below 20
+        // Maybe I should go up to minSdk 21? 😢😒
+        multiDexEnabled true
     }
 
     buildTypes {
@@ -42,6 +46,8 @@ android {
     }
 
     compileOptions {
+        coreLibraryDesugaringEnabled true
+
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
@@ -52,12 +58,12 @@ android {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
+    coreLibraryDesugaring(Tools.desugaring)
+
     implementation project(":domain")
 
     implementation(Androidx.appCompat)
     implementation(Kotlinx.stbLib, Kotlinx.Coroutines.android)
-    implementation(ThreeTen.abp)
 
     implementation(Androidx.Room.core)
     kapt(Androidx.Room.compiler)

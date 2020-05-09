@@ -28,11 +28,11 @@ object Testing {
     const val robolectric = "org.robolectric:robolectric:4.3"
 }
 
-object ThreeTen {
-    const val abp = "com.jakewharton.threetenabp:threetenabp:1.2.4"
-}
-
 object DI {
     const val dagger = "com.google.dagger:dagger:2.27"
     const val compiler = "com.google.dagger:dagger-compiler:2.27"
+}
+
+object Tools {
+    const val desugaring = "com.android.tools:desugar_jdk_libs:1.0.5"
 }
