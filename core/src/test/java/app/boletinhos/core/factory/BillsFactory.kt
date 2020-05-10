@@ -1,12 +1,13 @@
 package app.boletinhos.core.factory
 
-import app.boletinhos.core.bills.BillEntity
+import app.boletinhos.domain.Bill
 import app.boletinhos.domain.BillStatus
 import java.time.LocalDate
 import java.time.Month
 
 object BillsFactory {
-    val unpaid = BillEntity(
+    val unpaid = Bill(
+        1,
         name = "Unpaid bill",
         description = "unpaid",
         value = 200_00,
@@ -15,7 +16,8 @@ object BillsFactory {
         status = BillStatus.UNPAID
     )
 
-    val paid = BillEntity(
+    val paid = Bill(
+        2,
         name = "paid bill",
         description = "paid",
         value = 200_00,
@@ -24,7 +26,8 @@ object BillsFactory {
         status = BillStatus.PAID
     )
 
-    val overdue = BillEntity(
+    val overdue = Bill(
+        3,
         name = "overdue bill",
         description = "overdue",
         value = 200_00,
@@ -35,10 +38,10 @@ object BillsFactory {
 
     val merged = listOf(
         unpaid,
-        unpaid.copy(name = "New bill"),
-        unpaid.copy(name = "Another bill"),
+        unpaid.copy(id = 4, name = "New bill"),
+        unpaid.copy(id = 5, name = "Another bill"),
         paid,
-        paid.copy(name = "2nd paid bill"),
+        paid.copy(id = 6, name = "2nd paid bill"),
         overdue
     )
 }
