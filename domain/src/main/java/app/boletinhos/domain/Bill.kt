@@ -3,7 +3,7 @@ package app.boletinhos.domain
 import java.time.LocalDate
 
 data class Bill(
-    val id: Int,
+    val id: Long,
     val name: String,
     val description: String,
     val value: Long,
