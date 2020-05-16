@@ -10,4 +10,6 @@ data class Bill(
     val paymentDate: LocalDate?,
     val dueDate: LocalDate,
     val status: BillStatus
-)
+) {
+    val isOverdue = dueDate.isAfter(LocalDate.now())
+}

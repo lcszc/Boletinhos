@@ -20,5 +20,5 @@ interface BillsDao {
     fun getAll(): Flow<List<Bill>>
 
     @Query("SELECT * FROM bills WHERE status = :status")
-    suspend fun getByStatus(status: BillStatus): List<Bill>
+    fun getByStatus(status: BillStatus): Flow<List<Bill>>
 }
