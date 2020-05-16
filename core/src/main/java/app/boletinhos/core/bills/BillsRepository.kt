@@ -1,16 +1,39 @@
 package app.boletinhos.core.bills
 
 import app.boletinhos.domain.Bill
+import app.boletinhos.domain.BillStatus.OVERDUE
+import app.boletinhos.domain.BillStatus.PAID
+import app.boletinhos.domain.BillStatus.UNPAID
+import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
 class BillsRepository @Inject constructor(private val dao: BillsDao) {
-    suspend fun create(bill: Bill) = Unit
+    fun paids() = dao.getByStatus(PAID)
 
-    suspend fun update(bill: Bill) = Unit
+    fun overdue() = dao.getByStatus(OVERDUE)
 
-    fun getAll() = Unit
+    fun unpaids() = dao.getByStatus(UNPAID)
 
-    fun getByStatus() = Unit
+    suspend fun new(bill: Bill) {
+        val status = if (bill.isOverdue) OVERDUE else UNPAID
+
+        val newBill = bill
+            .copy(status = status)
+            .toEntity()
+
+        dao.insert(newBill)
+    }
+
+    suspend fun pay(bill: Bill) {
+        val paidBill = bill
+            .copy(
+                status = PAID,
+                paymentDate = LocalDate.now()
+            )
+            .toEntity()
+
+        dao.update(paidBill)
+    }
 }
