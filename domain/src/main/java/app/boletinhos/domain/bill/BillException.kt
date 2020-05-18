@@ -1,7 +1,5 @@
 package app.boletinhos.domain.bill
 
-import app.boletinhos.domain.Bill
-
 data class InvalidMinimumBillValueException(
     val minimumValue: Long = Bill.MINIMUM_VALUE
 ) : IllegalArgumentException("Bill's value can't be lower than $minimumValue.")

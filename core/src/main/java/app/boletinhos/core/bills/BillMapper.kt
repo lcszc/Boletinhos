@@ -1,6 +1,6 @@
 package app.boletinhos.core.bills
 
-import app.boletinhos.domain.Bill
+import app.boletinhos.domain.bill.Bill
 
 fun Bill.toEntity() = BillEntity(
     id,
