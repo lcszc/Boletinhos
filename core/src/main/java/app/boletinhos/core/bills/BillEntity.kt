@@ -2,7 +2,7 @@ package app.boletinhos.core.bills
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import app.boletinhos.domain.BillStatus
+import app.boletinhos.domain.bill.status.BillStatus
 import java.time.LocalDate
 
 @Entity(tableName = "bills")

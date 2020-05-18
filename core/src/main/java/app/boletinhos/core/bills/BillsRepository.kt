@@ -1,9 +1,9 @@
 package app.boletinhos.core.bills
 
-import app.boletinhos.domain.Bill
-import app.boletinhos.domain.BillStatus.OVERDUE
-import app.boletinhos.domain.BillStatus.PAID
-import app.boletinhos.domain.BillStatus.UNPAID
+import app.boletinhos.domain.bill.Bill
+import app.boletinhos.domain.bill.status.BillStatus.OVERDUE
+import app.boletinhos.domain.bill.status.BillStatus.PAID
+import app.boletinhos.domain.bill.status.BillStatus.UNPAID
 import java.time.LocalDate
 import javax.inject.Inject
 import javax.inject.Singleton
