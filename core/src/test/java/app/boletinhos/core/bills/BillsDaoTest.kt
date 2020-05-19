@@ -2,6 +2,7 @@ package app.boletinhos.core.bills
 
 import app.boletinhos.core.factory.BillsFactory
 import app.boletinhos.core.testutil.AppDatabaseTest
+import app.boletinhos.domain.bill.Bill
 import app.boletinhos.domain.bill.BillStatus
 import assertk.assertThat
 import assertk.assertions.isEqualTo
@@ -34,7 +35,8 @@ class BillsDaoTest : AppDatabaseTest() {
         }
 
         // @when fetching bills by `unpaid` status
-        val actual = billsDao.getByStatus(BillStatus.UNPAID)
+        val actual = mutableListOf<Bill>()
+        billsDao.getByStatus(BillStatus.UNPAID).test { it.toCollection(actual) }
 
         // @then the list of fetched bills should be equal to the expected
         assertThat(actual).isEqualTo(expected)
