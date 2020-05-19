@@ -11,19 +11,19 @@ data class Bill(
     val dueDate: LocalDate,
     val status: BillStatus
 ) {
-    val isOverdue = dueDate.isAfter(LocalDate.now())
+    fun isOverdue() = dueDate.isBefore(LocalDate.now())
 
-    val hasValidMinimumValue get() = value >= MINIMUM_VALUE
+    fun hasValidMinimumValue() = value >= MINIMUM_VALUE
 
-    val hasValidMaximumValue get() = value <= MAXIMUM_VALUE
+    fun hasValidMaximumValue() = value <= MAXIMUM_VALUE
 
-    val isNameTooShort get() = name.length < MINIMUM_NAME_COUNT
+    fun isNameTooShort() = name.length < MINIMUM_NAME_COUNT
 
-    val isNameTooLong get() = name.length > MAXIMUM_NAME_COUNT
+    fun isNameTooLong() = name.length > MAXIMUM_NAME_COUNT
 
-    val isDescriptionTooShort get() = description.length < MINIMUM_DESCRIPTION_COUNT
+    fun isDescriptionTooShort() = description.length < MINIMUM_DESCRIPTION_COUNT
 
-    val isDescriptionTooLong get() = description.length > MAXIMUM_DESCRIPTION_COUNT
+    fun isDescriptionTooLong() = description.length > MAXIMUM_DESCRIPTION_COUNT
 
     companion object {
         internal const val MINIMUM_VALUE = 10_00L /* 10 */

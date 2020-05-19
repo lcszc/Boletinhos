@@ -10,14 +10,8 @@ import javax.inject.Singleton
 
 @Singleton
 class BillsRepository @Inject constructor(private val dao: BillsDao) {
-    fun paids() = dao.getByStatus(PAID)
-
-    fun overdue() = dao.getByStatus(OVERDUE)
-
-    fun unpaids() = dao.getByStatus(UNPAID)
-
     suspend fun new(bill: Bill) {
-        val status = if (bill.isOverdue) OVERDUE else UNPAID
+        val status = if (bill.isOverdue()) OVERDUE else UNPAID
 
         val newBill = bill
             .copy(status = status)
