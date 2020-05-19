@@ -5,7 +5,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.status.BillStatus
+import app.boletinhos.domain.bill.BillStatus
 import kotlinx.coroutines.flow.Flow
 
 @Dao

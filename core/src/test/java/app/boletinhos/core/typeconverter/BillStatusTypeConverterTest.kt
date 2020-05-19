@@ -1,6 +1,6 @@
 package app.boletinhos.core.typeconverter
 
-import app.boletinhos.domain.bill.status.BillStatus
+import app.boletinhos.domain.bill.BillStatus
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.Test

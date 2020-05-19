@@ -1,4 +1,4 @@
-package app.boletinhos.domain.bill.status
+package app.boletinhos.domain.bill
 
 enum class BillStatus(val code: StatusCode) {
     UNPAID(StatusCode(0)),

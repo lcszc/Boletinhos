@@ -1,7 +1,7 @@
 package app.boletinhos.core.factory
 
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.status.BillStatus
+import app.boletinhos.domain.bill.BillStatus
 import java.time.LocalDate
 import java.time.Month
 

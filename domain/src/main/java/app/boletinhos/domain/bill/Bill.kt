@@ -1,6 +1,5 @@
 package app.boletinhos.domain.bill
 
-import app.boletinhos.domain.bill.status.BillStatus
 import java.time.LocalDate
 
 data class Bill(
