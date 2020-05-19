@@ -2,7 +2,7 @@ package app.boletinhos.core.bills
 
 import app.boletinhos.core.factory.BillsFactory
 import app.boletinhos.core.testutil.AppDatabaseTest
-import app.boletinhos.domain.bill.status.BillStatus
+import app.boletinhos.domain.bill.BillStatus
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlinx.coroutines.flow.take
