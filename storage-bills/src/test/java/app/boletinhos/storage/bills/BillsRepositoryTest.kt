@@ -1,7 +1,7 @@
-package app.boletinhos.core.bills
+package app.boletinhos.storage.bills
 
-import app.boletinhos.core.factory.BillsFactory
-import app.boletinhos.core.testutil.AppDatabaseTest
+import app.boletinhos.storage.factory.BillsFactory
+import app.boletinhos.storage.testutil.AppDatabaseTest
 import app.boletinhos.domain.bill.BillStatus.OVERDUE
 import app.boletinhos.domain.bill.BillStatus.PAID
 import app.boletinhos.domain.bill.BillStatus.UNPAID

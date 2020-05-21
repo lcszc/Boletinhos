@@ -1,4 +1,4 @@
-package app.boletinhos.core.typeconverter
+package app.boletinhos.storage.typeconverter
 
 import app.boletinhos.domain.bill.BillStatus
 import assertk.assertThat

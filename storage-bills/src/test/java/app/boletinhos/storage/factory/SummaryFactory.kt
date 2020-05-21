@@ -1,4 +1,4 @@
-package app.boletinhos.core.factory
+package app.boletinhos.storage.factory
 
 import app.boletinhos.domain.bill.BillStatus
 import app.boletinhos.domain.bill.Summary

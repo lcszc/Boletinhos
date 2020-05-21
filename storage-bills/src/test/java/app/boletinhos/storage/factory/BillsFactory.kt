@@ -1,4 +1,4 @@
-package app.boletinhos.core.factory
+package app.boletinhos.storage.factory
 
 import app.boletinhos.domain.bill.Bill
 import app.boletinhos.domain.bill.BillStatus.OVERDUE
