@@ -14,4 +14,8 @@ import app.boletinhos.storage.typeconverter.LocalDateTypeConverter
 abstract class AppDatabase : RoomDatabase() {
     abstract fun billsDao(): BillsDao
     abstract fun billsSummaryDao(): BillsSummaryDao
+
+    companion object {
+        const val DATABASE_NAME = "boletinhos-db"
+    }
 }
