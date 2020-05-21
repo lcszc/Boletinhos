@@ -5,6 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.boletinhos.core.bills.BillEntity
 import app.boletinhos.core.bills.BillsDao
+import app.boletinhos.core.bills.BillsSummaryDao
 import app.boletinhos.core.typeconverter.BillStatusTypeConverter
 import app.boletinhos.core.typeconverter.LocalDateTypeConverter
 
@@ -12,4 +13,5 @@ import app.boletinhos.core.typeconverter.LocalDateTypeConverter
 @TypeConverters(value = [LocalDateTypeConverter::class, BillStatusTypeConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     abstract fun billsDao(): BillsDao
+    abstract fun billsSummaryDao(): BillsSummaryDao
 }

@@ -3,7 +3,6 @@ package app.boletinhos.domain.bill
 import java.time.LocalDate
 
 data class Bill(
-    val id: Long,
     val name: String,
     val description: String,
     val value: Long,
@@ -11,6 +10,8 @@ data class Bill(
     val dueDate: LocalDate,
     val status: BillStatus
 ) {
+    var id: Long = 0L
+
     fun isOverdue() = dueDate.isBefore(LocalDate.now())
 
     fun hasValidMinimumValue() = value >= MINIMUM_VALUE

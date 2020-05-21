@@ -3,42 +3,52 @@ package app.boletinhos.core.bills
 import app.boletinhos.core.factory.BillsFactory
 import app.boletinhos.core.testutil.AppDatabaseTest
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.BillStatus
+import app.boletinhos.domain.bill.BillStatus.OVERDUE
+import app.boletinhos.domain.bill.BillStatus.PAID
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
+import java.time.LocalDate
 
 class BillsDaoTest : AppDatabaseTest() {
-    @Test fun `should insert and get inserted bill`() = runBlockingTest {
-        // @given a unpaid bill
-        val expected = BillsFactory.unpaid
+    @Test fun `should insert bill`() = runBlockingTest {
+        val expected = BillsFactory
+            .pick()
+            .first()
 
-        // @when inserting it to the app database
         billsDao.insert(expected.toEntity())
 
-        // @then it should be added in the database
-        billsDao.getAll().take(1).test { actual ->
-            assertThat(actual.first()).isEqualTo(expected)
-        }
+        assertThat(billsDao.getById(id = 1)).isEqualTo(expected)
     }
 
     @Test fun `should get bills by its status`() = runBlockingTest {
-        // @given a list of bills
-        val merged = BillsFactory.merged
-        val expected = merged.filter { bill -> bill.status == BillStatus.UNPAID }
+        val expected = BillsFactory.paids
 
-        // @and they are inserted in the database
-        merged.forEach { bill ->
-            billsDao.insert(bill.toEntity())
+        (expected + BillsFactory.overdue)
+            .map(Bill::toEntity)
+            .forEach { billsDao.insert(it) }
+
+        billsDao.getByStatus(PAID).test { actual ->
+            assertThat(actual).isEqualTo(expected)
         }
+    }
 
-        // @when fetching bills by `unpaid` status
-        val actual = mutableListOf<Bill>()
-        billsDao.getByStatus(BillStatus.UNPAID).test { it.toCollection(actual) }
+    @Test fun `should update a given bill`() = runBlockingTest {
+        val bill = BillsFactory
+            .pick()
+            .first()
+            .toEntity()
+            .copy(dueDate = LocalDate.now().minusMonths(1), status = OVERDUE)
 
-        // @then the list of fetched bills should be equal to the expected
-        assertThat(actual).isEqualTo(expected)
+        billsDao.insert(bill)
+
+        val updated = billsDao.getById(id = 1)
+            .copy(description = "My new description")
+            .also { it.id = 1 }
+
+        billsDao.update(updated.toEntity())
+
+        assertThat(billsDao.getById(id = 1)).isEqualTo(updated)
     }
 }

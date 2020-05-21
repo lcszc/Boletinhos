@@ -16,6 +16,9 @@ interface BillsDao {
     @Update
     suspend fun update(bill: BillEntity)
 
+    @Query("SELECT * FROM bills WHERE id = :id")
+    suspend fun getById(id: Long): Bill
+
     @Query("SELECT * FROM bills")
     fun getAll(): Flow<List<Bill>>
 
