@@ -1,11 +1,10 @@
-package app.boletinhos.core.typeconverter
+package app.boletinhos.storage.typeconverter
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.Test
 import java.time.LocalDate
 import java.time.Month
-import kotlin.math.exp
 
 class LocalDateTypeConverterTest {
     @Test fun `should parse to LocalDate from a given valid date`() {
