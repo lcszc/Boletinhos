@@ -8,7 +8,7 @@ import java.time.LocalDate
 @Entity(tableName = "bills")
 data class BillEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Long = 0,
+    var id: Long = 0,
     val name: String,
     val description: String,
     val value: Long,

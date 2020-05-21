@@ -10,8 +10,8 @@ class BillStatusTypeConverterTest {
         // @given a bill status
         val expected = BillStatus.UNPAID
 
-        // @and its expected status code value
-        val code = BillStatus.UNPAID.code.value
+        // @and its expected value
+        val code = BillStatus.UNPAID.name
 
         // @when converting to a status from a given code
         val actual = BillStatusTypeConverter.toStatus(code)
@@ -22,7 +22,7 @@ class BillStatusTypeConverterTest {
 
     @Test fun `should convert to int from a given status`() {
         // @given a bill status code value
-        val expected = BillStatus.UNPAID.code.value
+        val expected = BillStatus.UNPAID.name
 
         // @and its bill status
         val status = BillStatus.UNPAID

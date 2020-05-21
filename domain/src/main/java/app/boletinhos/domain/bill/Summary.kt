@@ -1,9 +1,10 @@
 package app.boletinhos.domain.bill
 
-import java.time.LocalDate
+import java.time.Month
 
-data class BillSummary(
-    val date: LocalDate,
+data class Summary(
+    val month: Month,
+    val year: Int,
     val totalValue: Long,
     val paids: Int,
     val unpaids: Int,

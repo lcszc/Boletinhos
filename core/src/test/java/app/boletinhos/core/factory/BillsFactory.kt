@@ -1,47 +1,87 @@
 package app.boletinhos.core.factory
 
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.BillStatus
+import app.boletinhos.domain.bill.BillStatus.OVERDUE
+import app.boletinhos.domain.bill.BillStatus.PAID
+import app.boletinhos.domain.bill.BillStatus.UNPAID
 import java.time.LocalDate
-import java.time.Month
 
 object BillsFactory {
-    val unpaid = Bill(
-        1,
-        name = "Unpaid bill",
-        description = "unpaid",
-        value = 200_00,
+    private val now get() = LocalDate.now()
+
+    val main = Bill(
+        name = "House Electricity Bill",
+        description = "Electricity",
+        value = 250_00L /* 250 currency */,
+        dueDate = now.plusMonths(1),
         paymentDate = null,
-        dueDate = LocalDate.of(2020, Month.DECEMBER, 23),
-        status = BillStatus.UNPAID
+        status = UNPAID
     )
 
-    val paid = Bill(
-        2,
-        name = "paid bill",
-        description = "paid",
-        value = 200_00,
-        paymentDate = LocalDate.of(2020, Month.DECEMBER, 20),
-        dueDate = LocalDate.of(2020, Month.DECEMBER, 23),
-        status = BillStatus.PAID
+    val bill2 = main.copy(
+        name = "Unity 3D",
+        description = "Subscriptions",
+        value = 99_00L
     )
 
-    val overdue = Bill(
-        3,
-        name = "overdue bill",
-        description = "overdue",
-        value = 200_00,
-        paymentDate = null,
-        dueDate = LocalDate.of(2020, Month.DECEMBER, 1),
-        status = BillStatus.OVERDUE
+    val bill3 = main.copy(
+        name = "PluralSight",
+        description = "Subscriptions",
+        value = 59_00L
     )
 
-    val merged = listOf(
-        unpaid,
-        unpaid.copy(id = 4, name = "New bill"),
-        unpaid.copy(id = 5, name = "Another bill"),
-        paid,
-        paid.copy(id = 6, name = "2nd paid bill"),
-        overdue
+    val bill4 = main.copy(
+        name = "Caster.io",
+        description = "Subscriptions",
+        value = 29_00L
     )
+
+    val bill5 = main.copy(
+        name = "Spotify",
+        description = "Subscriptions",
+        value = 8_00L
+    )
+
+    val bill6 = main.copy(
+        name = "Netflix",
+        description = "Subscriptions",
+        value = 49_90L
+    )
+
+    val bill7 = main.copy(
+        name = "Cute Cats NGO",
+        description = "Donations",
+        value = 990_00L,
+        dueDate = now.plusMonths(2)
+    )
+
+    val bill8 = main.copy(
+        name = "Angry Cats NGO",
+        description = "Donations",
+        value = 990_00L,
+        dueDate = now.plusMonths(2)
+    )
+
+    val bill9 = main.copy(
+        name = "Dogs for a living NGO",
+        description = "Donations",
+        value = 990_00L,
+        dueDate = now.plusMonths(2)
+    )
+
+    val unpaids = listOf(
+        bill2,
+        bill3,
+        bill4,
+        bill5,
+        bill6,
+        bill7,
+        bill8,
+        bill9
+    )
+
+    val paids = unpaids.map { it.copy(status = PAID) }
+    val overdue = paids.map { it.copy(status = OVERDUE) }
+
+    fun pick(quantity: Int = 1) = unpaids.shuffled().take(quantity)
 }

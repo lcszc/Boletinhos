@@ -14,19 +14,16 @@ class BillsRepository @Inject constructor(private val dao: BillsDao) {
         val status = if (bill.isOverdue()) OVERDUE else UNPAID
 
         val newBill = bill
-            .copy(status = status)
             .toEntity()
+            .copy(status = status)
 
         dao.insert(newBill)
     }
 
     suspend fun pay(bill: Bill) {
         val paidBill = bill
-            .copy(
-                status = PAID,
-                paymentDate = LocalDate.now()
-            )
             .toEntity()
+            .copy(status = PAID, paymentDate = LocalDate.now())
 
         dao.update(paidBill)
     }

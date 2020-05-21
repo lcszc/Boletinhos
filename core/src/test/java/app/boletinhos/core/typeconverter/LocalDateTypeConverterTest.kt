@@ -5,34 +5,34 @@ import assertk.assertions.isEqualTo
 import org.junit.Test
 import java.time.LocalDate
 import java.time.Month
+import kotlin.math.exp
 
 class LocalDateTypeConverterTest {
-
     @Test fun `should parse to LocalDate from a given valid date`() {
-        // @given a valid LocalDate
         val expected = LocalDate.of(2020, Month.JANUARY, 30)
 
-        // @and a valid date
-        val date = "30/1/2020"
+        val date = "2020-01-30"
 
-        // @when parsing the date
         val actual = LocalDateTypeConverter.toLocalDateTime(date)
 
-        // @then the result should be equal to the expected LocalDate
         assertThat(actual).isEqualTo(expected)
     }
 
     @Test fun `should format to text from a given LocalDate`() {
-        // @given a valid date
-        val expected = "30/1/2020"
+        val expected = "2020-01-30"
 
-        // @and a LocalDate
         val localDate = LocalDate.of(2020, Month.JANUARY, 30)
 
-        // @when formatting the LocalDate to text
         val actual = LocalDateTypeConverter.fromLocalDateTime(localDate)
 
-        // @then the result should be equal to the expected value
+        assertThat(actual).isEqualTo(expected)
+    }
+
+    @Test fun `should convert to Month from a given integer`() {
+        val expected = Month.DECEMBER
+
+        val actual = LocalDateTypeConverter.toMonth(12.toString())
+
         assertThat(actual).isEqualTo(expected)
     }
 }
