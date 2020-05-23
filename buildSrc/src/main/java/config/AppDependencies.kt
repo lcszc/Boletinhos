@@ -15,6 +15,8 @@ object Androidx {
 
 object Kotlinx {
     const val stbLib = "org.jetbrains.kotlin:kotlin-stdlib:1.3.70"
+    const val test = "org.jetbrains.kotlin:kotlin-test-common:1.3.70"
+    const val test2 = "org.jetbrains.kotlin:kotlin-test-annotations-common:1.3.70"
 
     object Coroutines {
         const val android = "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.5"

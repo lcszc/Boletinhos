@@ -1,3 +1,4 @@
 include ':android-ui'
 include ':domain'
 include ':storage-bills'
+include ':preferences'
