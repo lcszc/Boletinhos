@@ -1,0 +1,57 @@
+import config.Androidx
+import config.AppConfig
+import config.DI
+import config.Kotlinx
+import config.Testing
+
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+
+android {
+    compileSdkVersion AppConfig.Sdk.compile
+
+    defaultConfig {
+        minSdkVersion AppConfig.Sdk.min
+        targetSdkVersion AppConfig.Sdk.target
+
+        versionCode AppConfig.Version.code
+        versionName AppConfig.Version.toString()
+
+        testInstrumentationRunner AppConfig.testRunner
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8
+    }
+}
+
+dependencies {
+    implementation(Androidx.appCompat, Androidx.core)
+    implementation(Kotlinx.stbLib)
+
+    implementation(DI.dagger)
+    kapt(DI.compiler)
+
+    testImplementation(Testing.junit, Testing.assertK)
+    testImplementation(Androidx.test)
+    testImplementation(Kotlinx.Coroutines.test)
+}
