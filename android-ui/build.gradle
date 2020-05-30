@@ -1,6 +1,7 @@
 import config.Androidx
 import config.AppConfig
 import config.Kotlinx
+import config.UI
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
@@ -37,4 +38,5 @@ dependencies {
         implementation dependency
     }
 
+    implementation(UI.material)
 }
