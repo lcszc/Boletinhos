@@ -13,6 +13,10 @@ object Androidx {
     const val test = "androidx.test:core:1.0.0"
 }
 
+object UI {
+    const val material = "com.google.android.material:material:1.2.0-beta01"
+}
+
 object Kotlinx {
     const val stbLib = "org.jetbrains.kotlin:kotlin-stdlib:1.3.70"
 
