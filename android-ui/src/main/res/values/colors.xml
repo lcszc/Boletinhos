@@ -3,4 +3,39 @@
     <color name="colorPrimary">#6200EE</color>
     <color name="colorPrimaryDark">#3700B3</color>
     <color name="colorAccent">#03DAC5</color>
+
+    <!-- branding -->
+    <color name="branding">#79819C</color>
+    <color name="brandingVariant">#333745</color>
+
+    <!-- paid bills as primary-->
+    <color name="paidBillsPrimary">#9370DB</color>
+    <color name="paidBillsOnSurfaceLowEmphasis">#269370DB</color>
+
+    <!-- unpaid bills as primary-->
+    <color name="unpaidBillsPrimary">#F49D37</color>
+    <color name="unpaidBillsOnSurfaceLowEmphasis">#26F49D37</color>
+
+    <!-- overdue bills as primary -->
+    <color name="overdueBillsPrimary">#FE5F55</color>
+    <color name="overdueBillsOnSurfaceLowEmphasis">#26FE5F55</color>
+
+    <!-- theme colors def -->
+    <color name="primary">@color/branding</color>
+    <color name="primaryVariant">@color/brandingVariant</color>
+
+    <color name="background">#F9FCFE</color>
+    <color name="surface">@android:color/white</color>
+
+    <color name="error">#B00020</color>
+    
+    <!-- colors `on` defs -->
+    <color name="onPrimary">@android:color/white</color>
+
+    <color name="onSurface">@color/brandingVariant</color>
+    <color name="onSurfaceLowEmphasis">#9e9e9e</color>
+
+    <color name="onBackground">@android:color/white</color>
+
+    <color name="onError">@android:color/white</color>
 </resources>
