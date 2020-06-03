@@ -2,7 +2,6 @@
 <layer-list
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android">
-
     <item android:drawable="@color/surface" />
 
     <item>
@@ -11,5 +10,4 @@
             android:gravity="center"
             android:src="@drawable/ic_barcode" />
     </item>
-
 </layer-list>
