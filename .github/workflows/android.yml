@@ -22,10 +22,10 @@ jobs:
       - name: Unit tests
         run: bash ./gradlew test --stacktrace
 
-
   detekt:
     name: Run deteKt
     runs-on: ubuntu-18.04
     steps:
+      - uses: actions/checkout@v1
       - name: deteKt
         run: bash ./gradlew detekt
