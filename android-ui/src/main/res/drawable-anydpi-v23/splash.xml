@@ -8,6 +8,5 @@
         android:gravity="center"
         android:drawable="@drawable/ic_barcode"
         android:width="118dp"
-        android:height="118dp"
-        />
+        android:height="118dp" />
 </layer-list>
