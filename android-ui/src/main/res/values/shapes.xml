@@ -11,7 +11,7 @@
 
     <style name="ShapeAppearance.App.Medium" parent="ShapeAppearance.MaterialComponents.MediumComponent">
         <item name="cornerFamily">rounded</item>
-        <item name="cornerSize">@dimen/smallComponentCornerSize</item>
+        <item name="cornerSize">@dimen/mediumComponentCornerSize</item>
     </style>
 
     <style name="ShapeAppearance.App.Large" parent="ShapeAppearance.MaterialComponents.LargeComponent">
