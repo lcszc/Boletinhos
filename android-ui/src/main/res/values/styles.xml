@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- components -->
+
+    <!-- app bar: top -->
+    <dimen name="appbarElevation">4dp</dimen>
+
+    <style name="Widget.App.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
+        <item name="android:stateListAnimator" tools:targetApi="lollipop">@animator/appbar_state_list_animator</item>
+    </style>
+</resources>
