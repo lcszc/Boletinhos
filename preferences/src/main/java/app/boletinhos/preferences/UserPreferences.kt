@@ -3,7 +3,6 @@ package app.boletinhos.preferences
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import javax.inject.Inject
-import javax.inject.Singleton
 
 class UserPreferences @Inject constructor(
     private val prefs: SharedPreferences
