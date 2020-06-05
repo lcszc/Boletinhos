@@ -1,4 +1,6 @@
 import config.AppPlugins
+import config.Firebase
+import config.GoogleServices
 
 buildscript {
     repositories {
@@ -8,13 +10,20 @@ buildscript {
     }
 
     dependencies {
-        [
+        def plugins = []
+
+        plugins << [
             AppPlugins.androidGradle,
             AppPlugins.kotlinGradle,
             AppPlugins.testLogger
-        ].forEach { plugin ->
-            classpath plugin
-        }
+        ]
+
+        plugins << [
+            GoogleServices.gradle,
+            Firebase.Crashlytics.gradle
+        ]
+
+        classpath(plugins)
     }
 }
 
