@@ -1,5 +1,6 @@
 import config.Androidx
 import config.AppConfig
+import config.DI
 import config.Firebase
 import config.Kotlinx
 import config.UI
@@ -43,6 +44,9 @@ dependencies {
     }
 
     implementation(UI.material)
+
+    implementation(DI.dagger)
+    kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
 }
