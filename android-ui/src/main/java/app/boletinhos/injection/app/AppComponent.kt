@@ -13,14 +13,14 @@ interface AppComponent {
     fun inject(app: MainApplication)
 
     fun appContextComponent(): AppContextComponent
-    fun appPrefsComponent(): PreferencesComponent
+    fun preferencesComponent(): PreferencesComponent
     fun crashlyticsComponent(): CrashlyticsComponent
 
     @Component.Factory interface Factory {
         fun create(
             @BindsInstance appContextComponent: AppContextComponent,
-            @BindsInstance appPrefsComponent: PreferencesComponent,
-            @BindsInstance crashlyticsComponent: CrashlyticsComponent
+            preferencesComponent: PreferencesComponent,
+            crashlyticsComponent: CrashlyticsComponent
         ): AppComponent
     }
 }
