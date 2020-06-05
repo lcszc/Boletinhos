@@ -1,11 +1,14 @@
 import config.Androidx
 import config.AppConfig
+import config.Firebase
 import config.Kotlinx
 import config.UI
 
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.firebase.crashlytics'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion AppConfig.Sdk.compile
@@ -39,4 +42,6 @@ dependencies {
     }
 
     implementation(UI.material)
+
+    implementation(Firebase.Crashlytics.core)
 }

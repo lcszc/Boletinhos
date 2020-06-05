@@ -41,3 +41,14 @@ object DI {
 object Tools {
     const val desugaring = "com.android.tools:desugar_jdk_libs:1.0.5"
 }
+
+object GoogleServices {
+    const val gradle = "com.google.gms:google-services:4.3.3"
+}
+
+object Firebase {
+    object Crashlytics {
+        const val gradle = "com.google.firebase:firebase-crashlytics-gradle:2.1.1"
+        const val core = "com.google.firebase:firebase-crashlytics:17.0.0"
+    }
+}
