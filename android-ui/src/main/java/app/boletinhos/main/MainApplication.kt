@@ -1,6 +1,7 @@
 package app.boletinhos.main
 
 import android.app.Application
+import app.boletinhos.crashcat.CrashCat
 import app.boletinhos.injection.context.DaggerAppContextComponent
 import app.boletinhos.injection.app.AppComponent
 import app.boletinhos.injection.app.DaggerAppComponent
@@ -9,7 +10,7 @@ import app.boletinhos.injection.crashlytics.CrashlyticsComponent
 import app.boletinhos.injection.crashlytics.DaggerCrashlyticsComponent
 import app.boletinhos.injection.preferences.DaggerPreferencesComponent
 import app.boletinhos.injection.preferences.PreferencesComponent
-import com.google.firebase.crashlytics.FirebaseCrashlytics
+import javax.inject.Inject
 
 class MainApplication : Application() {
     private lateinit var component: AppComponent
@@ -34,10 +35,12 @@ class MainApplication : Application() {
             .also { component -> component.inject(this) }
     }
 
+    @Inject lateinit var crashCat: CrashCat
+
     override fun onCreate() {
         super.onCreate()
         component = injector()
-        FirebaseCrashlytics.getInstance().setCrashlyticsCollectionEnabled(false)
+        crashCat.configure()
     }
 
     fun mainComponent() = component
