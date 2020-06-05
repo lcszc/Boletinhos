@@ -48,8 +48,7 @@ dependencies {
     implementation(Androidx.appCompat, Androidx.core)
     implementation(Kotlinx.stbLib)
 
-    implementation(DI.dagger)
-    kapt(DI.compiler)
+    implementation(DI.javax)
 
     testImplementation(Testing.junit, Testing.assertK)
     testImplementation(Androidx.test)
