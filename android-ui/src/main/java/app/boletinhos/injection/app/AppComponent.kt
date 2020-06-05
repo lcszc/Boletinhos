@@ -11,13 +11,16 @@ import dagger.Component
 @Component(dependencies = [PreferencesComponent::class, CrashlyticsComponent::class])
 interface AppComponent {
     fun inject(app: MainApplication)
+
     fun appContextComponent(): AppContextComponent
+    fun appPrefsComponent(): PreferencesComponent
+    fun crashlyticsComponent(): CrashlyticsComponent
 
     @Component.Factory interface Factory {
         fun create(
             @BindsInstance appContextComponent: AppContextComponent,
-            appPrefsComponent: PreferencesComponent,
-            crashlyticsComponent: CrashlyticsComponent
+            @BindsInstance appPrefsComponent: PreferencesComponent,
+            @BindsInstance crashlyticsComponent: CrashlyticsComponent
         ): AppComponent
     }
 }
