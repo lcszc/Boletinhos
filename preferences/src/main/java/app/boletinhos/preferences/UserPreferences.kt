@@ -5,7 +5,6 @@ import androidx.core.content.edit
 import javax.inject.Inject
 import javax.inject.Singleton
 
-@Singleton
 class UserPreferences @Inject constructor(
     private val prefs: SharedPreferences
 ) {

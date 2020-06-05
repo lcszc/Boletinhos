@@ -36,6 +36,7 @@ object Testing {
 object DI {
     const val dagger = "com.google.dagger:dagger:2.27"
     const val compiler = "com.google.dagger:dagger-compiler:2.27"
+    const val javax = "javax.inject:javax.inject:1"
 }
 
 object Tools {
