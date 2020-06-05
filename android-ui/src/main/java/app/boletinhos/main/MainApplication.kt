@@ -5,6 +5,8 @@ import app.boletinhos.injection.context.DaggerAppContextComponent
 import app.boletinhos.injection.app.AppComponent
 import app.boletinhos.injection.app.DaggerAppComponent
 import app.boletinhos.injection.context.AppContextComponent
+import app.boletinhos.injection.crashlytics.CrashlyticsComponent
+import app.boletinhos.injection.crashlytics.DaggerCrashlyticsComponent
 import app.boletinhos.injection.preferences.DaggerPreferencesComponent
 import app.boletinhos.injection.preferences.PreferencesComponent
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -22,9 +24,13 @@ class MainApplication : Application() {
             .create(contextComponent())
     }
 
+    private fun crashlyticsComponent(): CrashlyticsComponent {
+        return DaggerCrashlyticsComponent.factory().create()
+    }
+
     private fun injector(): AppComponent {
         return DaggerAppComponent.factory()
-            .create(contextComponent(), preferencesComponent())
+            .create(contextComponent(), preferencesComponent(), crashlyticsComponent())
             .also { component -> component.inject(this) }
     }
 
