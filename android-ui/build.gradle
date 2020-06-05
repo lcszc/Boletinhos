@@ -38,6 +38,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation project(":preferences")
 
     [Androidx.core, Androidx.appCompat, Kotlinx.stbLib].forEach { dependency ->
         implementation dependency
