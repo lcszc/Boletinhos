@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Run Tests
+    name: Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: bash ./gradlew test --stacktrace
 
   apk:
-    name: Assemble APK
+    name: APKs
     runs-on: ubuntu-18.04
 
     steps:
@@ -34,16 +34,16 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Assemble development APK
+      - name: Assemble Development APK
         run: bash ./gradlew assembleDebug --stacktrace
 
-      - name: Upload development APK
+      - name: Upload Development APK
         uses: actions/upload-artifact@v1
         with:
           name: app-dev
           path: android-ui/build/outputs/apk/debug/android-ui-debug.apk
 
-      - name: Assemble UI Tests
+      - name: Assemble UI Tests APK
         run: bash ./gradlew assembleDebugAndroidTest
 
       - name: Upload UI Tests APK
@@ -53,19 +53,19 @@ jobs:
           path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
 
   test_lab:
-    name: Run UI tests
+    name: Run UI tests on Firebase Test Lab
     needs: apk
     runs-on: ubuntu-18.04
 
     steps:
       - uses: actions/checkout@v1
 
-      - name: Download app APK
+      - name: Download Development APK
         uses: actions/download-artifact@v1
         with:
           name: app-dev
 
-      - name: Download tests APK
+      - name: Download UI Tests APK
         uses: actions/download-artifact@v1
         with:
           name: app-dev-ui-tests
@@ -76,10 +76,10 @@ jobs:
           version: '270.0.0'
           service_account_key: ${{ secrets.GOOGLE_CLOUD_SERVICE_KEY }}
 
-      - name: Configure GCloud
+      - name: Configure GCloud project ID
         run: gcloud config set project $FIREBASE_PROJECT_ID
         env:
           FIREBASE_PROJECT_ID: boletinhos-5b614
 
-      - name: Run Instrumentation Tests in Firebase Test Lab
+      - name: Run Tests
         run: gcloud firebase test android run --type instrumentation --app app-dev/android-ui-debug.apk --test app-dev-ui-tests/android-ui-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
