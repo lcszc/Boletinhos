@@ -1,8 +1,10 @@
 import config.Androidx
 import config.AppConfig
 import config.DI
+import config.Espresso
 import config.Firebase
 import config.Kotlinx
+import config.Testing
 import config.UI
 
 apply plugin: 'com.android.application'
@@ -50,4 +52,7 @@ dependencies {
     kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
+
+    androidTestImplementation(Androidx.test, Androidx.rules, Androidx.junit)
+    androidTestImplementation(Espresso.core, Testing.assertK)
 }

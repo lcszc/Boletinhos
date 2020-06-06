@@ -11,6 +11,8 @@ object Androidx {
     }
 
     const val test = "androidx.test:core:1.0.0"
+    const val rules = "androidx.test:rules:1.2.0"
+    const val junit = "androidx.test.ext:junit:1.1.1"
 }
 
 object UI {
@@ -52,4 +54,8 @@ object Firebase {
         const val gradle = "com.google.firebase:firebase-crashlytics-gradle:2.1.1"
         const val core = "com.google.firebase:firebase-crashlytics:17.0.0"
     }
+}
+
+object Espresso {
+    const val core = "androidx.test.espresso:espresso-core:3.2.0"
 }
