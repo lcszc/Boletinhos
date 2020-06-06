@@ -41,7 +41,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-dev
-          path: app/build/outputs/apk/debug/android-ui-debug.apk
+          path: android-ui/build/outputs/apk/debug/android-ui-debug.apk
 
       - name: Assemble UI Tests
         run: bash ./gradlew assembleDebugAndroidTest
@@ -50,7 +50,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: app-dev-ui-tests
-          path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
+          path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
 
   test_lab:
     name: Run UI tests
@@ -82,4 +82,4 @@ jobs:
           FIREBASE_PROJECT_ID: boletinhos-5b614
 
       - name: Run Instrumentation Tests in Firebase Test Lab
-        run: gcloud firebase test android run --type instrumentation --app app-dev/app-debug.apk --test app-dev-ui-tests/app-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
+        run: gcloud firebase test android run --type instrumentation --app app-dev/android-ui-debug.apk --test app-dev-ui-tests/android-ui-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
