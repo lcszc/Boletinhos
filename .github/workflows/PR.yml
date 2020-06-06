@@ -53,34 +53,33 @@ jobs:
           path: app/build/outputs/apk/androidTest/debug/app-debug-androidTest.apk
 
   test_lab:
-    firebase:
-      name: Run UI tests
-      needs: apk
-      runs-on: ubuntu-18.04
+    name: Run UI tests
+    needs: apk
+    runs-on: ubuntu-18.04
 
-      steps:
-        - uses: actions/checkout@v1
+    steps:
+      - uses: actions/checkout@v1
 
-        - name: Download app APK
-          uses: actions/download-artifact@v1
-          with:
-            name: app-dev
+      - name: Download app APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-dev
 
-        - name: Download tests APK
-          uses: actions/download-artifact@v1
-          with:
-            name: app-dev-ui-tests
+      - name: Download tests APK
+        uses: actions/download-artifact@v1
+        with:
+          name: app-dev-ui-tests
 
-        - name: Authenticate with GCloud
-          uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
-          with:
-            version: '270.0.0'
-            service_account_key: ${{ secrets.GOOGLE_CLOUD_SERVICE_KEY }}
+      - name: Authenticate with GCloud
+        uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+        with:
+          version: '270.0.0'
+          service_account_key: ${{ secrets.GOOGLE_CLOUD_SERVICE_KEY }}
 
-        - name: Configure GCloud
-          run: gcloud config set project $FIREBASE_PROJECT_ID
-          env:
-            FIREBASE_PROJECT_ID: boletinhos-5b614
+      - name: Configure GCloud
+        run: gcloud config set project $FIREBASE_PROJECT_ID
+        env:
+          FIREBASE_PROJECT_ID: boletinhos-5b614
 
-        - name: Run Instrumentation Tests in Firebase Test Lab
-          run: gcloud firebase test android run --type instrumentation --app app-dev/app-debug.apk --test app-dev-ui-tests/app-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
+      - name: Run Instrumentation Tests in Firebase Test Lab
+        run: gcloud firebase test android run --type instrumentation --app app-dev/app-debug.apk --test app-dev-ui-tests/app-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
