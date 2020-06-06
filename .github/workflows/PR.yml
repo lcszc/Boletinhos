@@ -74,7 +74,7 @@ jobs:
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '270.0.0'
-          service_account_key: ${{ secrets.GOOGLE_CLOUD_SERVICE_KEY }}
+          service_account_key: ${{ secrets.FIREBASE_ADMIN_SERVICE_KEY }}
 
       - name: Configure GCloud project ID
         run: gcloud config set project $FIREBASE_PROJECT_ID
