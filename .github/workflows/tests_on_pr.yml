@@ -21,7 +21,7 @@ jobs:
         with:
           java-version: 1.8
 
-      - name: Unit tests
+      - name: Run Unit tests
         run: bash ./gradlew testDebugUnitTest --stacktrace
 
   apk:
@@ -87,7 +87,7 @@ jobs:
         env:
           FIREBASE_PROJECT_ID: boletinhos-5b614
 
-      - name: Run UI Tests
+      - name: Run Instrumentation Tests
         run: >
           gcloud firebase test android run --type instrumentation
           --app app-dev/android-ui-debug.apk
