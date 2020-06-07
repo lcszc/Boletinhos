@@ -1,0 +1,25 @@
+name: Static Code Analysis
+
+on:
+  pull_request:
+    branches:
+      - 'master'
+    paths-ignore:
+      - '*.md'
+
+jobs:
+  code_analysis:
+    name: Detekt
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Run DeteKt check
+        run: bash ./gradlew detekt
