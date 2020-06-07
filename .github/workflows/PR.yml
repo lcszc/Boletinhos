@@ -10,7 +10,7 @@ on:
 
 jobs:
   code_analysis:
-    name: Run Static Code Analysis
+    name: Static Code Analysis
     runs-on: ubuntu-18.04
 
     steps:
@@ -24,7 +24,7 @@ jobs:
         run: bash ./gradlew detekt
 
   test:
-    name: Run Unit Tests
+    name: Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
@@ -67,7 +67,7 @@ jobs:
           path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
 
   test_lab:
-    name: Run UI Tests
+    name: Instrumentation Tests
     needs: apk
     runs-on: ubuntu-18.04
 
@@ -84,7 +84,7 @@ jobs:
         with:
           name: app-dev-ui-tests
 
-      - name: Authenticate with GCloud
+      - name: Authenticate into GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
         with:
           version: '270.0.0'
@@ -95,7 +95,7 @@ jobs:
         env:
           FIREBASE_PROJECT_ID: boletinhos-5b614
 
-      - name: Run Tests
+      - name: Run UI Tests
         run: >
           gcloud firebase test android run --type instrumentation
           --app app-dev/android-ui-debug.apk
