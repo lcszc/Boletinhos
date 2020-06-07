@@ -78,7 +78,7 @@ dependencies {
     kapt(DI.compiler)
 
     testImplementation(Testing.junit, Testing.assertK, Testing.robolectric)
-    testImplementation(Androidx.Room.testing, Androidx.test)
+    testImplementation(Androidx.Room.testing, Androidx.Testing.core)
     testImplementation(Kotlinx.Coroutines.test)
 }
 

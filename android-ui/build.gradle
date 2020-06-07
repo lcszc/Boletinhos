@@ -27,7 +27,13 @@ android {
         versionName AppConfig.Version.toString()
 
         testInstrumentationRunner AppConfig.testRunner
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
         vectorDrawables.useSupportLibrary = true
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
@@ -53,6 +59,14 @@ dependencies {
 
     implementation(Firebase.Crashlytics.core)
 
-    androidTestImplementation(Androidx.test, Androidx.rules, Androidx.junit)
-    androidTestImplementation(Espresso.core, Testing.assertK)
+    androidTestImplementation(
+        Androidx.Testing.core,
+        Androidx.Testing.rules,
+        Androidx.Testing.junit,
+        Androidx.Testing.runner,
+        Espresso.core,
+        Testing.assertK
+    )
+
+    androidTestUtil(Androidx.Testing.orchestrator)
 }
