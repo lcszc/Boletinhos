@@ -15,7 +15,6 @@ class UserPreferences @Inject constructor(
         }
 
     companion object {
-        const val PREFS_NAME = "APP_PREFS"
         private const val CRASH_REPORTING_ENABLED = "crash_reporting_enabled"
     }
 }
