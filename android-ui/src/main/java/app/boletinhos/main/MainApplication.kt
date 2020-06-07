@@ -2,10 +2,10 @@ package app.boletinhos.main
 
 import android.app.Application
 import app.boletinhos.crashcat.CrashCat
-import app.boletinhos.injection.context.DaggerAppContextComponent
 import app.boletinhos.injection.app.AppComponent
 import app.boletinhos.injection.app.DaggerAppComponent
 import app.boletinhos.injection.context.AppContextComponent
+import app.boletinhos.injection.context.DaggerAppContextComponent
 import app.boletinhos.injection.crashlytics.CrashlyticsComponent
 import app.boletinhos.injection.crashlytics.DaggerCrashlyticsComponent
 import app.boletinhos.injection.preferences.DaggerPreferencesComponent
