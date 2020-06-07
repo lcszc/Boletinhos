@@ -27,6 +27,7 @@ jobs:
   apk:
     name: Assemble APKs
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, '[skip apks]')"
 
     steps:
       - name: Checkout repo
@@ -59,6 +60,7 @@ jobs:
     name: Instrumentation Tests
     needs: apk
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, '[skip ui tests]')"
 
     steps:
       - name: Checkout repo
