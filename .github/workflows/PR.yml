@@ -82,4 +82,9 @@ jobs:
           FIREBASE_PROJECT_ID: boletinhos-5b614
 
       - name: Run Tests
-        run: gcloud firebase test android run --type instrumentation --app app-dev/android-ui-debug.apk --test app-dev-ui-tests/android-ui-debug-androidTest.apk --device model=Pixel2,version=28,locale=en_US,orientation=portrait
+        run: >
+          gcloud firebase test android run --type instrumentation
+          --app app-dev/android-ui-debug.apk
+          --test app-dev-ui-tests/android-ui-debug-androidTest.apk
+          --device model=Pixel2,version=28,locale=en_US,orientation=portrait
+          --use-orchestrator
