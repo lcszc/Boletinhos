@@ -10,7 +10,7 @@ on:
 
 jobs:
   test:
-    name: Unit Tests
+    name: Run Unit Tests
     runs-on: ubuntu-18.04
 
     steps:
@@ -23,7 +23,7 @@ jobs:
         run: bash ./gradlew test --stacktrace
 
   apk:
-    name: APKs
+    name: Assemble APKs
     runs-on: ubuntu-18.04
 
     steps:
@@ -53,7 +53,7 @@ jobs:
           path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
 
   test_lab:
-    name: Run UI tests on Firebase Test Lab
+    name: Run UI Tests
     needs: apk
     runs-on: ubuntu-18.04
 
