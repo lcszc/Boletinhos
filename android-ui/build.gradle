@@ -1,8 +1,10 @@
 import config.Androidx
 import config.AppConfig
 import config.DI
+import config.Espresso
 import config.Firebase
 import config.Kotlinx
+import config.Testing
 import config.UI
 
 apply plugin: 'com.android.application'
@@ -25,7 +27,13 @@ android {
         versionName AppConfig.Version.toString()
 
         testInstrumentationRunner AppConfig.testRunner
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
         vectorDrawables.useSupportLibrary = true
+    }
+
+    testOptions {
+        execution 'ANDROIDX_TEST_ORCHESTRATOR'
     }
 
     buildTypes {
@@ -50,4 +58,15 @@ dependencies {
     kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
+
+    androidTestImplementation(
+        Androidx.Testing.core,
+        Androidx.Testing.rules,
+        Androidx.Testing.junit,
+        Androidx.Testing.runner,
+        Espresso.core,
+        Testing.assertK
+    )
+
+    androidTestUtil(Androidx.Testing.orchestrator)
 }

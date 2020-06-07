@@ -51,6 +51,6 @@ dependencies {
     implementation(DI.javax)
 
     testImplementation(Testing.junit, Testing.assertK)
-    testImplementation(Androidx.test)
+    testImplementation(Androidx.Testing.core)
     testImplementation(Kotlinx.Coroutines.test)
 }
