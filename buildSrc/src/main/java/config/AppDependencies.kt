@@ -63,3 +63,8 @@ object Firebase {
 object Espresso {
     const val core = "androidx.test.espresso:espresso-core:3.2.0"
 }
+
+object Jacoco {
+    const val version = "0.8.4"
+    const val core = "org.jacoco:org.jacoco.core:$version"
+}
