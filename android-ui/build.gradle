@@ -1,46 +1,17 @@
-import config.Androidx
 import config.AppConfig
 import config.DI
-import config.Espresso
 import config.Firebase
-import config.Kotlinx
-import config.Testing
-import config.UI
 
 apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
+apply from: "$rootDir/build-system/android.gradle"
+
 apply plugin: 'kotlin-kapt'
 apply plugin: 'com.google.firebase.crashlytics'
 apply plugin: 'com.google.gms.google-services'
 
 android {
-    compileSdkVersion AppConfig.Sdk.compile
-
     defaultConfig {
         applicationId AppConfig.id
-
-        minSdkVersion AppConfig.Sdk.min
-        targetSdkVersion AppConfig.Sdk.target
-
-        versionCode AppConfig.Version.code
-        versionName AppConfig.Version.toString()
-
-        testInstrumentationRunner AppConfig.testRunner
-        testInstrumentationRunnerArguments clearPackageData: 'true'
-
-        vectorDrawables.useSupportLibrary = true
-    }
-
-    testOptions {
-        execution 'ANDROIDX_TEST_ORCHESTRATOR'
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
     }
 }
 
@@ -48,25 +19,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":preferences")
 
-    [Androidx.core, Androidx.appCompat, Kotlinx.stbLib].forEach { dependency ->
-        implementation dependency
-    }
-
-    implementation(UI.material)
-
     implementation(DI.dagger)
     kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
-
-    androidTestImplementation(
-        Androidx.Testing.core,
-        Androidx.Testing.rules,
-        Androidx.Testing.junit,
-        Androidx.Testing.runner,
-        Espresso.core,
-        Testing.assertK
-    )
-
-    androidTestUtil(Androidx.Testing.orchestrator)
 }
