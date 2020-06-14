@@ -1,0 +1,69 @@
+import config.Androidx
+import config.AppConfig
+import config.Espresso
+import config.Kotlinx
+import config.Testing
+
+apply plugin: 'com.android.application'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion AppConfig.Sdk.compile
+
+    defaultConfig {
+        minSdkVersion AppConfig.Sdk.min
+        targetSdkVersion AppConfig.Sdk.target
+
+        versionCode AppConfig.Version.code
+        versionName AppConfig.Version.toString()
+
+        testInstrumentationRunner AppConfig.testRunner
+        testInstrumentationRunnerArguments clearPackageData: 'true'
+
+        vectorDrawables.useSupportLibrary = true
+    }
+
+    testOptions {
+        animationsDisabled true
+
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+
+            all {
+                jacoco.includeNoLocationClasses = true
+            }
+        }
+    }
+
+    buildTypes {
+        debug {
+            testCoverageEnabled true
+        }
+
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+
+    [Androidx.core, Androidx.appCompat, Kotlinx.stbLib].forEach { dependency ->
+        implementation dependency
+    }
+
+    androidTestImplementation(
+        Androidx.Testing.core,
+        Androidx.Testing.rules,
+        Androidx.Testing.junit,
+        Androidx.Testing.runner,
+        Espresso.core,
+        Testing.assertK
+    )
+
+    androidTestUtil(Androidx.Testing.orchestrator)
+}
