@@ -1,6 +1,7 @@
 import config.Androidx
 import config.DI
 import config.Kotlinx
+import config.Testing
 import config.Tools
 
 apply plugin: 'com.android.library'
@@ -40,8 +41,11 @@ dependencies {
     implementation(DI.dagger)
     kapt(DI.compiler)
 
-    testImplementation(Androidx.Room.testing)
-    testImplementation(Kotlinx.Coroutines.test)
+    testImplementation(
+        Androidx.Room.testing,
+        Kotlinx.Coroutines.test,
+        Testing.robolectric
+    )
 }
 
 kapt {
