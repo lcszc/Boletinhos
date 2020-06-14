@@ -1,6 +1,7 @@
 import config.AppConfig
 import config.DI
 import config.Firebase
+import config.UI
 
 apply plugin: 'com.android.application'
 apply from: "$rootDir/build-system/android.gradle"
@@ -18,6 +19,8 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation project(":preferences")
+
+    implementation(UI.material)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
