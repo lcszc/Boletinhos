@@ -76,4 +76,10 @@ dependencies {
     )
 
     androidTestUtil(Androidx.Testing.orchestrator)
+
+    testImplementation(
+        Androidx.Testing.core,
+        Testing.junit,
+        Testing.assertK
+    )
 }
