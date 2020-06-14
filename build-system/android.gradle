@@ -6,6 +6,7 @@ import config.Testing
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.adarshr.test-logger'
 
 apply from: "$rootDir/jacoco.gradle"
 
