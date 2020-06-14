@@ -9,7 +9,15 @@ apply plugin: 'kotlin-android-extensions'
 
 apply from: "$rootDir/jacoco.gradle"
 
+androidExtensions {
+    features = ["parcelize"]
+}
+
 android {
+    buildFeatures {
+        viewBinding = true
+    }
+
     compileSdkVersion AppConfig.Sdk.compile
 
     defaultConfig {
