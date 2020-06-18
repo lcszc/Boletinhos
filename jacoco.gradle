@@ -6,56 +6,86 @@ jacoco {
     toolVersion = Jacoco.version
 }
 
-tasks.withType(Test) {
-    jacoco.includeNoLocationClasses = true
-}
+configure(subprojects) {
+    apply plugin: 'jacoco'
 
-task jacocoTestReport(type: JacocoReport, dependsOn: ['createDebugCoverageReport']) {
-    reports {
-        xml.enabled = true
-        html.enabled = true
+    jacoco {
+        toolVersion = Jacoco.version
     }
 
-    def exclusions = [
-        'android/**/*.*',
-        '**/R.class',
-        '**/R$*.class',
-        '**/BuildConfig.*',
-        '**/Manifest*.*',
-        '**/*Test*.*',
-        '**/*Module.*',
-        '**/*Module$Companion.*',
-        '**/*Dagger*.*',
-        '**/*MembersInjector*.*',
-        '**/*_Provide*Factory*.*',
-        '**/*_Factory.*',
-        '**/*_MembersInjector.*',
-        '**/Dagger*Component.*',
-        '**/Dagger*Component$Builder.*',
-        '**/*Module_*Factory$InstanceHolder.*',
-        '**/injection/*',
-        '**/di/*'
-    ]
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+    }
 
-    def filesTree = fileTree(
-        dir: "$project.buildDir/intermediates/javac/debug",
-        excludes: exclusions
-    )
+    tasks.withType(Test) {
+        jacoco.includeNoLocationClasses = true
+    }
 
-    def kotlinFilesTree = fileTree(
-        dir: "${buildDir}/tmp/kotlin-classes/debug",
-        excludes: exclusions
-    )
+    task jacocoReport(type: JacocoReport) {
+        reports {
+            csv.enabled = true
+            xml.enabled = false
+            html.enabled = true
+        }
 
-    sourceDirectories.from = files(["$project.projectDir/src/main/java"])
-
-    classDirectories.from = files([filesTree], [kotlinFilesTree])
-
-    executionData.from = fileTree(
-        dir: project.buildDir,
-        includes: [
-            'jacoco/testDebugUnitTest.exec',
-            'outputs/code_coverage/debugAndroidTest/connected/**/*.ec'
+        def exclusions = [
+            'android/**/*.*',
+            '**/R.class',
+            '**/R$*.class',
+            '**/BuildConfig.*',
+            '**/Manifest*.*',
+            '**/*Test*.*',
+            '**/*Module.*',
+            '**/*Module$Companion.*',
+            '**/*Dagger*.*',
+            '**/*MembersInjector*.*',
+            '**/*_Provide*Factory*.*',
+            '**/*_Factory.*',
+            '**/*_MembersInjector.*',
+            '**/Dagger*Component.*',
+            '**/Dagger*Component$Builder.*',
+            '**/*Module_*Factory$InstanceHolder.*',
+            '**/injection/*',
+            '**/di/*'
         ]
-    )
+
+        def javacTree = fileTree(dir: "$buildDir/intermediates/classes/debug", excludes: exclusions)
+        def kotlinTree = fileTree(dir: "$buildDir/tmp/kotlin-classes/debug", excludes: exclusions)
+        def kotlinLibTree = fileTree(dir: "$buildDir/classes/kotlin", excludes: ['**/*Test*.*', '**/*_Factory.*'])
+        def mainSrc = "$project.projectDir/src/main/java"
+
+        sourceDirectories.from = files([mainSrc])
+        classDirectories.from = files([kotlinTree, javacTree, kotlinLibTree])
+        executionData.from = fileTree(
+            dir: buildDir,
+            includes: [
+                'jacoco/testDebugUnitTest.exec',
+                'jacoco/test.exec',
+                'outputs/code-coverage/connected/*.ec'
+            ]
+        )
+    }
+}
+
+task projectCodeCoverageReport(type: JacocoReport) {
+    def modulesTask = subprojects.jacocoReport
+
+    dependsOn modulesTask
+
+    additionalSourceDirs.from = files(modulesTask.sourceDirectories)
+    sourceDirectories.from = files(modulesTask.sourceDirectories)
+
+    classDirectories.from = files(modulesTask.classDirectories)
+    executionData.from = files(modulesTask.executionData)
+
+    reports {
+        html.enabled = true
+        html.destination = file('build/reports/jacoco/html')
+        xml.enabled = true
+        xml.destination = file('build/reports/jacoco/boletinhos.xml')
+    }
+
+    doFirst {
+        executionData.from = files(executionData.findAll { it.exists() })
+    }
 }
