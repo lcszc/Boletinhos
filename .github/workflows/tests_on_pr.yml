@@ -92,4 +92,4 @@ jobs:
           --app app-dev/android-ui-debug.apk
           --test app-dev-ui-tests/android-ui-debug-androidTest.apk
           --device model=Pixel2,version=28,locale=en_US,orientation=portrait
-          --use-orchestrator
+          --no-use-orchestrator

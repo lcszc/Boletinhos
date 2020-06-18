@@ -1,6 +1,7 @@
 import config.AppPlugins
 import config.Firebase
 import config.GoogleServices
+import config.Jacoco
 
 buildscript {
     repositories {
@@ -20,11 +21,11 @@ buildscript {
 
         plugins << [
             GoogleServices.gradle,
-            Firebase.Crashlytics.gradle
+            Firebase.Crashlytics.gradle,
+            Jacoco.core
         ]
 
         classpath(plugins)
-        classpath "org.jacoco:org.jacoco.core:0.8.4"
     }
 }
 
@@ -43,3 +44,5 @@ allprojects {
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+
+apply from: "$rootDir/jacoco.gradle"
