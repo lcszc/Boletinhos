@@ -1,0 +1,20 @@
+import config.Kotlinx
+import config.Testing
+
+apply plugin: 'kotlin'
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(Kotlinx.stbLib)
+    testImplementation(Testing.junit, Testing.assertK)
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+}
+
+compileTestKotlin {
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+}
+
+jacocoReport.dependsOn test

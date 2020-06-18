@@ -8,8 +8,6 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'com.adarshr.test-logger'
 
-apply from: "$rootDir/jacoco.gradle"
-
 androidExtensions {
     features = ["parcelize"]
 }
@@ -40,10 +38,6 @@ android {
         unitTests {
             includeAndroidResources = true
             returnDefaultValues = true
-
-            all {
-                jacoco.includeNoLocationClasses = true
-            }
         }
     }
 
@@ -92,3 +86,5 @@ dependencies {
         Testing.assertK
     )
 }
+
+jacocoReport.dependsOn 'testDebugUnitTest'

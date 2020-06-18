@@ -1,19 +1,8 @@
 import config.Kotlinx
 import config.Testing
 
-apply plugin: 'java-library'
-apply plugin: 'kotlin'
+apply from: "$rootDir/build-system/kotlin.gradle"
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation(Kotlinx.stbLib, Kotlinx.Coroutines.core)
-    testImplementation(Testing.junit, Testing.assertK)
-}
-
-compileKotlin {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
-}
-
-compileTestKotlin {
-    kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
+    implementation(Kotlinx.Coroutines.core)
 }
