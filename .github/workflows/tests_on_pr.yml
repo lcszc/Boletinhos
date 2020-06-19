@@ -24,8 +24,8 @@ jobs:
       - name: Run Unit tests
         run: bash ./gradlew testDebugUnitTest --stacktrace
 
-  development_apk:
-    name: Development APK
+  apks:
+    name: APKs
     runs-on: ubuntu-18.04
 
     steps:
@@ -43,21 +43,8 @@ jobs:
       - name: Upload Development APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-dev
+          name: apk-development
           path: android-ui/build/outputs/apk/debug/android-ui-debug.apk
-
-  instrumentation_tests_apk:
-    name: Instrumentation Tests APK
-    runs-on: ubuntu-18.04
-
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v2
-
-      - name: Set up JDK 1.8
-        uses: actions/setup-java@v1
-        with:
-          java-version: 1.8
 
       - name: Assemble Instrumentation Tests APK
         run: bash ./gradlew assembleDebugAndroidTest
@@ -65,28 +52,31 @@ jobs:
       - name: Upload Instrumentation Tests APK
         uses: actions/upload-artifact@v1
         with:
-          name: app-dev-ui-tests
+          name: apk-tests
           path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
 
   test_lab:
     name: Instrumentation Tests
-    needs: [development_apk, instrumentation_tests_apk]
+    needs: apks
     runs-on: ubuntu-18.04
+    env:
+      INSTRUMENTATION_COVERAGE_DIR: instrumentation/coverage
+      GOOGLE_CLOUD_PROJECT_PATH: test-lab-dxpqby473161q-hj2c770js967m
     if: "!contains(github.event.head_commit.message, '[ci skip]')"
 
     steps:
       - name: Checkout repo
         uses: actions/checkout@v2
 
-      - name: Download Development APK
+      - name: Download APKs
         uses: actions/download-artifact@v1
         with:
-          name: app-dev
+          name: apk-development
 
       - name: Download UI Tests APK
         uses: actions/download-artifact@v1
         with:
-          name: app-dev-ui-tests
+          name: apk-tests
 
       - name: Authenticate into GCloud
         uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
@@ -102,22 +92,23 @@ jobs:
       - name: Run Instrumentation Tests
         run: >
           gcloud firebase test android run --type instrumentation
-          --app app-dev/android-ui-debug.apk
-          --test app-dev-ui-tests/android-ui-debug-androidTest.apk
+          --app apk-development/android-ui-debug.apk
+          --test apk-tests/android-ui-debug-androidTest.apk
           --device model=Pixel2,version=28,locale=en_US,orientation=portrait
           --no-use-orchestrator
           --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec"
           --directories-to-pull=/sdcard
+          --no-record-video
 
-      - name: Create Firebase directory in workspace
-        run: mkdir firebase
+      - name: Create Instrumentation Coverage folder
+        run: mkdir $INSTRUMENTATION_COVERAGE_DIR
 
-      - name: Download Firebase Test Lab code coverage
+      - name: Download coverage file from Firebase Test Lab
         run: >
-          gsutil -m cp -r -U "`gsutil ls gs://test-lab-dxpqby473161q-hj2c770js967m | tail -1`*" $GITHUB_WORKSPACE/firebase/
+          gsutil -m cp -r -U "gsutil ls gs://$GOOGLE_CLOUD_PROJECT_PATH/**/sdcard/*.ec" $GITHUB_WORKSPACE/$INSTRUMENTATION_COVERAGE_DIR/
 
-      - name: Upload Firebase Test Lab code coverage
+      - name: Upload Instrumentation Coverage
         uses: actions/upload-artifact@v1
         with:
-          name: firebase
-          path: firebase/
+          name: coverage
+          path: $INSTRUMENTATION_COVERAGE_DIR/
