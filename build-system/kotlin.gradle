@@ -16,5 +16,3 @@ compileKotlin {
 compileTestKotlin {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_1_8
 }
-
-jacocoReport.dependsOn test
