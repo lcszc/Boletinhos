@@ -112,3 +112,24 @@ jobs:
         with:
           name: coverage
           path: $INSTRUMENTATION_COVERAGE_DIR/
+
+      - name: Move Instrumentation Coverage to app outputs dir
+        run: >
+          mkdir -p android-ui/build/outputs/code-coverage/connected && cp coverage/*.ec android-ui/build/outputs/code-coverage/connected/coverage.ec
+
+  code_coverage:
+    name: Code Coverage
+    needs: test_lab
+    runs-on: ubuntu-18.04
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v2
+
+      - name: Set up JDK 1.8
+        uses: actions/setup-java@v1
+        with:
+          java-version: 1.8
+
+      - name: Generate Jacoco Reports
+        run: bash ./gradlew clean projectCodeCoverageReport
