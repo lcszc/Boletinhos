@@ -87,4 +87,3 @@ dependencies {
     )
 }
 
-jacocoReport.dependsOn 'testDebugUnitTest'
