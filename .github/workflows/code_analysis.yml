@@ -11,6 +11,7 @@ jobs:
   code_analysis:
     name: Detekt
     runs-on: ubuntu-18.04
+    if: "!contains(github.event.head_commit.message, '[skip-ci]')"
 
     steps:
       - name: Checkout repo
