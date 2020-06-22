@@ -1,8 +1,8 @@
-package app.boletinhos.storage.di
+package app.boletinhos.di
 
 import android.content.Context
 import androidx.room.Room
-import app.boletinhos.storage.database.AppDatabase
+import app.boletinhos.database.AppDatabase
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton

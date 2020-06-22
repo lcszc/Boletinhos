@@ -1,11 +1,11 @@
-package app.boletinhos.storage.testutil
+package app.boletinhos.testutil
 
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import app.boletinhos.storage.bills.BillsDao
-import app.boletinhos.storage.bills.BillsSummaryDao
-import app.boletinhos.storage.bills.ManageBillDao
-import app.boletinhos.storage.database.AppDatabase
+import app.boletinhos.bills.BillsDao
+import app.boletinhos.bills.BillsSummaryDao
+import app.boletinhos.bills.ManageBillDao
+import app.boletinhos.database.AppDatabase
 import kotlinx.coroutines.asExecutor
 import org.junit.After
 import org.junit.Before

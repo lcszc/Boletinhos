@@ -1,4 +1,4 @@
-package app.boletinhos.storage.testutil
+package app.boletinhos.testutil
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

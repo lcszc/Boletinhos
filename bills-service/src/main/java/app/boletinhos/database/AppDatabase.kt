@@ -1,14 +1,14 @@
-package app.boletinhos.storage.database
+package app.boletinhos.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.boletinhos.storage.bills.BillEntity
-import app.boletinhos.storage.bills.BillsDao
-import app.boletinhos.storage.bills.BillsSummaryDao
-import app.boletinhos.storage.bills.ManageBillDao
-import app.boletinhos.storage.typeconverter.BillStatusTypeConverter
-import app.boletinhos.storage.typeconverter.LocalDateTypeConverter
+import app.boletinhos.bills.BillEntity
+import app.boletinhos.bills.BillsDao
+import app.boletinhos.bills.BillsSummaryDao
+import app.boletinhos.bills.ManageBillDao
+import app.boletinhos.typeconverter.BillStatusTypeConverter
+import app.boletinhos.typeconverter.LocalDateTypeConverter
 
 @Database(entities = [BillEntity::class], version = 1)
 @TypeConverters(value = [LocalDateTypeConverter::class, BillStatusTypeConverter::class])

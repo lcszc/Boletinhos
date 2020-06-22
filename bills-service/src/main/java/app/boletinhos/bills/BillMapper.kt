@@ -1,4 +1,4 @@
-package app.boletinhos.storage.bills
+package app.boletinhos.bills
 
 import app.boletinhos.domain.bill.Bill
 

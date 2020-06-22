@@ -1,4 +1,4 @@
-package app.boletinhos.storage.typeconverter
+package app.boletinhos.typeconverter
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
