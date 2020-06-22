@@ -16,7 +16,7 @@ class BillsSummaryDaoTest : AppDatabaseTest() {
     @Test fun `should get summaries for a given batch of bills`() = runBlockingTest {
         val bills = SummaryFactory.bills
 
-        bills.map(Bill::toEntity).forEach { billsDao.insert(it) }
+        bills.forEach { manageBillDao.create(it) }
 
         billsSummaryDao.getSummary().test { summaries ->
             assertAll {
@@ -34,7 +34,7 @@ class BillsSummaryDaoTest : AppDatabaseTest() {
         runBlockingTest {
             val bills = SummaryFactory.bills
 
-            bills.map(Bill::toEntity).forEach { billsDao.insert(it) }
+            bills.forEach { manageBillDao.create(it) }
 
             billsSummaryDao.getSummary().test { summaries ->
                 assertAll {

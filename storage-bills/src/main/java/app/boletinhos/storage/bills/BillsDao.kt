@@ -10,12 +10,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface BillsDao {
-    @Insert
-    suspend fun insert(bill: BillEntity)
-
-    @Update
-    suspend fun update(bill: BillEntity)
-
     @Query("SELECT * FROM bills WHERE id = :id")
     suspend fun getById(id: Long): Bill
 
