@@ -4,6 +4,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import app.boletinhos.storage.bills.BillsDao
 import app.boletinhos.storage.bills.BillsSummaryDao
+import app.boletinhos.storage.bills.ManageBillDao
 import app.boletinhos.storage.database.AppDatabase
 import kotlinx.coroutines.asExecutor
 import org.junit.After
@@ -19,6 +20,7 @@ abstract class AppDatabaseTest : CoroutineTest() {
 
     internal lateinit var billsDao: BillsDao
     internal lateinit var billsSummaryDao: BillsSummaryDao
+    internal lateinit var manageBillDao: ManageBillDao
 
     @Before fun setUp() {
         val context = InstrumentationRegistry.getInstrumentation().context
@@ -32,6 +34,7 @@ abstract class AppDatabaseTest : CoroutineTest() {
 
         billsDao = appDatabase.billsDao()
         billsSummaryDao = appDatabase.billsSummaryDao()
+        manageBillDao = appDatabase.manageBillDao()
     }
 
     @After fun tearDown() {
