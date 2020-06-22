@@ -2,6 +2,11 @@ package app.boletinhos.domain.bill
 
 import java.time.LocalDate
 
+object BillsIsAlreadyPaidException : IllegalStateException()
+object BillHasInvalidValueException : IllegalArgumentException()
+object BillHasInvalidNameException : IllegalArgumentException()
+object BillHasInvalidDescriptionException : IllegalArgumentException()
+
 data class Bill(
     val name: String,
     val description: String,
@@ -14,17 +19,13 @@ data class Bill(
 
     fun isOverdue() = dueDate.isBefore(LocalDate.now())
 
-    fun hasValidMinimumValue() = value >= MINIMUM_VALUE
+    fun isPaid() = paymentDate != null
 
-    fun hasValidMaximumValue() = value <= MAXIMUM_VALUE
+    val isValueValid get() = value in MINIMUM_VALUE..MAXIMUM_VALUE
 
-    fun isNameTooShort() = name.length < MINIMUM_NAME_COUNT
+    val isNameValid get() = name.count() in MINIMUM_NAME_COUNT..MAXIMUM_NAME_COUNT
 
-    fun isNameTooLong() = name.length > MAXIMUM_NAME_COUNT
-
-    fun isDescriptionTooShort() = description.length < MINIMUM_DESCRIPTION_COUNT
-
-    fun isDescriptionTooLong() = description.length > MAXIMUM_DESCRIPTION_COUNT
+    val isDescriptionValid get() = description.count() in MINIMUM_DESCRIPTION_COUNT..MAXIMUM_DESCRIPTION_COUNT
 
     companion object {
         internal const val MINIMUM_VALUE = 10_00L /* 10 */
