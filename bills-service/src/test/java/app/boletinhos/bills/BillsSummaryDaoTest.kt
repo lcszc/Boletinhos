@@ -1,8 +1,7 @@
-package app.boletinhos.storage.bills
+package app.boletinhos.bills
 
-import app.boletinhos.storage.factory.SummaryFactory
-import app.boletinhos.storage.testutil.AppDatabaseTest
-import app.boletinhos.domain.bill.Bill
+import app.boletinhos.fakes.SummaryFactory
+import app.boletinhos.testutil.AppDatabaseTest
 import assertk.assertAll
 import assertk.assertThat
 import assertk.assertions.containsAll

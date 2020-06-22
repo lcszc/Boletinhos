@@ -1,4 +1,4 @@
-package app.boletinhos.storage.testutil
+package app.boletinhos.testutil
 
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.flow.Flow

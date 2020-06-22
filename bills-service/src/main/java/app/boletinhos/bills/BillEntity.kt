@@ -1,4 +1,4 @@
-package app.boletinhos.storage.bills
+package app.boletinhos.bills
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

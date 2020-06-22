@@ -1,8 +1,8 @@
-package app.boletinhos.storage.bills
+package app.boletinhos.bills
 
 import app.boletinhos.domain.bill.BillStatus
-import app.boletinhos.storage.factory.BillsFactory
-import app.boletinhos.storage.testutil.AppDatabaseTest
+import app.boletinhos.fakes.BillsFactory
+import app.boletinhos.testutil.AppDatabaseTest
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlinx.coroutines.test.runBlockingTest

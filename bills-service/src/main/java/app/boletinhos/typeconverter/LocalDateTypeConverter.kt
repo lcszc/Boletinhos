@@ -1,4 +1,4 @@
-package app.boletinhos.storage.typeconverter
+package app.boletinhos.typeconverter
 
 import androidx.room.TypeConverter
 import java.time.LocalDate
