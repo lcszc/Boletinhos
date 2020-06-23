@@ -2,7 +2,7 @@
     package="app.boletinhos">
 
     <application
-        android:name=".main.MainApplication"
+        android:name=".application.MainApplication"
         android:allowBackup="true"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
