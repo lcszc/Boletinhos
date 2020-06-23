@@ -1,7 +1,7 @@
 package app.boletinhos.injection.app
 
 import android.app.Application
-import app.boletinhos.injection.crashlytics.CrashlyticsModule
+import app.boletinhos.crashcat.injection.CrashlyticsModule
 import app.boletinhos.main.MainApplication
 import app.boletinhos.preferences.injection.UserPreferencesModule
 import dagger.BindsInstance
