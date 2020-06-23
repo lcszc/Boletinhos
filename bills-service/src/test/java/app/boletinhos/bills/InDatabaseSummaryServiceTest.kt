@@ -15,7 +15,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
     @Test fun `should get summaries for a given batch of bills`() = runBlockingTest {
         val bills = SummaryFactory.bills
 
-        bills.forEach { manageBillDao.create(it) }
+        bills.forEach { manageBillService.create(it) }
 
         summaryService.getSummary().test { summaries ->
             assertAll {
@@ -33,7 +33,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
         runBlockingTest {
             val bills = SummaryFactory.bills
 
-            bills.forEach { manageBillDao.create(it) }
+            bills.forEach { manageBillService.create(it) }
 
             summaryService.getSummary().test { summaries ->
                 assertAll {
