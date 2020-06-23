@@ -47,7 +47,8 @@ configure(subprojects) {
             '**/Dagger*Component$Builder.*',
             '**/*Module_*Factory$InstanceHolder.*',
             '**/injection/*',
-            '**/di/*'
+            '**/di/*',
+            '**/*Entity*.*' /* We'll ignore Entities because it is only representative. We'll not touch it. */
         ]
 
         def kotlinLibExclusions = [
