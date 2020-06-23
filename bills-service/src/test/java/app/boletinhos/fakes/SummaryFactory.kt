@@ -1,7 +1,7 @@
 package app.boletinhos.fakes
 
 import app.boletinhos.domain.bill.BillStatus
-import app.boletinhos.domain.bill.Summary
+import app.boletinhos.domain.summary.Summary
 import java.time.LocalDate
 import java.time.Month
 

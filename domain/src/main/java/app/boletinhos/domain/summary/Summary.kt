@@ -1,4 +1,4 @@
-package app.boletinhos.domain.bill
+package app.boletinhos.domain.summary
 
 import java.time.Month
 

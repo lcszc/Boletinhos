@@ -24,7 +24,7 @@ abstract class StorageModule {
 
     @Provides
     @Singleton
-    fun summaryDao(database: AppDatabase) = database.billsSummaryDao()
+    internal fun provideSummaryService(database: AppDatabase) = database.summaryService()
 
     @Provides
     @Singleton

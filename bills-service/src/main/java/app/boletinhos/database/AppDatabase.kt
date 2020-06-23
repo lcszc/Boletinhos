@@ -5,7 +5,7 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.boletinhos.bills.BillEntity
 import app.boletinhos.bills.InDatabaseFetchBillService
-import app.boletinhos.bills.BillsSummaryDao
+import app.boletinhos.bills.InDatabaseSummaryService
 import app.boletinhos.bills.ManageBillDao
 import app.boletinhos.typeconverter.BillStatusTypeConverter
 import app.boletinhos.typeconverter.LocalDateTypeConverter
@@ -15,7 +15,7 @@ import app.boletinhos.typeconverter.LocalDateTypeConverter
 abstract class AppDatabase : RoomDatabase() {
     internal abstract fun fetchBillService(): InDatabaseFetchBillService
     abstract fun manageBillDao(): ManageBillDao
-    abstract fun billsSummaryDao(): BillsSummaryDao
+    internal abstract fun summaryService(): InDatabaseSummaryService
 
     companion object {
         const val DATABASE_NAME = "boletinhos-db"

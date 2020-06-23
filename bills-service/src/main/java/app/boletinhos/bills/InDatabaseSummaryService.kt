@@ -2,11 +2,11 @@ package app.boletinhos.bills
 
 import androidx.room.Dao
 import androidx.room.Query
-import app.boletinhos.domain.bill.Summary
+import app.boletinhos.domain.summary.SummaryService
+import app.boletinhos.domain.summary.Summary
 import kotlinx.coroutines.flow.Flow
 
-@Dao
-interface BillsSummaryDao {
+@Dao internal interface InDatabaseSummaryService : SummaryService {
     @Query(
         """
         SELECT
@@ -21,5 +21,5 @@ interface BillsSummaryDao {
         ORDER BY dueDate DESC
     """
     )
-    fun getSummary(): Flow<List<Summary>>
+    override fun getSummary(): Flow<List<Summary>>
 }
