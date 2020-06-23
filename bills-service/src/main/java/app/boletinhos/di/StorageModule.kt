@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import app.boletinhos.database.AppDatabase
 import app.boletinhos.domain.bill.BillService
+import app.boletinhos.domain.summary.SummaryService
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -24,7 +25,7 @@ abstract class StorageModule {
 
     @Provides
     @Singleton
-    internal fun provideSummaryService(database: AppDatabase) = database.summaryService()
+    internal fun provideSummaryService(database: AppDatabase): SummaryService = database.summaryService()
 
     @Provides
     @Singleton
