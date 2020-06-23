@@ -36,6 +36,7 @@ configure(subprojects) {
             '**/Manifest*.*',
             '**/*Test*.*',
             '**/*Module.*',
+            '**/*Fake*.*',
             '**/*Module$Companion.*',
             '**/*Dagger*.*',
             '**/*MembersInjector*.*',
