@@ -10,14 +10,15 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 import java.time.LocalDate
 
-class BillsDaoTest : AppDatabaseTest() {
+class InDatabaseFetchBillServiceTest : AppDatabaseTest() {
     @Test fun `should get bills by its status`() = runBlockingTest {
         val expected = BillsFactory.paids
 
-        (expected + BillsFactory.overdue)
-            .forEach { manageBillDao.create(it) }
+        (expected + BillsFactory.overdue).forEach {
+            manageBillDao.create(it)
+        }
 
-        billsDao.getByStatus(PAID).test { actual ->
+        fetchBillService.getByStatus(PAID).test { actual ->
             assertThat(actual).isEqualTo(expected)
         }
     }
@@ -30,12 +31,12 @@ class BillsDaoTest : AppDatabaseTest() {
 
         manageBillDao.create(bill)
 
-        val updated = billsDao.getById(id = 1)
+        val updated = fetchBillService.getById(id = 1)
             .copy(description = "My new description", paymentDate = LocalDate.now())
             .also { it.id = 1 }
 
         manageBillDao.pay(updated)
 
-        assertThat(billsDao.getById(id = 1)).isEqualTo(updated)
+        assertThat(fetchBillService.getById(id = 1)).isEqualTo(updated)
     }
 }

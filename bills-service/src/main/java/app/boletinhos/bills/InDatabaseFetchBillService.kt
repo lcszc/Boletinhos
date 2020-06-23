@@ -4,16 +4,16 @@ import androidx.room.Dao
 import androidx.room.Query
 import app.boletinhos.domain.bill.Bill
 import app.boletinhos.domain.bill.BillStatus
+import app.boletinhos.domain.bill.FetchBill
 import kotlinx.coroutines.flow.Flow
 
-@Dao
-interface BillsDao {
+@Dao internal interface InDatabaseFetchBillService : FetchBill {
     @Query("SELECT * FROM bills WHERE id = :id")
-    suspend fun getById(id: Long): Bill
+    override suspend fun getById(id: Long): Bill
 
     @Query("SELECT * FROM bills")
-    fun getAll(): Flow<List<Bill>>
+    override fun getAll(): Flow<List<Bill>>
 
     @Query("SELECT * FROM bills WHERE status = :status")
-    fun getByStatus(status: BillStatus): Flow<List<Bill>>
+    override fun getByStatus(status: BillStatus): Flow<List<Bill>>
 }
