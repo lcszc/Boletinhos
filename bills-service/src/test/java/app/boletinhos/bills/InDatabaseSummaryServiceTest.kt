@@ -11,13 +11,13 @@ import assertk.assertions.isEmpty
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
-class BillsSummaryDaoTest : AppDatabaseTest() {
+class InDatabaseSummaryServiceTest : AppDatabaseTest() {
     @Test fun `should get summaries for a given batch of bills`() = runBlockingTest {
         val bills = SummaryFactory.bills
 
         bills.forEach { manageBillDao.create(it) }
 
-        billsSummaryDao.getSummary().test { summaries ->
+        summaryService.getSummary().test { summaries ->
             assertAll {
                 assertThat(summaries).hasSize(3)
                 assertThat(summaries).containsAll(
@@ -35,7 +35,7 @@ class BillsSummaryDaoTest : AppDatabaseTest() {
 
             bills.forEach { manageBillDao.create(it) }
 
-            billsSummaryDao.getSummary().test { summaries ->
+            summaryService.getSummary().test { summaries ->
                 assertAll {
                     assertThat(summaries).hasSize(3)
                     assertThat(summaries).containsExactly(
@@ -48,7 +48,7 @@ class BillsSummaryDaoTest : AppDatabaseTest() {
         }
 
     @Test fun `should have no summary if there's no data in the data source`() = runBlockingTest {
-        billsSummaryDao.getSummary().test { summaries ->
+        summaryService.getSummary().test { summaries ->
             assertThat(summaries).isEmpty()
         }
     }

@@ -2,11 +2,10 @@ package app.boletinhos.testutil
 
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import app.boletinhos.bills.InDatabaseFetchBillService
-import app.boletinhos.bills.BillsSummaryDao
 import app.boletinhos.bills.ManageBillDao
 import app.boletinhos.database.AppDatabase
 import app.boletinhos.domain.bill.FetchBill
+import app.boletinhos.domain.summary.SummaryService
 import kotlinx.coroutines.asExecutor
 import org.junit.After
 import org.junit.Before
@@ -20,7 +19,7 @@ abstract class AppDatabaseTest : CoroutineTest() {
     private lateinit var appDatabase: AppDatabase
 
     internal lateinit var fetchBillService: FetchBill
-    internal lateinit var billsSummaryDao: BillsSummaryDao
+    internal lateinit var summaryService: SummaryService
     internal lateinit var manageBillDao: ManageBillDao
 
     @Before fun setUp() {
@@ -34,7 +33,7 @@ abstract class AppDatabaseTest : CoroutineTest() {
             .build()
 
         fetchBillService = appDatabase.fetchBillService()
-        billsSummaryDao = appDatabase.billsSummaryDao()
+        summaryService = appDatabase.summaryService()
         manageBillDao = appDatabase.manageBillDao()
     }
 
