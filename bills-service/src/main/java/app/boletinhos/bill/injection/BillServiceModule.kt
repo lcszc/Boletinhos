@@ -1,4 +1,4 @@
-package app.boletinhos.di
+package app.boletinhos.bill.injection
 
 import app.boletinhos.database.AppDatabase
 import app.boletinhos.domain.bill.BillService
