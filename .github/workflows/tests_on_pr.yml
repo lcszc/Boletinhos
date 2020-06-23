@@ -42,6 +42,7 @@ jobs:
 
       - name: Assemble Instrumentation Tests APK
         run: bash ./gradlew assembleDebugAndroidTest
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Upload Instrumentation Tests APK
         uses: actions/upload-artifact@v1
