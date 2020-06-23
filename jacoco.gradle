@@ -50,9 +50,15 @@ configure(subprojects) {
             '**/di/*'
         ]
 
-        def javacTree = fileTree(dir: "$buildDir/intermediates/javac/classes/debug", excludes: exclusions)
+        def kotlinLibExclusions = [
+            '**/*Test*.*',
+            '**/*_Factory.*',
+            '**/*Fake*.*'
+        ]
+
+        def javacTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: exclusions)
         def kotlinTree = fileTree(dir: "$buildDir/tmp/kotlin-classes/debug", excludes: exclusions)
-        def kotlinLibTree = fileTree(dir: "$buildDir/classes/kotlin", excludes: ['**/*Test*.*', '**/*_Factory.*'])
+        def kotlinLibTree = fileTree(dir: "$buildDir/classes/kotlin", excludes: kotlinLibExclusions)
         def mainSrc = "$project.projectDir/src/main/java"
 
         sourceDirectories.from = files([mainSrc])
