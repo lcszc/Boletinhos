@@ -1,8 +1,11 @@
+import config.DI
 import config.Kotlinx
-import config.Testing
 
 apply from: "$rootDir/build-system/kotlin.gradle"
+apply plugin: 'kotlin-kapt'
 
 dependencies {
     implementation(Kotlinx.Coroutines.core)
+    implementation(DI.dagger)
+    kapt(DI.compiler)
 }

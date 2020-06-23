@@ -3,6 +3,7 @@ package app.boletinhos.di
 import android.content.Context
 import androidx.room.Room
 import app.boletinhos.database.AppDatabase
+import app.boletinhos.domain.bill.FetchBill
 import dagger.Module
 import dagger.Provides
 import javax.inject.Singleton
@@ -19,7 +20,7 @@ abstract class StorageModule {
 
     @Provides
     @Singleton
-    fun billsDao(database: AppDatabase) = database.billsDao()
+    internal fun provideFetchBill(database: AppDatabase): FetchBill = database.fetchBillService()
 
     @Provides
     @Singleton
