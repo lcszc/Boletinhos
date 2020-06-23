@@ -6,8 +6,6 @@ import app.boletinhos.injection.app.AppComponent
 import app.boletinhos.injection.app.DaggerAppComponent
 import app.boletinhos.injection.context.AppContextComponent
 import app.boletinhos.injection.context.DaggerAppContextComponent
-import app.boletinhos.injection.crashlytics.CrashlyticsComponent
-import app.boletinhos.injection.crashlytics.DaggerCrashlyticsComponent
 import javax.inject.Inject
 
 class MainApplication : Application() {
@@ -18,13 +16,9 @@ class MainApplication : Application() {
             .create(this)
     }
 
-    private fun crashlyticsComponent(): CrashlyticsComponent {
-        return DaggerCrashlyticsComponent.factory().create()
-    }
-
     private fun injector(): AppComponent {
         return DaggerAppComponent.factory()
-            .create(contextComponent(), crashlyticsComponent())
+            .create(contextComponent())
             .also { component -> component.inject(this) }
     }
 
