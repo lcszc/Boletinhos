@@ -3,7 +3,7 @@ package app.boletinhos.application
 import android.app.Application
 import app.boletinhos.crashcat.CrashCat
 import app.boletinhos.application.injection.AppComponent
-import app.boletinhos.injection.app.DaggerAppComponent
+import app.boletinhos.application.injection.DaggerAppComponent
 import javax.inject.Inject
 
 class MainApplication : Application() {
