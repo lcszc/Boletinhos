@@ -4,22 +4,21 @@ import app.boletinhos.injection.context.AppContextComponent
 import app.boletinhos.injection.crashlytics.CrashlyticsComponent
 import app.boletinhos.injection.preferences.PreferencesComponent
 import app.boletinhos.main.MainApplication
+import app.boletinhos.preferences.injection.UserPreferencesModule
 import dagger.BindsInstance
 import dagger.Component
 
 @common.AppScope
-@Component(dependencies = [PreferencesComponent::class, CrashlyticsComponent::class])
+@Component(modules = [UserPreferencesModule::class], dependencies = [CrashlyticsComponent::class])
 interface AppComponent {
     fun inject(app: MainApplication)
 
     fun appContextComponent(): AppContextComponent
-    fun preferencesComponent(): PreferencesComponent
     fun crashlyticsComponent(): CrashlyticsComponent
 
     @Component.Factory interface Factory {
         fun create(
             @BindsInstance appContextComponent: AppContextComponent,
-            preferencesComponent: PreferencesComponent,
             crashlyticsComponent: CrashlyticsComponent
         ): AppComponent
     }

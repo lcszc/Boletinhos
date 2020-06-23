@@ -8,8 +8,6 @@ import app.boletinhos.injection.context.AppContextComponent
 import app.boletinhos.injection.context.DaggerAppContextComponent
 import app.boletinhos.injection.crashlytics.CrashlyticsComponent
 import app.boletinhos.injection.crashlytics.DaggerCrashlyticsComponent
-import app.boletinhos.injection.preferences.DaggerPreferencesComponent
-import app.boletinhos.injection.preferences.PreferencesComponent
 import javax.inject.Inject
 
 class MainApplication : Application() {
@@ -20,18 +18,13 @@ class MainApplication : Application() {
             .create(this)
     }
 
-    private fun preferencesComponent(): PreferencesComponent {
-        return DaggerPreferencesComponent.factory()
-            .create(contextComponent())
-    }
-
     private fun crashlyticsComponent(): CrashlyticsComponent {
         return DaggerCrashlyticsComponent.factory().create()
     }
 
     private fun injector(): AppComponent {
         return DaggerAppComponent.factory()
-            .create(contextComponent(), preferencesComponent(), crashlyticsComponent())
+            .create(contextComponent(), crashlyticsComponent())
             .also { component -> component.inject(this) }
     }
 
