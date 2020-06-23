@@ -1,4 +1,4 @@
-package app.boletinhos.bills
+package app.boletinhos.bill
 
 import app.boletinhos.fakes.BillsFactory
 import app.boletinhos.testutil.AppDatabaseTest
