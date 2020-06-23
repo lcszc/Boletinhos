@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import app.boletinhos.database.AppDatabase
 import app.boletinhos.domain.bill.BillService
+import app.boletinhos.domain.bill.ManageBillService
 import app.boletinhos.domain.summary.SummaryService
 import dagger.Module
 import dagger.Provides
@@ -29,5 +30,5 @@ abstract class StorageModule {
 
     @Provides
     @Singleton
-    fun manageBillDao(database: AppDatabase) = database.manageBillDao()
+    internal fun provideManageBillService(database: AppDatabase): ManageBillService = database.manageBillService()
 }

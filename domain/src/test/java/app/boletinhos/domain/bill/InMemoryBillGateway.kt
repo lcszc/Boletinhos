@@ -1,6 +1,6 @@
 package app.boletinhos.domain.bill
 
-class InMemoryBillGateway : BillGateway {
+class InMemoryBillGateway : ManageBillService {
     private val _bills = mutableMapOf<Long, Bill>()
     val bills: Map<Long, Bill> = _bills
 

@@ -2,7 +2,7 @@ package app.boletinhos.domain.bill
 
 import java.time.LocalDate
 
-class ManageBill(private val gateway: BillGateway) {
+class ManageBill(private val gateway: ManageBillService) {
     suspend fun createNew(bill: Bill) {
         val newBill = when {
             !bill.isValueValid -> throw BillHasInvalidValueException

@@ -15,7 +15,7 @@ class InDatabaseBillServiceTest : AppDatabaseTest() {
         val expected = BillsFactory.paids
 
         (expected + BillsFactory.overdue).forEach {
-            manageBillDao.create(it)
+            manageBillService.create(it)
         }
 
         billService.getByStatus(PAID).test { actual ->
@@ -29,13 +29,13 @@ class InDatabaseBillServiceTest : AppDatabaseTest() {
             .first()
             .copy(dueDate = LocalDate.now().minusMonths(1), status = OVERDUE)
 
-        manageBillDao.create(bill)
+        manageBillService.create(bill)
 
         val updated = billService.getById(id = 1)
             .copy(description = "My new description", paymentDate = LocalDate.now())
             .also { it.id = 1 }
 
-        manageBillDao.pay(updated)
+        manageBillService.pay(updated)
 
         assertThat(billService.getById(id = 1)).isEqualTo(updated)
     }

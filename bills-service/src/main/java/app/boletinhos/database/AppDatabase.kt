@@ -6,7 +6,7 @@ import androidx.room.TypeConverters
 import app.boletinhos.bills.BillEntity
 import app.boletinhos.bills.InDatabaseBillService
 import app.boletinhos.bills.InDatabaseSummaryService
-import app.boletinhos.bills.ManageBillDao
+import app.boletinhos.bills.InDatabaseManageBillService
 import app.boletinhos.typeconverter.BillStatusTypeConverter
 import app.boletinhos.typeconverter.LocalDateTypeConverter
 
@@ -14,7 +14,7 @@ import app.boletinhos.typeconverter.LocalDateTypeConverter
 @TypeConverters(value = [LocalDateTypeConverter::class, BillStatusTypeConverter::class])
 abstract class AppDatabase : RoomDatabase() {
     internal abstract fun billService(): InDatabaseBillService
-    abstract fun manageBillDao(): ManageBillDao
+    internal abstract fun manageBillService(): InDatabaseManageBillService
     internal abstract fun summaryService(): InDatabaseSummaryService
 
     companion object {
