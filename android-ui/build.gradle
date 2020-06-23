@@ -1,6 +1,7 @@
 import config.AppConfig
 import config.DI
 import config.Firebase
+import config.LeakCanary
 import config.UI
 
 apply plugin: 'com.android.application'
@@ -30,4 +31,5 @@ dependencies {
     kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
+    debugImplementation(LeakCanary.android)
 }

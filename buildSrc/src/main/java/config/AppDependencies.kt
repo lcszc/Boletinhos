@@ -68,3 +68,7 @@ object Jacoco {
     const val version = "0.8.4"
     const val core = "org.jacoco:org.jacoco.core:$version"
 }
+
+object LeakCanary {
+    const val android = "com.squareup.leakcanary:leakcanary-android:2.4"
+}
