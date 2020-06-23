@@ -31,7 +31,11 @@ android {
 
 dependencies {
     coreLibraryDesugaring(Tools.desugaring)
-    implementation project(":domain")
+
+    implementation(
+        project(":domain"),
+        project(":common")
+    )
 
     implementation(Kotlinx.Coroutines.android)
 
