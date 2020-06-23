@@ -17,7 +17,7 @@ class ManageBillDaoTest : AppDatabaseTest() {
 
         manageBillDao.create(expected)
 
-        assertThat(fetchBillService.getById(id = 1)).isEqualTo(expected)
+        assertThat(billService.getById(id = 1)).isEqualTo(expected)
     }
 
     @Test fun `should mark a given bill as paid`() = runBlockingTest {
@@ -29,12 +29,12 @@ class ManageBillDaoTest : AppDatabaseTest() {
         manageBillDao.create(bill)
         manageBillDao.create(bill.copy(name = "Legal"))
 
-        val billToPay = fetchBillService.getById(id = 1)
+        val billToPay = billService.getById(id = 1)
             .copy(paymentDate = LocalDate.now(), status = BillStatus.PAID)
             .also { it.id = 1 }
 
         manageBillDao.pay(billToPay)
 
-        assertThat(fetchBillService.getById(id = 1)).isEqualTo(billToPay)
+        assertThat(billService.getById(id = 1)).isEqualTo(billToPay)
     }
 }
