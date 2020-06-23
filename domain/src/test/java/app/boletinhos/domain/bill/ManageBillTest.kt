@@ -11,7 +11,7 @@ import java.time.LocalDate
 
 
 class ManageBillTest {
-    private val gateway = InMemoryBillGateway()
+    private val gateway = FakeManageBillService()
     private val useCase = ManageBill(gateway)
 
     private val fakeBill = Bill(
