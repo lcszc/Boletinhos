@@ -1,0 +1,7 @@
+import config.DI
+
+apply from: "$rootDir/build-system/kotlin.gradle"
+
+dependencies {
+    implementation(DI.javax)
+}
