@@ -15,7 +15,8 @@ jobs:
     env:
       GOOGLE_CLOUD_PROJECT_PATH: test-lab-dxpqby473161q-hj2c770js967m
       FIREBASE_PROJECT_ID: boletinhos-5b614
-      RUN_ON_FIREBASE_TEST_LAB: ${{ false }} # Must disable Firebase Test Lab while we aren't building our UI layer.
+      # Set to true if we should run instrumentation tests with Firebase Test Lab.
+      RUN_ON_FIREBASE_TEST_LAB: ${{ false }}
     if: "!contains(github.event.head_commit.message, '[skip-ci]')"
 
     steps:
@@ -27,19 +28,17 @@ jobs:
         with:
           java-version: 1.8
 
-      # Run unit tests
-      - name: Run Unit tests
-        run: bash ./gradlew testDebugUnitTest --stacktrace
-
       # Generate development and tests APK
       - name: Assemble Development APK
         run: bash ./gradlew assembleDebug --stacktrace
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Upload Development APK
         uses: actions/upload-artifact@v1
         with:
           name: apk-development
           path: android-ui/build/outputs/apk/debug/android-ui-debug.apk
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Assemble Instrumentation Tests APK
         run: bash ./gradlew assembleDebugAndroidTest
@@ -49,11 +48,7 @@ jobs:
         with:
           name: apk-tests
           path: android-ui/build/outputs/apk/androidTest/debug/android-ui-debug-androidTest.apk
-
-      # Should run on Firebase Test Lab
-      - name: Check if can run on Firebase Test Lab
-        run: exit 1
-        if: env.RUN_ON_FIREBASE_TEST_LAB == 'false'
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       # Authenticate & Configure GCloud
       - name: Authenticate into GCloud
@@ -61,9 +56,11 @@ jobs:
         with:
           version: '270.0.0'
           service_account_key: ${{ secrets.FIREBASE_ADMIN_SERVICE_KEY }}
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Configure GCloud project ID
         run: gcloud config set project $FIREBASE_PROJECT_ID
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       # Run Instrumentation Tests on Firebase Test Lab
       - name: Run Instrumentation Tests
@@ -76,23 +73,26 @@ jobs:
           --environment-variables coverage=true,coverageFile="/sdcard/coverage.ec"
           --directories-to-pull=/sdcard
           --no-record-video
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       # Download Instrumentation Tests coverage report
       - name: Create Instrumentation Coverage folder
         run: mkdir -p instrumentation/coverage/
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Download coverage file from Firebase Test Lab
         run: >
           gsutil cp -U gs://$GOOGLE_CLOUD_PROJECT_PATH/**/sdcard/*.ec $GITHUB_WORKSPACE/instrumentation/coverage/
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
       - name: Move Instrumentation Coverage to app outputs dir
         run: >
           mkdir -p android-ui/build/outputs/code-coverage/connected && cp instrumentation/coverage/*.ec android-ui/build/outputs/code-coverage/connected/coverage.ec
+        if: env.RUN_ON_FIREBASE_TEST_LAB == 'true'
 
-      # Generate Code Coverage reports with Jacoco
-      - name: Generate Jacoco Reports
-        run: bash ./gradlew projectCodeCoverageReport
-        if: ${{ always() }}
+      # Run tests & generate code coverage report with Jacoco
+      - name: Run tests & generate jacoco report
+        run: bash ./gradlew test projectCodeCoverageReport --stacktrace
 
       # Upload coverage reports
       - name: Upload Jacoco Reports
@@ -100,7 +100,6 @@ jobs:
         with:
           name: jacoco-report
           path: build/reports/jacoco/html
-        if: ${{ always() }}
 
       # Upload coverage to Codecov
       - name: Upload coverage to Codecov
@@ -109,4 +108,3 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: build/reports/jacoco/boletinhos.xml
           fail_ci_if_error: true
-        if: ${{ always() }}
