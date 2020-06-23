@@ -2,7 +2,7 @@ package app.boletinhos
 
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import app.boletinhos.main.MainApplication
+import app.boletinhos.application.MainApplication
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import org.junit.Test

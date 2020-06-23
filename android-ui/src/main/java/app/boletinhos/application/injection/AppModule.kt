@@ -1,4 +1,4 @@
-package app.boletinhos.injection.app
+package app.boletinhos.application.injection
 
 import android.app.Application
 import android.content.Context
