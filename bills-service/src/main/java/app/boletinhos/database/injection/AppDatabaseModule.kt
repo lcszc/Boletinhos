@@ -1,4 +1,4 @@
-package app.boletinhos.di
+package app.boletinhos.database.injection
 
 import android.content.Context
 import androidx.room.Room
