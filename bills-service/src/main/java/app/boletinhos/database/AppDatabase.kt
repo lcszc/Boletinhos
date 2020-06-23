@@ -3,10 +3,10 @@ package app.boletinhos.database
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
-import app.boletinhos.bills.BillEntity
-import app.boletinhos.bills.InDatabaseBillService
-import app.boletinhos.bills.InDatabaseSummaryService
-import app.boletinhos.bills.InDatabaseManageBillService
+import app.boletinhos.bill.BillEntity
+import app.boletinhos.bill.InDatabaseBillService
+import app.boletinhos.bill.InDatabaseSummaryService
+import app.boletinhos.bill.InDatabaseManageBillService
 import app.boletinhos.typeconverter.BillStatusTypeConverter
 import app.boletinhos.typeconverter.LocalDateTypeConverter
 

@@ -1,4 +1,4 @@
-package app.boletinhos.bills
+package app.boletinhos.bill
 
 import app.boletinhos.domain.bill.BillStatus
 import app.boletinhos.fakes.BillsFactory
