@@ -7,7 +7,7 @@ import app.boletinhos.main.MainApplication
 import dagger.BindsInstance
 import dagger.Component
 
-@AppScope
+@common.AppScope
 @Component(dependencies = [PreferencesComponent::class, CrashlyticsComponent::class])
 interface AppComponent {
     fun inject(app: MainApplication)

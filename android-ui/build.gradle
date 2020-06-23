@@ -18,7 +18,11 @@ android {
 
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
-    implementation project(":preferences")
+
+    implementation(
+        project(":preferences"),
+        project(":common")
+    )
 
     implementation(UI.material)
 
