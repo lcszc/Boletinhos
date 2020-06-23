@@ -1,4 +1,4 @@
-package app.boletinhos.injection.crashlytics
+package app.boletinhos.crashcat.injection
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 
