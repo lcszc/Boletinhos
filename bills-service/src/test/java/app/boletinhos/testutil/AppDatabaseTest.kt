@@ -4,7 +4,7 @@ import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
 import app.boletinhos.bills.ManageBillDao
 import app.boletinhos.database.AppDatabase
-import app.boletinhos.domain.bill.FetchBill
+import app.boletinhos.domain.bill.BillService
 import app.boletinhos.domain.summary.SummaryService
 import kotlinx.coroutines.asExecutor
 import org.junit.After
@@ -18,7 +18,7 @@ import org.robolectric.annotation.Config
 abstract class AppDatabaseTest : CoroutineTest() {
     private lateinit var appDatabase: AppDatabase
 
-    internal lateinit var fetchBillService: FetchBill
+    internal lateinit var billService: BillService
     internal lateinit var summaryService: SummaryService
     internal lateinit var manageBillDao: ManageBillDao
 
@@ -32,7 +32,7 @@ abstract class AppDatabaseTest : CoroutineTest() {
             .allowMainThreadQueries()
             .build()
 
-        fetchBillService = appDatabase.fetchBillService()
+        billService = appDatabase.billService()
         summaryService = appDatabase.summaryService()
         manageBillDao = appDatabase.manageBillDao()
     }
