@@ -1,4 +1,4 @@
-package app.boletinhos.bill
+package app.boletinhos.summary
 
 import androidx.room.Dao
 import androidx.room.Query

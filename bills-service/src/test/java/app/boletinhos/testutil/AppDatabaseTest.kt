@@ -2,7 +2,6 @@ package app.boletinhos.testutil
 
 import androidx.room.Room
 import androidx.test.platform.app.InstrumentationRegistry
-import app.boletinhos.bill.InDatabaseManageBillService
 import app.boletinhos.database.AppDatabase
 import app.boletinhos.domain.bill.BillService
 import app.boletinhos.domain.bill.ManageBillService
