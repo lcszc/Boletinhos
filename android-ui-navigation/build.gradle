@@ -1,0 +1,28 @@
+import config.DI
+import config.Kotlinx
+
+apply plugin: 'com.android.library'
+apply from: "$rootDir/build-system/android.gradle"
+
+apply plugin: 'kotlin-kapt'
+
+android {
+    kotlinOptions {
+        // ...
+        freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
+}
+
+dependencies {
+    implementation(project(":common"))
+
+    implementation(Kotlinx.Coroutines.android)
+
+    implementation(DI.dagger)
+    kapt(DI.compiler)
+
+    testImplementation(Kotlinx.Coroutines.test,)
+}
