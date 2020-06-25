@@ -16,6 +16,8 @@ import app.boletinhos.preferences.injection.UserPreferencesModule
     ]
 )
 interface AppComponent {
+    fun activityComponentFactory(): ActivityComponent.Factory
+
     fun inject(app: MainApplication)
 
     @dagger.Component.Factory interface Factory {
