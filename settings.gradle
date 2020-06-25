@@ -1,6 +1,6 @@
 include ':common'
 include ':android-ui'
-include ':android-ui-navigation'
+include ':android-core'
 include ':domain'
 include ':bills-service'
 include ':preferences'
