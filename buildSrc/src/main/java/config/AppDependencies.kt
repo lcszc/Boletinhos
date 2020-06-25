@@ -72,3 +72,11 @@ object Jacoco {
 object LeakCanary {
     const val android = "com.squareup.leakcanary:leakcanary-android:2.4"
 }
+
+object SimpleStack {
+    const val core = "com.github.Zhuinden:simple-stack:2.3.2"
+    const val services = "com.github.Zhuinden.simple-stack-extensions:services-ktx:2.0.0"
+    const val navigator = "com.github.Zhuinden.simple-stack-extensions:navigator-ktx:2.0.0"
+
+    fun dependencies() = listOf(core, services, navigator)
+}

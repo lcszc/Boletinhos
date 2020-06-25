@@ -1,5 +1,6 @@
 import config.DI
 import config.Kotlinx
+import config.SimpleStack
 
 apply plugin: 'com.android.library'
 apply from: "$rootDir/build-system/android.gradle"
@@ -16,10 +17,15 @@ android {
     }
 }
 
+repositories {
+    maven { url "https://jitpack.io" }
+}
+
 dependencies {
     implementation(project(":common"))
 
     implementation(Kotlinx.Coroutines.android)
+    implementation(SimpleStack.navigator, SimpleStack.services)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
