@@ -23,7 +23,8 @@ dependencies {
 
     implementation(
         project(":preferences"),
-        project(":common")
+        project(":common"),
+        project(":android-core")
     )
 
     implementation(UI.material)
