@@ -1,6 +1,7 @@
 import config.AppConfig
 import config.DI
 import config.Firebase
+import config.Kotlinx
 import config.LeakCanary
 import config.UI
 
@@ -32,4 +33,6 @@ dependencies {
 
     implementation(Firebase.Crashlytics.core)
     debugImplementation(LeakCanary.android)
+
+    implementation(Kotlinx.Coroutines.android)
 }
