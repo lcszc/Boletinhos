@@ -7,16 +7,15 @@ import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
 import com.zhuinden.simplestackextensions.servicesktx.canFind
 import com.zhuinden.simplestackextensions.servicesktx.lookup
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
+import common.CoroutineScopeContainer
 
 @dagger.Module
 object LifecycleCoroutineScopeModule {
     @dagger.Provides
     internal fun provideCoroutineScope(
         @common.ActivityContext activity: Activity,
-        @common.UiDispatcher dispatcher: CoroutineDispatcher
-    ): CoroutineScope {
+        lifecycleCoroutineScope: LifecycleCoroutineScope
+    ): CoroutineScopeContainer {
         if (!Navigator.isNavigatorAvailable(activity)) {
             throw IllegalInitializationException
         }
@@ -27,6 +26,6 @@ object LifecycleCoroutineScopeModule {
             return backstack.lookup()
         }
 
-        return LifecycleCoroutineScope(dispatcher)
+        return lifecycleCoroutineScope
     }
 }
