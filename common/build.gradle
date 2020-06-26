@@ -1,7 +1,9 @@
 import config.DI
+import config.Kotlinx
 
 apply from: "$rootDir/build-system/kotlin.gradle"
 
 dependencies {
     implementation(DI.javax)
+    implementation(Kotlinx.Coroutines.core)
 }
