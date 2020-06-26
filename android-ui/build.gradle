@@ -1,3 +1,4 @@
+import config.Androidx
 import config.AppConfig
 import config.DI
 import config.Firebase
@@ -43,4 +44,6 @@ dependencies {
     implementation(Kotlinx.Coroutines.android)
     implementation(SimpleStack.core, SimpleStack.navigator, SimpleStack.services)
     api SimpleStack.services
+
+    androidTestImplementation(Androidx.Testing.coreKtx)
 }

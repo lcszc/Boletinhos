@@ -11,19 +11,14 @@ import app.boletinhos.preferences.injection.UserPreferencesModule
     modules = [
         AppModule::class,
         UserPreferencesModule::class,
-        CrashlyticsModule::class,
-        AppComponent.Subcomponent::class
+        CrashlyticsModule::class
     ]
 )
 interface AppComponent {
-    fun activityComponentFactory(): ActivityComponent.Factory
-
     fun inject(app: MainApplication)
+    fun activityComponentFactory(): ActivityComponent.Factory
 
     @dagger.Component.Factory interface Factory {
         fun create(@dagger.BindsInstance app: Application): AppComponent
     }
-
-    @dagger.Module(subcomponents = [ActivityComponent::class])
-    interface Subcomponent
 }

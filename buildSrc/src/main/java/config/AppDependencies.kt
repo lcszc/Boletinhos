@@ -12,6 +12,7 @@ object Androidx {
 
     object Testing {
         const val core = "androidx.test:core:1.0.0"
+        const val coreKtx = "androidx.test:core-ktx:1.1.0"
         const val rules = "androidx.test:rules:1.2.0"
         const val runner = "androidx.test:runner:1.1.0"
         const val orchestrator = "androidx.test:orchestrator:1.1.0"
