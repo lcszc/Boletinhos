@@ -3,6 +3,7 @@ import config.DI
 import config.Firebase
 import config.Kotlinx
 import config.LeakCanary
+import config.SimpleStack
 import config.UI
 
 apply plugin: 'com.android.application'
@@ -40,4 +41,6 @@ dependencies {
     debugImplementation(LeakCanary.android)
 
     implementation(Kotlinx.Coroutines.android)
+    implementation(SimpleStack.core, SimpleStack.navigator, SimpleStack.services)
+    api SimpleStack.services
 }
