@@ -25,7 +25,7 @@ dependencies {
     implementation(project(":common"))
 
     implementation(Kotlinx.Coroutines.android)
-    implementation(SimpleStack.navigator, SimpleStack.services)
+    implementation(SimpleStack.navigator, SimpleStack.servicesKtx)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
