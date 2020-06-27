@@ -23,5 +23,5 @@ class MainApplication : Application() {
         crashCat.configure()
     }
 
-    fun mainComponent() = component
+    fun appComponent() = component
 }

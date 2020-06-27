@@ -17,7 +17,7 @@ import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
 
 class MainActivity : AppCompatActivity() {
     private fun appComponent(): AppComponent {
-        return (application as MainApplication).mainComponent()
+        return (application as MainApplication).appComponent()
     }
 
     private fun injector(): ActivityComponent {
