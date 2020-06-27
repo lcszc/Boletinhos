@@ -2,8 +2,8 @@ package app.boletinhos.summary
 
 import androidx.room.Dao
 import androidx.room.Query
-import app.boletinhos.domain.summary.SummaryService
 import app.boletinhos.domain.summary.Summary
+import app.boletinhos.domain.summary.SummaryService
 import kotlinx.coroutines.flow.Flow
 
 @Dao internal interface InDatabaseSummaryService : SummaryService {

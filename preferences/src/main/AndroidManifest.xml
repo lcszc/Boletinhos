@@ -1,5 +1,1 @@
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="app.boletinhos.preferences">
-
-    /
-</manifest>
+<manifest package="app.boletinhos.preferences" />

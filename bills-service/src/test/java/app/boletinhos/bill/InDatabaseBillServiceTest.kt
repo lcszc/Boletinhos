@@ -1,9 +1,9 @@
 package app.boletinhos.bill
 
-import app.boletinhos.fakes.BillsFactory
-import app.boletinhos.testutil.AppDatabaseTest
 import app.boletinhos.domain.bill.BillStatus.OVERDUE
 import app.boletinhos.domain.bill.BillStatus.PAID
+import app.boletinhos.fakes.BillsFactory
+import app.boletinhos.testutil.AppDatabaseTest
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import kotlinx.coroutines.test.runBlockingTest

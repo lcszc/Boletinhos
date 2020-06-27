@@ -5,8 +5,8 @@ import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import app.boletinhos.bill.BillEntity
 import app.boletinhos.bill.InDatabaseBillService
-import app.boletinhos.summary.InDatabaseSummaryService
 import app.boletinhos.bill.InDatabaseManageBillService
+import app.boletinhos.summary.InDatabaseSummaryService
 import app.boletinhos.typeconverter.BillStatusTypeConverter
 import app.boletinhos.typeconverter.LocalDateTypeConverter
 
