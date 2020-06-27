@@ -3,8 +3,6 @@ package app.boletinhos.lifecycle
 import androidx.lifecycle.Lifecycle
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import androidx.test.filters.LargeTest
-import androidx.test.filters.MediumTest
 import androidx.test.filters.SmallTest
 import app.boletinhos.main.MainActivity
 import assertk.assertAll

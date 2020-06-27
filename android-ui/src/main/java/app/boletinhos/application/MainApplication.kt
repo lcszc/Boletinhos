@@ -1,9 +1,9 @@
 package app.boletinhos.application
 
 import android.app.Application
-import app.boletinhos.crashcat.CrashCat
 import app.boletinhos.application.injection.AppComponent
 import app.boletinhos.application.injection.DaggerAppComponent
+import app.boletinhos.crashcat.CrashCat
 import javax.inject.Inject
 
 class MainApplication : Application() {

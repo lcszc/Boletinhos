@@ -3,8 +3,8 @@ package app.boletinhos.bill
 import androidx.room.Dao
 import androidx.room.Query
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.BillStatus
 import app.boletinhos.domain.bill.BillService
+import app.boletinhos.domain.bill.BillStatus
 import kotlinx.coroutines.flow.Flow
 
 @Dao internal interface InDatabaseBillService : BillService {
