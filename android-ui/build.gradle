@@ -42,8 +42,12 @@ dependencies {
     debugImplementation(LeakCanary.android)
 
     implementation(Kotlinx.Coroutines.android)
-    implementation(SimpleStack.core, SimpleStack.navigator, SimpleStack.services)
-    api SimpleStack.services
+    implementation(
+        SimpleStack.core,
+        SimpleStack.services,
+        SimpleStack.servicesKtx,
+        SimpleStack.navigator
+    )
 
     androidTestImplementation(Androidx.Testing.coreKtx)
 }
