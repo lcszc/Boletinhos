@@ -21,7 +21,7 @@ jobs:
       GOOGLE_CLOUD_PROJECT_PATH: test-lab-dxpqby473161q-hj2c770js967m
       FIREBASE_PROJECT_ID: boletinhos-5b614
       # Set to true if we should run instrumentation tests with Firebase Test Lab.
-      RUN_ON_FIREBASE_TEST_LAB: ${{ false }}
+      RUN_ON_FIREBASE_TEST_LAB: ${{ true }}
     if: "!contains(github.event.head_commit.message, '[skip-ci]')"
 
     steps:
