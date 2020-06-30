@@ -2,11 +2,11 @@ package app.boletinhos.application.injection
 
 import android.app.Application
 import android.content.Context
-import app.boletinhos.main.injection.ActivityComponent
+import app.boletinhos.main.injection.ActivityRetainedComponent
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 
-@dagger.Module(subcomponents = [ActivityComponent::class])
+@dagger.Module(subcomponents = [ActivityRetainedComponent::class])
 object AppModule {
     @dagger.Provides
     @common.AppContext

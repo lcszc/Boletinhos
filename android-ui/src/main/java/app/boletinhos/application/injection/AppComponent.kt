@@ -3,7 +3,8 @@ package app.boletinhos.application.injection
 import android.app.Application
 import app.boletinhos.application.MainApplication
 import app.boletinhos.crashcat.injection.CrashlyticsModule
-import app.boletinhos.main.injection.ActivityComponent
+import app.boletinhos.main.MainActivity
+import app.boletinhos.main.injection.ActivityRetainedComponent
 import app.boletinhos.preferences.injection.UserPreferencesModule
 
 @common.AppScope
@@ -16,7 +17,9 @@ import app.boletinhos.preferences.injection.UserPreferencesModule
 )
 interface AppComponent {
     fun inject(app: MainApplication)
-    fun activityComponentFactory(): ActivityComponent.Factory
+    fun inject(activity: MainActivity)
+
+    fun activityRetainedComponentFactory(): ActivityRetainedComponent.Factory
 
     @dagger.Component.Factory interface Factory {
         fun create(@dagger.BindsInstance app: Application): AppComponent

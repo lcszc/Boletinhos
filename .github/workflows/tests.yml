@@ -113,4 +113,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           file: build/reports/jacoco/boletinhos.xml
-          fail_ci_if_error: true

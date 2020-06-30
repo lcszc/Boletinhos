@@ -9,24 +9,22 @@ import androidx.appcompat.app.AppCompatActivity
 import app.boletinhos.R
 import app.boletinhos.application.MainApplication
 import app.boletinhos.application.injection.AppComponent
-import app.boletinhos.main.injection.ActivityComponent
+import app.boletinhos.main.injection.ActivityRetainedServicesFactory
 import app.boletinhos.wip.WipViewKey
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
+import javax.inject.Inject
 
 class MainActivity : AppCompatActivity() {
     private fun appComponent(): AppComponent {
         return (application as MainApplication).appComponent()
     }
 
-    private fun injector(): ActivityComponent {
-        return appComponent().activityComponentFactory()
-            .create(this)
-    }
+    @Inject lateinit var activityRetainedServicesFactory: ActivityRetainedServicesFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        val activityComponent = injector()
+        appComponent().inject(this)
 
         setTheme(R.style.App)
         super.onCreate(savedInstanceState)
@@ -35,8 +33,8 @@ class MainActivity : AppCompatActivity() {
         setContentView(root)
 
         Navigator.configure()
-            .setGlobalServices(activityComponent.globalServicesFactory())
             .setScopedServices(DefaultServiceProvider())
+            .setGlobalServices(activityRetainedServicesFactory)
             .install(this, root, History.single(WipViewKey()))
     }
 
