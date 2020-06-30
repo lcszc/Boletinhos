@@ -5,6 +5,7 @@ import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.filters.SmallTest
 import app.boletinhos.main.MainActivity
+import app.boletinhos.main.injection.activityRetainedComponent
 import assertk.assertAll
 import assertk.assertThat
 import assertk.assertions.isFalse
@@ -12,7 +13,7 @@ import assertk.assertions.isNotNull
 import assertk.assertions.isSameAs
 import assertk.assertions.isTrue
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
-import common.CoroutineScopeContainer
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.isActive
 import org.junit.Rule
 import org.junit.Test
@@ -24,18 +25,18 @@ class LifecycleCoroutineScopeTest {
     @get:Rule val mainActivity = ActivityScenarioRule(MainActivity::class.java)
 
     @Test fun shouldLifecycleCoroutineScopeContainerSurviveRecreation() {
-        var beforeRecreation: CoroutineScopeContainer? = null
-        var afterRecreation: CoroutineScopeContainer? = null
+        var beforeRecreation: CoroutineScope? = null
+        var afterRecreation: CoroutineScope? = null
 
         mainActivity.scenario.run {
             onActivity {
-                beforeRecreation = it.backstack.lookupService(CoroutineScopeContainer.TAG)
+                beforeRecreation = it.backstack.activityRetainedComponent.coroutineScope()
             }
 
             recreate()
 
             onActivity {
-                afterRecreation = it.backstack.lookupService(CoroutineScopeContainer.TAG)
+                afterRecreation = it.backstack.activityRetainedComponent.coroutineScope()
             }
         }
 
@@ -49,22 +50,23 @@ class LifecycleCoroutineScopeTest {
     // ~> I don't know if moveToState(DESTROYED) really simulates process death. Maybe!
     // But it should work just fine for our use case.
     @Test fun shouldLifecycleCoroutineScopeContainerBeCancelledAfterProcessDeath() {
-        var coroutineScopeContainer: CoroutineScopeContainer? = null
+        var uiCoroutineScope: CoroutineScope? = null
 
         mainActivity.scenario.run {
             recreate()
             moveToState(Lifecycle.State.RESUMED)
             onActivity { activity ->
-                coroutineScopeContainer = activity
+                uiCoroutineScope = activity
                     .backstack
-                    .lookupService<CoroutineScopeContainer>(CoroutineScopeContainer.TAG)
+                    .activityRetainedComponent
+                    .coroutineScope()
             }
             moveToState(Lifecycle.State.DESTROYED)
         }
 
         assertThat {
-            assertThat(coroutineScopeContainer).isNotNull()
-            assertThat(coroutineScopeContainer!!.isActive).isFalse()
+            assertThat(uiCoroutineScope).isNotNull()
+            assertThat(uiCoroutineScope!!.isActive).isFalse()
         }
     }
 }
