@@ -3,6 +3,7 @@ package app.boletinhos.lifecycle
 import assertk.assertThat
 import assertk.assertions.isNotNull
 import assertk.assertions.isTrue
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.TestCoroutineDispatcher
 import org.junit.Test
@@ -18,7 +19,7 @@ class LifecycleCoroutineScopeTest {
         val job2 = client.job2()
         val job3 = client.job3()
 
-        lifecycleScope.onServiceUnregistered()
+        lifecycleScope.cancel()
 
         assertThat(job1.isCancelled).isTrue()
         assertThat(job2.isCancelled).isTrue()
@@ -28,7 +29,7 @@ class LifecycleCoroutineScopeTest {
     @Test fun `jobs must be cancelled if they got launched after lifecycleScope gets cancelled`() {
         val client = FakeCoroutineScopeClient(lifecycleScope)
 
-        lifecycleScope.onServiceUnregistered()
+        lifecycleScope.cancel()
 
         val job1 = client.job1()
         val job2 = client.job2()
