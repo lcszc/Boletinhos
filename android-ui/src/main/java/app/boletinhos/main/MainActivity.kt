@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import app.boletinhos.R
 import app.boletinhos.application.MainApplication
 import app.boletinhos.application.injection.AppComponent
-import app.boletinhos.main.injection.ActivityRetainedServiceFactory
+import app.boletinhos.main.injection.ActivityRetainedServicesFactory
 import app.boletinhos.wip.WipViewKey
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.Navigator
@@ -21,7 +21,7 @@ class MainActivity : AppCompatActivity() {
         return (application as MainApplication).appComponent()
     }
 
-    @Inject lateinit var activityRetainedServiceFactory: ActivityRetainedServiceFactory
+    @Inject lateinit var activityRetainedServicesFactory: ActivityRetainedServicesFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent().inject(this)
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
 
         Navigator.configure()
             .setScopedServices(DefaultServiceProvider())
-            .setGlobalServices(activityRetainedServiceFactory)
+            .setGlobalServices(activityRetainedServicesFactory)
             .install(this, root, History.single(WipViewKey()))
     }
 

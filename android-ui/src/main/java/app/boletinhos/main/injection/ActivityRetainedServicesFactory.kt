@@ -4,7 +4,7 @@ import com.zhuinden.simplestack.GlobalServices
 import com.zhuinden.simplestackextensions.servicesktx.add
 import javax.inject.Inject
 
-class ActivityRetainedServiceFactory @Inject constructor(
+class ActivityRetainedServicesFactory @Inject constructor(
     private val service: ActivityRetainedService
 ) : GlobalServices.Factory {
     override fun create(): GlobalServices {
