@@ -22,10 +22,10 @@ repositories {
 }
 
 dependencies {
-    implementation(project(":common"))
+    api project(":common")
 
-    implementation(Kotlinx.Coroutines.android)
-    implementation(SimpleStack.navigator, SimpleStack.servicesKtx)
+    api(Kotlinx.Coroutines.android)
+    api(SimpleStack.navigator, SimpleStack.servicesKtx)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
