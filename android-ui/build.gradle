@@ -11,6 +11,14 @@ android {
     defaultConfig {
         applicationId AppConfig.id
     }
+
+    kotlinOptions {
+        // ...
+        freeCompilerArgs += [
+            "-Xuse-experimental=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
+        ]
+    }
 }
 
 repositories {
@@ -33,6 +41,8 @@ dependencies {
     implementation(SimpleStack.core, SimpleStack.services)
 
     debugImplementation(LeakCanary.android)
+
+    testImplementation(Kotlinx.Coroutines.test)
 
     androidTestImplementation(Androidx.Testing.coreKtx)
 }
