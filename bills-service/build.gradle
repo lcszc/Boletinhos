@@ -32,18 +32,15 @@ android {
 dependencies {
     coreLibraryDesugaring(Tools.desugaring)
 
-    implementation(
+    api(
         project(":domain"),
         project(":common")
     )
 
-    implementation(Kotlinx.Coroutines.android)
+    api(Kotlinx.Coroutines.android)
 
-    implementation(Androidx.Room.core)
-    kapt(Androidx.Room.compiler)
-
-    implementation(DI.dagger)
-    kapt(DI.compiler)
+    implementation(Androidx.Room.core, DI.dagger)
+    kapt(Androidx.Room.compiler, DI.compiler)
 
     testImplementation(
         Androidx.Room.testing,

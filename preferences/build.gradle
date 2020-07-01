@@ -7,7 +7,7 @@ apply from: "$rootDir/build-system/android.gradle"
 apply plugin: 'kotlin-kapt'
 
 dependencies {
-    implementation project(":common")
+    api project(":common")
 
     implementation(DI.dagger)
     kapt(DI.compiler)

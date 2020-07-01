@@ -1,11 +1,4 @@
-import config.Androidx
-import config.AppConfig
-import config.DI
-import config.Firebase
-import config.Kotlinx
-import config.LeakCanary
-import config.SimpleStack
-import config.UI
+import config.*
 
 apply plugin: 'com.android.application'
 apply from: "$rootDir/build-system/android.gradle"
@@ -25,11 +18,9 @@ repositories {
 }
 
 dependencies {
-    implementation fileTree(dir: "libs", include: ["*.jar"])
-
     implementation(
+        project(":domain"),
         project(":preferences"),
-        project(":common"),
         project(":android-core")
     )
 
@@ -39,15 +30,9 @@ dependencies {
     kapt(DI.compiler)
 
     implementation(Firebase.Crashlytics.core)
-    debugImplementation(LeakCanary.android)
+    implementation(SimpleStack.core, SimpleStack.services)
 
-    implementation(Kotlinx.Coroutines.android)
-    implementation(
-        SimpleStack.core,
-        SimpleStack.services,
-        SimpleStack.servicesKtx,
-        SimpleStack.navigator
-    )
+    debugImplementation(LeakCanary.android)
 
     androidTestImplementation(Androidx.Testing.coreKtx)
 }
