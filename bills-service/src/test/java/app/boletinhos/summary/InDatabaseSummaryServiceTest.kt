@@ -10,7 +10,6 @@ import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
 import assertk.assertions.isFalse
 import assertk.assertions.isTrue
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
@@ -20,7 +19,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
 
         bills.forEach { manageBillService.create(it) }
 
-        summaryService.getSummary().test { summaries ->
+        summaryService.getSummaries().test { summaries ->
             assertAll {
                 assertThat(summaries).hasSize(3)
                 assertThat(summaries).containsAll(
@@ -32,26 +31,25 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
         }
     }
 
-    @Test fun `should check if summaries are correctly ordered by its due date`() =
-        runBlockingTest {
-            val bills = SummaryFactory.bills
+    @Test fun `should check if summaries are correctly ordered by its due date`() = runBlockingTest {
+        val bills = SummaryFactory.bills
 
-            bills.forEach { manageBillService.create(it) }
+        bills.forEach { manageBillService.create(it) }
 
-            summaryService.getSummary().test { summaries ->
-                assertAll {
-                    assertThat(summaries).hasSize(3)
-                    assertThat(summaries).containsExactly(
-                        SummaryFactory.december,
-                        SummaryFactory.november,
-                        SummaryFactory.august
-                    )
-                }
+        summaryService.getSummaries().test { summaries ->
+            assertAll {
+                assertThat(summaries).hasSize(3)
+                assertThat(summaries).containsExactly(
+                    SummaryFactory.december,
+                    SummaryFactory.november,
+                    SummaryFactory.august
+                )
             }
         }
+    }
 
     @Test fun `should have no summary if there's no data in the data source`() = runBlockingTest {
-        summaryService.getSummary().test { summaries ->
+        summaryService.getSummaries().test { summaries ->
             assertThat(summaries).isEmpty()
         }
     }
