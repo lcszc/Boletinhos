@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.Flow
         ORDER BY dueDate DESC
     """
     )
-    override fun getSummary(): Flow<List<Summary>>
+    override fun getSummaries(): Flow<List<Summary>>
 
     @Query("SELECT EXISTS(SELECT * FROM bills)")
     override suspend fun hasSummary(): Boolean
