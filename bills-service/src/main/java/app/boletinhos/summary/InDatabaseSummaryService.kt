@@ -22,4 +22,7 @@ import kotlinx.coroutines.flow.Flow
     """
     )
     override fun getSummary(): Flow<List<Summary>>
+
+    @Query("SELECT EXISTS(SELECT * FROM bills)")
+    override suspend fun hasSummary(): Boolean
 }

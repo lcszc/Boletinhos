@@ -8,6 +8,9 @@ import assertk.assertions.containsAll
 import assertk.assertions.containsExactly
 import assertk.assertions.hasSize
 import assertk.assertions.isEmpty
+import assertk.assertions.isFalse
+import assertk.assertions.isTrue
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
@@ -51,5 +54,16 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
         summaryService.getSummary().test { summaries ->
             assertThat(summaries).isEmpty()
         }
+    }
+
+    @Test fun `should be false when there is no bill to create a summary`() = runBlockingTest {
+        assertThat(summaryService.hasSummary()).isFalse()
+    }
+
+    @Test fun `should be true when there is bill to create a summary`() = runBlockingTest {
+        val bills = SummaryFactory.bills
+        bills.forEach { manageBillService.create(it) }
+
+        assertThat(summaryService.hasSummary()).isTrue()
     }
 }
