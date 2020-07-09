@@ -7,6 +7,7 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation(Kotlinx.stbLib)
     testImplementation(Testing.junit, Testing.assertK)
+    testImplementation(project(":testutil"), Kotlinx.Coroutines.test)
 }
 
 compileKotlin {
