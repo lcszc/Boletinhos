@@ -85,5 +85,7 @@ dependencies {
         Testing.junit,
         Testing.assertK
     )
+
+    testImplementation(project(":testutil"), Kotlinx.Coroutines.test)
 }
 
