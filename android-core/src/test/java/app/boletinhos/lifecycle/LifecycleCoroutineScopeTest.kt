@@ -10,7 +10,7 @@ import org.junit.Test
 
 class LifecycleCoroutineScopeTest {
     private val dispatcher = TestCoroutineDispatcher()
-    private val lifecycleScope = LifecycleCoroutineScope(dispatcher)
+    private val lifecycleScope = ActivityRetainedCoroutineScope(dispatcher, dispatcher, dispatcher)
 
     @Test fun `jobs must be cancelled when lifecycleScope gets cancelled`() {
         val client = FakeCoroutineScopeClient(lifecycleScope)

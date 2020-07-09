@@ -38,6 +38,7 @@ object Testing {
     const val junit = "junit:junit:4.12"
     const val assertK = "com.willowtreeapps.assertk:assertk-jvm:0.22"
     const val robolectric = "org.robolectric:robolectric:4.3"
+    const val mockK = "io.mockk:mockk:1.10.0"
 }
 
 object DI {

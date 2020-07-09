@@ -8,4 +8,8 @@
     <style name="Widget.App.AppBarLayout" parent="Widget.MaterialComponents.AppBarLayout.Surface">
         <item name="android:stateListAnimator" tools:targetApi="lollipop">@animator/appbar_state_list_animator</item>
     </style>
+
+    <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
+        <item name="titleTextAppearance">?textAppearanceHeadline6</item>
+    </style>
 </resources>

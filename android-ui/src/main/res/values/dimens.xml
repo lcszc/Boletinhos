@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 8-grid -->
+    <dimen name="app_margin_1x">8dp</dimen>
+    <dimen name="app_margin_2x">16dp</dimen>
+
+    <dimen name="app_padding_2x">@dimen/app_margin_2x</dimen>
+
+    <!-- icons alpha -->
+    <dimen name="app_status_icon_alpha">0.3</dimen>
+    <dimen name="app_status_icon_background_alpha">0.16</dimen>
+
+</resources>

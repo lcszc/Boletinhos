@@ -1,6 +1,7 @@
 package app.boletinhos.application
 
 import android.app.Application
+import androidx.appcompat.app.AppCompatDelegate
 import app.boletinhos.application.injection.AppComponent
 import app.boletinhos.application.injection.DaggerAppComponent
 import app.boletinhos.crashcat.CrashCat
@@ -19,6 +20,8 @@ class MainApplication : Application() {
 
     override fun onCreate() {
         super.onCreate()
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true)
+
         component = injector()
         crashCat.configure()
     }

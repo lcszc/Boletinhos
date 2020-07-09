@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import androidx.core.content.edit
 import javax.inject.Inject
 
+@common.AppScope
 class UserPreferences @Inject constructor(
     private val prefs: SharedPreferences
 ) {

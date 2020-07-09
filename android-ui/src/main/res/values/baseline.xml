@@ -33,6 +33,8 @@
         <item name="textAppearanceButton">@style/TextAppearance.App.Button</item>
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
         <item name="textAppearanceOverline">@style/TextAppearance.App.Overline</item>
+        <item name="textAppearanceCurrencyHeadline">@style/TextAppearance.App.Headline4.Currency</item>
+        <item name="textAppearanceCurrencySubtitle">@style/TextAppearance.App.Subtitle1.Currency</item>
 
         <!-- Shape -->
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.Small</item>
@@ -42,5 +44,6 @@
         <!-- Styles -->
         <item name="textInputStyle">@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox</item>
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
+        <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
     </style>
 </resources>

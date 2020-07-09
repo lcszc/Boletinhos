@@ -6,5 +6,6 @@ interface SummaryPreferences {
 
     companion object {
         const val NO_SUMMARY: Long = -1
+        const val ACTUAL_SUMMARY_ID = "actual_summary_id"
     }
 }

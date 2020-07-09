@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/app_padding_2x">
+
+    <TextView
+        android:id="@+id/text_item_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawablePadding="@dimen/app_padding_2x"
+        android:textAppearance="?textAppearanceSubtitle1"
+        android:gravity="center_vertical"
+        android:ellipsize="end"
+        android:maxLines="2"
+        android:text="LOL XDD"
+        tools:text="Summary of January, 2020"
+        tools:drawableStart="@drawable/ic_summary"
+        tools:drawableLeft="@drawable/ic_summary"
+        />
+
+    <TextView
+        android:id="@+id/text_item_value"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/app_margin_2x"
+        android:textAppearance="?textAppearanceCurrencyHeadline"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="$ 999.92"
+        />
+
+    <TextView
+        android:id="@+id/text_item_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?textAppearanceBody2"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="In bills"
+        />
+
+</LinearLayout>

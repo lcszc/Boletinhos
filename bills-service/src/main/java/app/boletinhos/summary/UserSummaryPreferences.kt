@@ -3,10 +3,10 @@ package app.boletinhos.summary
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import app.boletinhos.domain.summary.SummaryPreferences
-import common.AppScope
+import app.boletinhos.domain.summary.SummaryPreferences.Companion.ACTUAL_SUMMARY_ID
 import javax.inject.Inject
 
-@AppScope
+@common.AppScope
 internal class UserSummaryPreferences @Inject constructor(
     private val prefs: SharedPreferences
 ) : SummaryPreferences {
@@ -18,9 +18,5 @@ internal class UserSummaryPreferences @Inject constructor(
         prefs.edit {
             putLong(ACTUAL_SUMMARY_ID, id)
         }
-    }
-
-    companion object {
-        const val ACTUAL_SUMMARY_ID = "actual_summary_id"
     }
 }

@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
-import app.boletinhos.R
 import app.boletinhos.application.MainApplication
 import app.boletinhos.application.injection.AppComponent
 import app.boletinhos.main.injection.ActivityRetainedServicesFactory
@@ -17,6 +16,7 @@ import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
 import kotlinx.coroutines.cancel
 import javax.inject.Inject
 import android.R.id as AndroidIds
+import app.boletinhos.R.style as Styles
 
 class MainActivity : AppCompatActivity() {
     @Inject lateinit var activityRetainedServicesFactory: ActivityRetainedServicesFactory
@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         appComponent().inject(this)
 
-        setTheme(R.style.App)
+        setTheme(Styles.App)
         super.onCreate(savedInstanceState)
 
         val root = findViewById<ViewGroup>(AndroidIds.content)

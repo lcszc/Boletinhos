@@ -1,11 +1,13 @@
 package app.boletinhos.lifecycle.injection
 
-import app.boletinhos.lifecycle.LifecycleCoroutineScope
+import app.boletinhos.lifecycle.ActivityRetainedCoroutineScope
+import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import kotlinx.coroutines.CoroutineScope
 
 @dagger.Module
 object LifecycleCoroutineScopeModule {
     @dagger.Provides
-    @common.UiCoroutineScope
-    internal fun provideCoroutineScope(impl: LifecycleCoroutineScope): CoroutineScope = impl
+    internal fun provideCoroutineScope(impl: ActivityRetainedCoroutineScope): LifecycleAwareCoroutineScope {
+        return impl
+    }
 }
