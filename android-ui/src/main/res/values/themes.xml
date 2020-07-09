@@ -8,4 +8,19 @@
         <item name="android:colorBackground">@android:color/white</item>
         <item name="android:windowBackground">@drawable/splash</item>
     </style>
+
+    <style name="App.Bills.Paid" parent="App">
+        <item name="colorOnSurface">@color/paidBillsPrimary</item>
+        <item name="android:textColorPrimary">@color/paidBillsPrimary</item>
+    </style>
+
+    <style name="App.Bills.Overdue" parent="App">
+        <item name="colorOnSurface">@color/overdueBillsPrimary</item>
+        <item name="android:textColorPrimary">@color/overdueBillsPrimary</item>
+    </style>
+
+    <style name="App.Bills.Unpaid" parent="App">
+        <item name="colorOnSurface">@color/unpaidBillsPrimary</item>
+        <item name="android:textColorPrimary">@color/unpaidBillsPrimary</item>
+    </style>
 </resources>

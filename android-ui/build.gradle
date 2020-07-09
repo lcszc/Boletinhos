@@ -42,7 +42,7 @@ dependencies {
 
     debugImplementation(LeakCanary.android)
 
-    testImplementation(Kotlinx.Coroutines.test)
+    testImplementation(Kotlinx.Coroutines.test, Testing.robolectric, Testing.mockK)
 
     androidTestImplementation(Androidx.Testing.coreKtx)
 }

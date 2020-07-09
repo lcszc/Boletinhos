@@ -54,7 +54,8 @@ configure(subprojects) {
         def kotlinLibExclusions = [
             '**/*Test*.*',
             '**/*_Factory.*',
-            '**/*Fake*.*'
+            '**/*Fake*.*',
+            'testutil/**'
         ]
 
         def javacTree = fileTree(dir: "$buildDir/intermediates/javac/debug", excludes: exclusions)

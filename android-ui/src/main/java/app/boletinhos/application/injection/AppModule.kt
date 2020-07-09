@@ -12,7 +12,16 @@ object AppModule {
     @common.AppContext
     internal fun provideContext(app: Application): Context = app
 
+    /* rework -> multibinding */
     @dagger.Provides
-    @common.UiDispatcher
-    fun provideUiDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
+    @common.ImmediateDispatcher
+    internal fun provideImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main.immediate
+
+    @dagger.Provides
+    @common.MainDispatcher
+    internal fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
+
+    @dagger.Provides
+    @common.IoDispatcher
+    internal fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.IO
 }

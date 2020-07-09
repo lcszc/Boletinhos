@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Boletinhos</string>
+    
+    <string name="text_month_summary">Your %s summary</string>
+
+    <string name="text_bills">In bills</string>
+    <string name="text_bills_paids">Paids</string>
+    <string name="text_bills_unpaids">Unpaids</string>
+    <string name="text_bills_overdue">Overdue</string>
 </resources>

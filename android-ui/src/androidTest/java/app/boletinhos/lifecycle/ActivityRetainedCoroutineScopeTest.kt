@@ -21,7 +21,7 @@ import org.junit.runner.RunWith
 
 @RunWith(AndroidJUnit4::class)
 @SmallTest
-class LifecycleCoroutineScopeTest {
+class ActivityRetainedCoroutineScopeTest {
     @get:Rule val mainActivity = ActivityScenarioRule(MainActivity::class.java)
 
     @Test fun shouldLifecycleCoroutineScopeContainerSurviveRecreation() {
