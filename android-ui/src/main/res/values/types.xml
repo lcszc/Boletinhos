@@ -36,9 +36,9 @@
     </style>
 
     <style name="TextAppearance.App.Headline6" parent="TextAppearance.MaterialComponents.Headline6">
-        <item name="fontFamily">@font/fira_sans_bold</item>
-        <item name="android:fontFamily">@font/fira_sans_bold</item>
-        <item name="android:letterSpacing">0.3</item>
+        <item name="fontFamily">@font/fira_sans_medium</item>
+        <item name="android:fontFamily">@font/fira_sans_medium</item>
+        <item name="android:letterSpacing">0.03</item>
     </style>
 
     <style name="TextAppearance.App.Subtitle1" parent="TextAppearance.MaterialComponents.Subtitle1">
@@ -66,20 +66,20 @@
         <item name="fontFamily">@font/fira_sans</item>
         <item name="android:fontFamily">@font/fira_sans</item>
         <item name="android:textSize">18sp</item>
-        <item name="android:letterSpacing">0.2</item>
+        <item name="android:letterSpacing">0.02</item>
     </style>
 
     <style name="TextAppearance.App.Body2" parent="TextAppearance.MaterialComponents.Body2">
         <item name="fontFamily">@font/fira_sans</item>
         <item name="android:fontFamily">@font/fira_sans</item>
-        <item name="android:letterSpacing">0.25</item>
+        <item name="android:letterSpacing">0.025</item>
     </style>
 
     <style name="TextAppearance.App.Button" parent="TextAppearance.MaterialComponents.Button">
         <item name="fontFamily">@font/fira_sans_medium</item>
         <item name="android:fontFamily">@font/fira_sans_medium</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:letterSpacing">0.88</item>
+        <item name="android:letterSpacing">0.088</item>
         <item name="android:textAllCaps">true</item>
         <item name="textAllCaps">true</item>
     </style>
@@ -88,14 +88,14 @@
         <item name="fontFamily">@font/fira_sans</item>
         <item name="android:fontFamily">@font/fira_sans</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:letterSpacing">0.4</item>
+        <item name="android:letterSpacing">0.04</item>
     </style>
 
     <style name="TextAppearance.App.Overline" parent="TextAppearance.MaterialComponents.Overline">
         <item name="fontFamily">@font/fira_sans_medium</item>
         <item name="android:fontFamily">@font/fira_sans_medium</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:letterSpacing">1.2</item>
+        <item name="android:letterSpacing">0.12</item>
         <item name="android:textAllCaps">true</item>
         <item name="textAllCaps">true</item>
     </style>
