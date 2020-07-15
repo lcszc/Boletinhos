@@ -4,6 +4,7 @@ import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestackextensions.servicesktx.lookup
 import common.UiCoroutineScope
+import dagger.BindsInstance
 import kotlinx.coroutines.CoroutineScope
 
 @common.ActivityRetainedScope
@@ -13,7 +14,7 @@ interface ActivityRetainedComponent {
 
     @dagger.Subcomponent.Factory
     interface Factory {
-        fun create(): ActivityRetainedComponent
+        fun create(@BindsInstance backstack: Backstack): ActivityRetainedComponent
     }
 }
 
