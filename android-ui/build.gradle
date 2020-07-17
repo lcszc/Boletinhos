@@ -29,13 +29,14 @@ dependencies {
     implementation(
         project(":domain"),
         project(":preferences"),
-        project(":android-core")
+        project(":android-core"),
+        project(":bills-service")
     )
 
     implementation(UI.material)
 
-    implementation(DI.dagger)
-    kapt(DI.compiler)
+    implementation(DI.dagger, Androidx.Room.core)
+    kapt(DI.compiler, Androidx.Room.compiler)
 
     implementation(Firebase.Crashlytics.core)
     implementation(SimpleStack.core, SimpleStack.services)
