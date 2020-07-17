@@ -1,6 +1,7 @@
 import config.DI
 import config.Kotlinx
 import config.SimpleStack
+import config.UI
 
 apply plugin: 'com.android.library'
 apply from: "$rootDir/build-system/android.gradle"
@@ -26,6 +27,8 @@ dependencies {
 
     api(Kotlinx.Coroutines.android)
     api(SimpleStack.navigator, SimpleStack.servicesKtx)
+
+    implementation(UI.material)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
