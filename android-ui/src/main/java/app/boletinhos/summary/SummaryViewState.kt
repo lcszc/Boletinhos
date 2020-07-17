@@ -1,7 +1,6 @@
 package app.boletinhos.summary
 
 import android.os.Parcelable
-import app.boletinhos.domain.summary.Summary
 import kotlinx.android.parcel.Parcelize
 
 @Parcelize

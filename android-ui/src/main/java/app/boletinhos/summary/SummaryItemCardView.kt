@@ -7,12 +7,12 @@ import android.view.LayoutInflater
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
 import androidx.annotation.StyleRes
-import app.boletinhos.R.layout as Layouts
-import app.boletinhos.R.style as Styles
 import app.boletinhos.databinding.SummaryItemViewBinding
 import app.boletinhos.theming.createThemeAwareDrawable
 import com.google.android.material.card.MaterialCardView
 import kotlinx.android.parcel.Parcelize
+import app.boletinhos.R.layout as Layouts
+import app.boletinhos.R.style as Styles
 
 class SummaryItemCardView(
     context: Context,
