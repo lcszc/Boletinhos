@@ -9,7 +9,7 @@ import app.boletinhos.widget.recyclerview.ListAdapter
 class SummaryAdapter(
     private val onItemClick: (Model.Kind) -> Unit = {}
 ) : ListAdapter<Model>() {
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): BindableViewHolder<Model> {
         val themeRes = Model.Kind.values()
             .first { it.viewType == viewType }
             .themeRes
@@ -20,7 +20,7 @@ class SummaryAdapter(
 
     override fun getItemViewType(position: Int): Int = items[position].kind.viewType
 
-    inner class ViewHolder(
+    private inner class ViewHolder(
         private val view: SummaryItemCardView
     ) : BindableViewHolder<Model>(view) {
         override fun bind(model: Model) {
