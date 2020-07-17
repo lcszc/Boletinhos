@@ -1,26 +1,24 @@
 package app.boletinhos.main
 
-import android.content.Context
 import android.os.Bundle
 import android.view.ViewGroup
-import android.view.ViewGroup.LayoutParams.MATCH_PARENT
-import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import app.boletinhos.R
 import app.boletinhos.application.MainApplication
 import app.boletinhos.application.injection.AppComponent
 import app.boletinhos.main.injection.ActivityRetainedServicesFactory
+import app.boletinhos.navigation.ViewStateChanger
+import app.boletinhos.navigation.viewScope
 import app.boletinhos.wip.WipViewKey
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
+import kotlinx.coroutines.cancel
 import javax.inject.Inject
+import android.R.id as AndroidIds
 
 class MainActivity : AppCompatActivity() {
-    private fun appComponent(): AppComponent {
-        return (application as MainApplication).appComponent()
-    }
-
     @Inject lateinit var activityRetainedServicesFactory: ActivityRetainedServicesFactory
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,10 +27,11 @@ class MainActivity : AppCompatActivity() {
         setTheme(R.style.App)
         super.onCreate(savedInstanceState)
 
-        val root = MainLayout(this)
-        setContentView(root)
+        val root = findViewById<ViewGroup>(AndroidIds.content)
+        val stateChanger = ViewStateChanger(this, root)
 
         Navigator.configure()
+            .setStateChanger(stateChanger)
             .setScopedServices(DefaultServiceProvider())
             .setGlobalServices(activityRetainedServicesFactory)
             .install(this, root, History.single(WipViewKey()))
@@ -44,9 +43,13 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private inner class MainLayout(context: Context) : FrameLayout(context) {
-        init {
-            layoutParams = ViewGroup.LayoutParams(MATCH_PARENT, MATCH_PARENT)
-        }
+    override fun onDestroy() {
+        super.onDestroy()
+        val root = findViewById<ViewGroup>(AndroidIds.content)
+        root[0].viewScope.cancel()
+    }
+
+    private fun appComponent(): AppComponent {
+        return (application as MainApplication).appComponent()
     }
 }
