@@ -1,10 +1,8 @@
 package app.boletinhos.navigation
 
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.core.view.get
-import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.Lifecycle.State.DESTROYED
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -70,6 +68,22 @@ class ViewCoroutineScopeTest {
     }
 
     @Test fun shouldViewCoroutineScopeGetsCancelledWhenActivityGetsDestroyed() {
+        var topViewCoroutineScope: CoroutineScope? = null
+
+        mainActivity.scenario.run {
+            onActivity { activity ->
+                val rootContainer = activity.findViewById<ViewGroup>(AndroidIds.content)
+                val topView = rootContainer[0]
+                topViewCoroutineScope = topView.viewScope
+            }
+
+            moveToState(DESTROYED)
+        }
+
+        assertThat(topViewCoroutineScope!!.isActive).isFalse()
+    }
+
+    @Test fun shouldViewCoroutineScopeGetsCancelledWhenActivityGetsRecreated() {
         var topViewCoroutineScope: CoroutineScope? = null
 
         mainActivity.scenario.run {
