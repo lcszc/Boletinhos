@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.boletinhos.summary.SummaryView xmlns:android="http://schemas.android.com/apk/res/android"
+<app.boletinhos.summary.SummaryView
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -24,11 +25,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
+        android:visibility="gone"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
         app:spanCount="2"
         tools:itemCount="3"
         tools:listitem="@layout/summary_item_view"
+        />
+
+    <ProgressBar
+        style="?progressBarStyle"
+        android:id="@+id/progress_loading"
+        android:layout_gravity="center"
+        />
+
+    <ViewStub
+        android:id="@+id/stubError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inflatedId="@+id/error"
+        android:layout="@layout/summary_view_error"
+        android:layout_gravity="center"
+        android:layout_margin="@dimen/app_margin_2x"
         />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -37,6 +55,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="@dimen/app_margin_2x"
+        android:visibility="gone"
         app:srcCompat="@drawable/ic_add"
         />
 </app.boletinhos.summary.SummaryView>

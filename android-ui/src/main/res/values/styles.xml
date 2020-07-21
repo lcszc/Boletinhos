@@ -12,4 +12,10 @@
     <style name="Widget.App.Toolbar" parent="Widget.MaterialComponents.Toolbar.Surface">
         <item name="titleTextAppearance">?textAppearanceHeadline6</item>
     </style>
+
+    <!-- progressbar -->
+    <style name="Widget.App.Progress" parent="Widget.AppCompat.ProgressBar">
+        <item name="android:layout_width">24dp</item>
+        <item name="android:layout_height">24dp</item>
+    </style>
 </resources>

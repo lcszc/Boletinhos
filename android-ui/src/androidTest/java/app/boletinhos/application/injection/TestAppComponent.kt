@@ -1,19 +1,25 @@
 package app.boletinhos.application.injection
 
 import android.app.Application
-import app.boletinhos.domain.summary.SummaryService
+import app.boletinhos.bill.injection.ManageBillServiceModule
+import app.boletinhos.summary.SummaryViewTest
 import app.boletinhos.summary.injection.SummaryServiceModule
+import app.boletinhos.rule.UsesDatabaseRule
+import common.AppScope
+import dagger.Component
 
-@common.AppScope
-@dagger.Component(modules = [
+@AppScope
+@Component(modules = [
     TestModule::class,
     TestDatabaseModule::class,
-    SummaryServiceModule::class
+    SummaryServiceModule::class,
+    ManageBillServiceModule::class
 ])
 interface TestAppComponent : AppComponent {
-    fun bla(): SummaryService
+    fun inject(test: SummaryViewTest)
+    fun inject(rule: UsesDatabaseRule)
 
-    @dagger.Component.Factory interface Factory {
+    @Component.Factory interface Factory {
         fun create(@dagger.BindsInstance app: Application): TestAppComponent
     }
 }

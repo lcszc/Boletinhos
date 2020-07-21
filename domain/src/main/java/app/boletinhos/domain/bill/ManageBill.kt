@@ -1,8 +1,9 @@
 package app.boletinhos.domain.bill
 
 import java.time.LocalDate
+import javax.inject.Inject
 
-class ManageBill(private val gateway: ManageBillService) {
+class ManageBill @Inject constructor(private val gateway: ManageBillService) {
     suspend fun createNew(bill: Bill) {
         val newBill = when {
             !bill.isValueValid -> throw BillHasInvalidValueException
