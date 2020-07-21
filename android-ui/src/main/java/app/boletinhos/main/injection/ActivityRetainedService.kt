@@ -15,7 +15,8 @@ class ActivityRetainedService @Inject constructor(
 
     fun createComponent(backstack: Backstack) {
         component = (application as MainApplication).appComponent()
-            .activityRetainedComponentFactory().create(backstack)
+            .activityRetainedComponentFactory()
+            .create(backstack)
     }
 
     override fun onServiceRegistered() = Unit

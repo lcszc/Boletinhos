@@ -1,4 +1,5 @@
 import config.Androidx
+import config.AppConfig
 import config.DI
 import config.Firebase
 import config.Kotlinx
