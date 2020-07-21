@@ -1,11 +1,11 @@
 package app.boletinhos.summary
 
 import app.boletinhos.R
-
 import app.boletinhos.domain.summary.FetchSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
+import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.viewModelScope
 import app.boletinhos.wip.WipViewKey
 import assertk.assertThat
@@ -13,6 +13,7 @@ import assertk.assertions.contains
 import assertk.assertions.containsExactly
 import assertk.assertions.hasSize
 import assertk.assertions.isEqualTo
+import assertk.assertions.isNull
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.DefaultViewKey
@@ -30,7 +31,8 @@ import org.junit.Rule
 import org.junit.Test
 import testutil.MainCoroutineRule
 import java.time.Month
-import java.util.Locale
+import app.boletinhos.R.drawable as Drawables
+import app.boletinhos.R.string as Texts
 
 class SummaryViewModelTest {
     @get:Rule val mainCoroutineRule = MainCoroutineRule()
@@ -56,9 +58,9 @@ class SummaryViewModelTest {
         coEvery { summaryService.hasSummary() } returns false
 
         viewModel(viewEvents.asFlow())
-        viewEvents.offer(SummaryViewEvent.OnAttach)
+        viewEvents.offer(SummaryViewEvent.FetchData)
 
-        assertThat(backstack.top<DefaultViewKey>()).isEqualTo(WipViewKey("Welcome Screen!"))
+        assertThat(backstack.top<DefaultViewKey>()).isEqualTo(WipViewKey("Welcome Screen"))
         assertThat(backstack.getHistory<DefaultViewKey>()).hasSize(1)
     }
 
@@ -76,21 +78,20 @@ class SummaryViewModelTest {
             states.add(state)
         }.launchIn(viewModelScope)
 
-        viewEvents.offer(SummaryViewEvent.OnAttach)
+        viewEvents.offer(SummaryViewEvent.FetchData)
 
-        val locale = Locale.getDefault()
 
         val items = listOf(
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_summary,
+                iconRes = Drawables.ic_summary,
                 titleRes = R.string.text_month_summary,
-                titleArg = summary1.displayName(locale),
+                titleArg = summary1.displayName(),
                 descriptionRes = R.string.text_bills,
-                textValue = summary1.totalValue.toString(),
+                textValue = summary1.formattedTotalValue(),
                 kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
             ),
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_paids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary1.paids.toString(),
@@ -98,7 +99,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_hourglass,
+                iconRes = Drawables.ic_hourglass,
                 titleRes = R.string.text_bills_unpaids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary1.unpaids.toString(),
@@ -106,7 +107,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_overdue,
                 descriptionRes = R.string.text_bills,
                 textValue = summary1.overdue.toString(),
@@ -114,7 +115,9 @@ class SummaryViewModelTest {
             )
         )
 
-        assertThat(states).contains(SummaryViewState(summary = items))
+        assertThat(states).contains(
+            SummaryViewState(isActionAndSummaryVisible = true, summary = items)
+        )
     }
 
     @Test fun `should emit most recent summary if user didn't selected any`() {
@@ -131,21 +134,19 @@ class SummaryViewModelTest {
             states.add(state)
         }.launchIn(viewModelScope)
 
-        viewEvents.offer(SummaryViewEvent.OnAttach)
-
-        val locale = Locale.getDefault()
+        viewEvents.offer(SummaryViewEvent.FetchData)
 
         val items = listOf(
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_summary,
+                iconRes = Drawables.ic_summary,
                 titleRes = R.string.text_month_summary,
-                titleArg = summary2.displayName(locale),
+                titleArg = summary2.displayName(),
                 descriptionRes = R.string.text_bills,
-                textValue = summary2.totalValue.toString(),
+                textValue = summary2.formattedTotalValue(),
                 kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
             ),
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_paids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.paids.toString(),
@@ -153,7 +154,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_hourglass,
+                iconRes = Drawables.ic_hourglass,
                 titleRes = R.string.text_bills_unpaids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.unpaids.toString(),
@@ -161,7 +162,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_overdue,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.overdue.toString(),
@@ -169,7 +170,9 @@ class SummaryViewModelTest {
             )
         )
 
-        assertThat(states).contains(SummaryViewState(summary = items))
+        assertThat(states).contains(
+            SummaryViewState(isActionAndSummaryVisible = true, summary = items)
+        )
     }
 
     @Test fun `should emit null summary if fetching throws any error`() {
@@ -183,9 +186,30 @@ class SummaryViewModelTest {
             states.add(state)
         }.launchIn(viewModelScope)
 
-        viewEvents.offer(SummaryViewEvent.OnAttach)
+        viewEvents.offer(SummaryViewEvent.FetchData)
 
-        assertThat(states.last()).isEqualTo(SummaryViewState(summary = null))
+        assertThat(states.last().summary).isNull()
+    }
+
+    @Test fun `should emit error if summary has not found due to some exception`() {
+        coEvery { summaryService.hasSummary() } returns true
+        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryService.getSummaries() } throws IllegalStateException("god knows why")
+
+        val states = mutableListOf<SummaryViewState>()
+
+        viewModel(viewEvents.asFlow()).onEach { state ->
+            states.add(state)
+        }.launchIn(viewModelScope)
+
+        viewEvents.offer(SummaryViewEvent.FetchData)
+
+        val error = ErrorViewModel(
+            titleRes = Texts.text_summary_error_title,
+            messageRes = Texts.text_summary_error_message
+        )
+
+        assertThat(states.last()).isEqualTo(SummaryViewState(error = error))
     }
 
     @Test fun `should emit loading process`() {
@@ -202,21 +226,19 @@ class SummaryViewModelTest {
             states.add(state)
         }.launchIn(viewModelScope)
 
-        viewEvents.offer(SummaryViewEvent.OnAttach)
-
-        val locale = Locale.getDefault()
+        viewEvents.offer(SummaryViewEvent.FetchData)
 
         val items = listOf(
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_summary,
+                iconRes = Drawables.ic_summary,
                 titleRes = R.string.text_month_summary,
-                titleArg = summary2.displayName(locale),
+                titleArg = summary2.displayName(),
                 descriptionRes = R.string.text_bills,
-                textValue = summary2.totalValue.toString(),
+                textValue = summary2.formattedTotalValue(),
                 kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
             ),
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_paids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.paids.toString(),
@@ -224,7 +246,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_hourglass,
+                iconRes = Drawables.ic_hourglass,
                 titleRes = R.string.text_bills_unpaids,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.unpaids.toString(),
@@ -232,7 +254,7 @@ class SummaryViewModelTest {
             ),
 
             SummaryItemCardView.Model(
-                iconRes = R.drawable.ic_check,
+                iconRes = Drawables.ic_check,
                 titleRes = R.string.text_bills_overdue,
                 descriptionRes = R.string.text_bills,
                 textValue = summary2.overdue.toString(),
@@ -244,7 +266,7 @@ class SummaryViewModelTest {
         assertThat(states).containsExactly(
             SummaryViewState(), // <- default
             SummaryViewState(isLoading = true),
-            SummaryViewState(summary = items)
+            SummaryViewState(isActionAndSummaryVisible = true, summary = items)
         )
     }
 }

@@ -7,4 +7,7 @@
     <string name="text_bills_paids">Paids</string>
     <string name="text_bills_unpaids">Unpaids</string>
     <string name="text_bills_overdue">Overdue</string>
+    <string name="text_try_again">Try again</string>
+    <string name="text_summary_error_title">Oh, we\'ve made a mistake. 😪</string>
+    <string name="text_summary_error_message">Something really bad happened and we didn\'t correctly handled it. Try again later.</string>
 </resources>

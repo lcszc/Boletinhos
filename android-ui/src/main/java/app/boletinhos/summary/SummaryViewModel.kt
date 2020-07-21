@@ -1,8 +1,8 @@
 package app.boletinhos.summary
 
-
 import app.boletinhos.domain.summary.FetchSummary
 import app.boletinhos.domain.summary.Summary
+import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.summary.SummaryItemCardView.Model.Kind
 import app.boletinhos.wip.WipViewKey
@@ -20,9 +20,7 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.onEmpty
-import java.util.Locale
 import javax.inject.Inject
-
 import app.boletinhos.R.drawable as Drawables
 import app.boletinhos.R.string as Texts
 
@@ -32,10 +30,6 @@ class SummaryViewModel @Inject constructor(
     private val fetchSummary: FetchSummary,
     private val backstack: Backstack
 ) : Bundleable {
-    private val locale by lazy {
-        Locale.getDefault()
-    }
-
     private val viewState = MutableStateFlow(SummaryViewState())
 
     override fun fromBundle(bundle: StateBundle?) {
@@ -47,25 +41,25 @@ class SummaryViewModel @Inject constructor(
     }
 
     operator fun invoke(viewEvents: Flow<SummaryViewEvent>): Flow<SummaryViewState> {
-        viewEvents.filterIsInstance<SummaryViewEvent.OnAttach>().handleOnAttach()
+        viewEvents.filterIsInstance<SummaryViewEvent.FetchData>().thenFetch()
         return viewState
     }
 
-    private fun Flow<SummaryViewEvent.OnAttach>.handleOnAttach() {
+    private fun Flow<SummaryViewEvent.FetchData>.thenFetch() {
         onEach {
             viewState.value = SummaryViewState(isLoading = true)
             fetchSummary()
-                .ifEmptyLaunchWelcomeScreen()
+                .flowOn(viewModelScope.io)
                 .ifSuccessRenderOnUi()
                 .onErrorRenderOnUi()
-                .flowOn(viewModelScope.io)
+                .ifEmptyLaunchWelcomeScreen()
                 .launchIn(viewModelScope)
         }.launchIn(viewModelScope)
     }
 
     private fun Flow<Summary>.ifEmptyLaunchWelcomeScreen() = onEmpty {
         backstack.setHistory(
-            History.of(WipViewKey("Welcome Screen!")),
+            History.of(WipViewKey("Welcome Screen")),
             StateChange.BACKWARD
         )
     }
@@ -74,9 +68,9 @@ class SummaryViewModel @Inject constructor(
         val itemMonth = SummaryItemCardView.Model(
             iconRes = Drawables.ic_summary,
             titleRes = Texts.text_month_summary,
-            titleArg = summary.displayName(locale),
+            titleArg = summary.displayName(),
             descriptionRes = Texts.text_bills,
-            textValue = summary.totalValue.toString(),
+            textValue = summary.formattedTotalValue(),
             kind = Kind.MONTH_SUMMARY
         )
 
@@ -105,12 +99,18 @@ class SummaryViewModel @Inject constructor(
         )
 
         viewState.value = SummaryViewState(
+            isActionAndSummaryVisible = true,
             summary = listOf(itemMonth, itemPaids, itemUnpaids, itemOverdue)
         )
     }
 
     private fun Flow<Summary>.onErrorRenderOnUi() = catch {
-        viewState.value = SummaryViewState(summary = null)
+        val error = ErrorViewModel(
+            titleRes = Texts.text_summary_error_title,
+            messageRes = Texts.text_summary_error_message
+        )
+
+        viewState.value = SummaryViewState(error = error)
     }
 
     companion object {

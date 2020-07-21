@@ -5,6 +5,10 @@ import android.content.Context
 import android.content.SharedPreferences
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import common.AppContext
+import common.AppScope
+import common.ImmediateDispatcher
+import common.IoDispatcher
+import common.MainDispatcher
 import dagger.Module
 import dagger.Provides
 import kotlinx.coroutines.CoroutineDispatcher
@@ -17,19 +21,19 @@ object TestModule {
     internal fun provideContext(app: Application): Context = app
 
     @Provides
-    @common.ImmediateDispatcher
+    @ImmediateDispatcher
     internal fun provideImmediateDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
     @Provides
-    @common.MainDispatcher
+    @MainDispatcher
     internal fun provideMainDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
     @Provides
-    @common.IoDispatcher
+    @IoDispatcher
     internal fun provideIoDispatcher(): CoroutineDispatcher = Dispatchers.Main
 
     @Provides
-    @common.AppScope
+    @AppScope
     internal fun provideSharedPreferences(
         @AppContext context: Context
     ): SharedPreferences {
@@ -37,7 +41,7 @@ object TestModule {
     }
 
     @Provides
-    @common.AppScope
+    @AppScope
     internal fun provideCrashlytics(): FirebaseCrashlytics {
         return FirebaseCrashlytics.getInstance()
     }

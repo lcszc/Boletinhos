@@ -17,6 +17,7 @@ object Androidx {
         const val runner = "androidx.test:runner:1.1.0"
         const val orchestrator = "androidx.test:orchestrator:1.1.0"
         const val junit = "androidx.test.ext:junit:1.1.1"
+        const val espresso = "androidx.test.espresso:espresso-core:3.1.0"
     }
 }
 

@@ -5,7 +5,6 @@ import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
-import java.time.YearMonth
 import javax.inject.Inject
 
 class FetchSummary @Inject constructor(

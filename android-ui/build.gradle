@@ -27,6 +27,11 @@ android {
             "-Xuse-experimental=kotlinx.coroutines.ObsoleteCoroutinesApi"
         ]
     }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude("META-INF/LGPL2.1")
+    }
 }
 
 repositories {
@@ -53,6 +58,8 @@ dependencies {
 
     testImplementation(Kotlinx.Coroutines.test, Testing.robolectric, Testing.mockK)
 
-    androidTestImplementation(Androidx.Testing.coreKtx)
+    androidTestImplementation(Androidx.Testing.coreKtx, Androidx.Testing.espresso)
+    androidTestImplementation(project(":testutil"), Kotlinx.Coroutines.test)
+
     kaptAndroidTest(DI.compiler)
 }
