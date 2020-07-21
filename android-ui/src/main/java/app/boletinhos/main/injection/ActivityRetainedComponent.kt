@@ -21,4 +21,5 @@ interface ActivityRetainedComponent {
     }
 }
 
+val Backstack.activityRetainedComponent get() = lookup<ActivityRetainedService>().component
 val ServiceBinder.activityRetainedComponent get() = lookup<ActivityRetainedService>().component
