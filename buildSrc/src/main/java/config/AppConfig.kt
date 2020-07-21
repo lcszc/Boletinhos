@@ -2,7 +2,7 @@ package config
 
 object AppConfig {
     const val id = "app.boletinhos"
-    const val testRunner = "androidx.test.runner.AndroidJUnitRunner"
+    const val testRunner = "app.boletinhos.runner.TestRunner"
 
     object Sdk {
         const val min = 16

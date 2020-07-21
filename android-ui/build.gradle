@@ -1,4 +1,11 @@
-import config.*
+import config.Androidx
+import config.DI
+import config.Firebase
+import config.Kotlinx
+import config.LeakCanary
+import config.SimpleStack
+import config.Testing
+import config.UI
 
 apply plugin: 'com.android.application'
 apply from: "$rootDir/build-system/android.gradle"
@@ -46,4 +53,5 @@ dependencies {
     testImplementation(Kotlinx.Coroutines.test, Testing.robolectric, Testing.mockK)
 
     androidTestImplementation(Androidx.Testing.coreKtx)
+    kaptAndroidTest(DI.compiler)
 }

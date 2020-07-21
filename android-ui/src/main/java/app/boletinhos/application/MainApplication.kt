@@ -7,7 +7,7 @@ import app.boletinhos.application.injection.DaggerAppComponent
 import app.boletinhos.crashcat.CrashCat
 import javax.inject.Inject
 
-class MainApplication : Application() {
+open class MainApplication : Application() {
     private lateinit var component: AppComponent
 
     private fun injector(): AppComponent {
@@ -26,5 +26,5 @@ class MainApplication : Application() {
         crashCat.configure()
     }
 
-    fun appComponent() = component
+    open fun appComponent() = component
 }
