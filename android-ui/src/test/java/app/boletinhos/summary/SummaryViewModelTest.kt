@@ -7,17 +7,17 @@ import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.viewModelScope
+import app.boletinhos.testutil.TestKey
 import app.boletinhos.wip.WipViewKey
 import assertk.assertThat
-import assertk.assertions.contains
-import assertk.assertions.containsExactly
-import assertk.assertions.hasSize
-import assertk.assertions.isEqualTo
-import assertk.assertions.isNull
+import assertk.assertions.*
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
+import com.zhuinden.simplestack.ServiceBinder
 import com.zhuinden.simplestack.navigator.DefaultViewKey
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
+import com.zhuinden.simplestackextensions.servicesktx.add
+import com.zhuinden.simplestackextensions.servicesktx.lookup
 import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.channels.BroadcastChannel
@@ -39,17 +39,15 @@ class SummaryViewModelTest {
 
     private val summaryPreferences: SummaryPreferences = mockk(relaxed = true)
     private val summaryService: SummaryService = mockk(relaxed = true)
-    private lateinit var backstack: Backstack
-
-    private val useCase by lazy { FetchSummary(summaryPreferences, summaryService) }
-    private val viewModel by lazy { SummaryViewModel(viewModelScope, useCase, backstack) }
-
+    private val useCase = FetchSummary(summaryPreferences, summaryService)
     private val viewEvents = BroadcastChannel<SummaryViewEvent>(Channel.BUFFERED)
+
+    private lateinit var backstack: Backstack
 
     @Before fun setUp() {
         backstack = Backstack().apply {
             setScopedServices(DefaultServiceProvider())
-            setup(History.of(WipViewKey("Summary Screen")))
+            setup(History.of(TestSummaryViewKey()))
             setStateChanger { _, completionCallback -> completionCallback.stateChangeComplete() }
         }
     }
@@ -57,7 +55,9 @@ class SummaryViewModelTest {
     @Test fun `should navigate backward to welcome screen if there is no summary available`() {
         coEvery { summaryService.hasSummary() } returns false
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow())
+
         viewEvents.offer(SummaryViewEvent.FetchData)
 
         assertThat(backstack.top<DefaultViewKey>()).isEqualTo(WipViewKey("Welcome Screen"))
@@ -74,6 +74,7 @@ class SummaryViewModelTest {
 
         val states = mutableListOf<SummaryViewState>()
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow()).onEach { state ->
             states.add(state)
         }.launchIn(viewModelScope)
@@ -130,6 +131,7 @@ class SummaryViewModelTest {
 
         val states = mutableListOf<SummaryViewState>()
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow()).onEach { state ->
             states.add(state)
         }.launchIn(viewModelScope)
@@ -182,6 +184,7 @@ class SummaryViewModelTest {
 
         val states = mutableListOf<SummaryViewState>()
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow()).onEach { state ->
             states.add(state)
         }.launchIn(viewModelScope)
@@ -198,6 +201,7 @@ class SummaryViewModelTest {
 
         val states = mutableListOf<SummaryViewState>()
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow()).onEach { state ->
             states.add(state)
         }.launchIn(viewModelScope)
@@ -222,6 +226,7 @@ class SummaryViewModelTest {
 
         val states = mutableListOf<SummaryViewState>()
 
+        val viewModel = backstack.lookup<SummaryViewModel>()
         viewModel(viewEvents.asFlow()).onEach { state ->
             states.add(state)
         }.launchIn(viewModelScope)
@@ -268,5 +273,49 @@ class SummaryViewModelTest {
             SummaryViewState(isLoading = true),
             SummaryViewState(isActionAndSummaryVisible = true, summary = items)
         )
+    }
+
+    @Test fun `should persist and restore view state`() {
+        val summary1 = Summary(
+            month = Month.JANUARY,
+            year = 2019,
+            totalValue = 1900, paids = 0, unpaids = 0, overdue = 0)
+        val summary2 = summary1.copy(month = Month.FEBRUARY)
+
+        coEvery { summaryService.hasSummary() } returns true
+        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryService.getSummaries() } returns flowOf(listOf(summary2, summary1))
+
+        val states = mutableListOf<SummaryViewState>()
+
+        val viewModel = backstack.lookup<SummaryViewModel>()
+        viewModel(viewEvents.asFlow()).onEach { state ->
+            states.add(state)
+        }.launchIn(viewModelScope)
+
+        viewEvents.offer(SummaryViewEvent.FetchData)
+
+        val stateBundle = backstack.toBundle()
+
+        val newBackstack = Backstack().apply {
+            setScopedServices(DefaultServiceProvider())
+            setup(History.of(SummaryViewKey()))
+            fromBundle(stateBundle)
+            setStateChanger { _, completionCallback -> completionCallback.stateChangeComplete() }
+        }
+
+        val viewModel2 = newBackstack.lookup<SummaryViewModel>()
+        viewModel2(viewEvents.asFlow()).onEach { restoredState ->
+            assertThat(restoredState).isEqualTo(states.last())
+        }.launchIn(viewModelScope)
+    }
+
+    inner class TestSummaryViewKey : TestKey(), DefaultServiceProvider.HasServices {
+        override fun bindServices(serviceBinder: ServiceBinder) {
+            val backstack = serviceBinder.backstack
+            serviceBinder.add(SummaryViewModel(viewModelScope, useCase, backstack))
+        }
+
+        override fun getScopeTag() = this::class.java.name
     }
 }
