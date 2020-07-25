@@ -1,8 +1,6 @@
 package app.boletinhos.summary
 
-import app.boletinhos.R
 import app.boletinhos.domain.summary.FetchSummary
-import app.boletinhos.domain.summary.Summary
 import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
 import app.boletinhos.error.ErrorViewModel
@@ -30,8 +28,6 @@ import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
 import testutil.MainCoroutineRule
-import java.time.Month
-import app.boletinhos.R.drawable as Drawables
 import app.boletinhos.R.string as Texts
 
 class SummaryViewModelTest {
@@ -65,56 +61,22 @@ class SummaryViewModelTest {
     }
 
     @Test fun `should emit user's actual selected summary`() {
-        val summary1 = Summary(month = Month.JANUARY, year = 2019, totalValue = 1900, paids = 0, unpaids = 0, overdue = 0)
-        val summary2 = summary1.copy(month = Month.FEBRUARY)
+        val summaries = createSummaries()
+        val selectedSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns summary1.id()
-        coEvery { summaryService.getSummaries() } returns flowOf(listOf(summary1, summary2))
+        coEvery { summaryPreferences.actualSummaryId() } returns selectedSummary.id()
+        coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
-
         val viewModel = backstack.lookup<SummaryViewModel>()
-        viewModel(viewEvents.asFlow()).onEach { state ->
-            states.add(state)
-        }.launchIn(viewModelScope)
+        viewModel(viewEvents.asFlow())
+            .onEach { state -> states.add(state) }
+            .launchIn(viewModelScope)
 
         viewEvents.offer(SummaryViewEvent.FetchData)
 
-
-        val items = listOf(
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_summary,
-                titleRes = R.string.text_month_summary,
-                titleArg = summary1.displayName(),
-                descriptionRes = R.string.text_bills,
-                textValue = summary1.formattedTotalValue(),
-                kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
-            ),
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_paids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary1.paids.toString(),
-                kind = SummaryItemCardView.Model.Kind.PAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_hourglass,
-                titleRes = R.string.text_bills_unpaids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary1.unpaids.toString(),
-                kind = SummaryItemCardView.Model.Kind.UNPAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_overdue,
-                descriptionRes = R.string.text_bills,
-                textValue = summary1.overdue.toString(),
-                kind = SummaryItemCardView.Model.Kind.OVERDUE
-            )
-        )
+        val items = createItemsFromSummary(selectedSummary)
 
         assertThat(states).contains(
             SummaryViewState(isActionAndSummaryVisible = true, summary = items)
@@ -122,55 +84,22 @@ class SummaryViewModelTest {
     }
 
     @Test fun `should emit most recent summary if user didn't selected any`() {
-        val summary1 = Summary(month = Month.JANUARY, year = 2019, totalValue = 1900, paids = 0, unpaids = 0, overdue = 0)
-        val summary2 = summary1.copy(month = Month.FEBRUARY)
+        val summaries = createSummaries().sortedByDescending { it.id() }
+        val mostRecentSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
         coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
-        coEvery { summaryService.getSummaries() } returns flowOf(listOf(summary2, summary1))
+        coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
-
         val viewModel = backstack.lookup<SummaryViewModel>()
-        viewModel(viewEvents.asFlow()).onEach { state ->
-            states.add(state)
-        }.launchIn(viewModelScope)
+        viewModel(viewEvents.asFlow())
+            .onEach { state -> states.add(state) }
+            .launchIn(viewModelScope)
 
         viewEvents.offer(SummaryViewEvent.FetchData)
 
-        val items = listOf(
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_summary,
-                titleRes = R.string.text_month_summary,
-                titleArg = summary2.displayName(),
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.formattedTotalValue(),
-                kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
-            ),
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_paids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.paids.toString(),
-                kind = SummaryItemCardView.Model.Kind.PAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_hourglass,
-                titleRes = R.string.text_bills_unpaids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.unpaids.toString(),
-                kind = SummaryItemCardView.Model.Kind.UNPAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_overdue,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.overdue.toString(),
-                kind = SummaryItemCardView.Model.Kind.OVERDUE
-            )
-        )
+        val items = createItemsFromSummary(mostRecentSummary)
 
         assertThat(states).contains(
             SummaryViewState(isActionAndSummaryVisible = true, summary = items)
@@ -200,11 +129,10 @@ class SummaryViewModelTest {
         coEvery { summaryService.getSummaries() } throws IllegalStateException("god knows why")
 
         val states = mutableListOf<SummaryViewState>()
-
         val viewModel = backstack.lookup<SummaryViewModel>()
-        viewModel(viewEvents.asFlow()).onEach { state ->
-            states.add(state)
-        }.launchIn(viewModelScope)
+        viewModel(viewEvents.asFlow())
+            .onEach { state -> states.add(state) }
+            .launchIn(viewModelScope)
 
         viewEvents.offer(SummaryViewEvent.FetchData)
 
@@ -217,56 +145,22 @@ class SummaryViewModelTest {
     }
 
     @Test fun `should emit loading process`() {
-        val summary1 = Summary(month = Month.JANUARY, year = 2019, totalValue = 1900, paids = 0, unpaids = 0, overdue = 0)
-        val summary2 = summary1.copy(month = Month.FEBRUARY)
+        val summaries = createSummaries().sortedByDescending { it.id() }
+        val mostRecentSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
         coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
-        coEvery { summaryService.getSummaries() } returns flowOf(listOf(summary2, summary1))
+        coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
-
         val viewModel = backstack.lookup<SummaryViewModel>()
-        viewModel(viewEvents.asFlow()).onEach { state ->
-            states.add(state)
-        }.launchIn(viewModelScope)
+        viewModel(viewEvents.asFlow())
+            .onEach { state -> states.add(state) }
+            .launchIn(viewModelScope)
 
         viewEvents.offer(SummaryViewEvent.FetchData)
 
-        val items = listOf(
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_summary,
-                titleRes = R.string.text_month_summary,
-                titleArg = summary2.displayName(),
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.formattedTotalValue(),
-                kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
-            ),
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_paids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.paids.toString(),
-                kind = SummaryItemCardView.Model.Kind.PAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_hourglass,
-                titleRes = R.string.text_bills_unpaids,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.unpaids.toString(),
-                kind = SummaryItemCardView.Model.Kind.UNPAIDS
-            ),
-
-            SummaryItemCardView.Model(
-                iconRes = Drawables.ic_check,
-                titleRes = R.string.text_bills_overdue,
-                descriptionRes = R.string.text_bills,
-                textValue = summary2.overdue.toString(),
-                kind = SummaryItemCardView.Model.Kind.OVERDUE
-            )
-        )
-
+        val items = createItemsFromSummary(mostRecentSummary)
 
         assertThat(states).containsExactly(
             SummaryViewState(), // <- default
@@ -276,25 +170,21 @@ class SummaryViewModelTest {
     }
 
     @Test fun `should persist and restore view state`() {
-        val summary1 = Summary(
-            month = Month.JANUARY,
-            year = 2019,
-            totalValue = 1900, paids = 0, unpaids = 0, overdue = 0)
-        val summary2 = summary1.copy(month = Month.FEBRUARY)
+        val summaries = createSummaries()
 
         coEvery { summaryService.hasSummary() } returns true
         coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
-        coEvery { summaryService.getSummaries() } returns flowOf(listOf(summary2, summary1))
+        coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
-
         val viewModel = backstack.lookup<SummaryViewModel>()
-        viewModel(viewEvents.asFlow()).onEach { state ->
-            states.add(state)
-        }.launchIn(viewModelScope)
+        viewModel(viewEvents.asFlow())
+            .onEach { state -> states.add(state) }
+            .launchIn(viewModelScope)
 
         viewEvents.offer(SummaryViewEvent.FetchData)
 
+        // -> State Restoration
         val stateBundle = backstack.toBundle()
 
         val newBackstack = Backstack().apply {
@@ -305,9 +195,9 @@ class SummaryViewModelTest {
         }
 
         val viewModel2 = newBackstack.lookup<SummaryViewModel>()
-        viewModel2(viewEvents.asFlow()).onEach { restoredState ->
-            assertThat(restoredState).isEqualTo(states.last())
-        }.launchIn(viewModelScope)
+        viewModel2(viewEvents.asFlow())
+            .onEach { restoredState -> assertThat(restoredState).isEqualTo(states.last()) }
+            .launchIn(viewModelScope)
     }
 
     inner class TestSummaryViewKey : TestKey(), DefaultServiceProvider.HasServices {
