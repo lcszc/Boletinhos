@@ -3,7 +3,7 @@ package app.boletinhos.domain.bill
 import java.time.LocalDate
 import javax.inject.Inject
 
-class PayBill @Inject constructor(private val gateway: ManageBillService) {
+class PayBill @Inject constructor(private val gateway: BillGateway) {
     suspend operator fun invoke(bill: Bill) {
         if (bill.isPaid()) throw BillsIsAlreadyPaidException
 

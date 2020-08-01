@@ -3,13 +3,15 @@ package app.boletinhos.preferences.injection
 import android.content.Context
 import android.content.SharedPreferences
 import common.AppScope
+import dagger.Module
+import dagger.Provides
 
-@dagger.Module
+@Module
 object UserPreferencesModule {
     private const val NAME = "app_prefs"
 
-    @dagger.Provides
-    @common.AppScope
+    @Provides
+    @AppScope
     internal fun provideSharedPreferences(
         @common.AppContext context: Context
     ): SharedPreferences {

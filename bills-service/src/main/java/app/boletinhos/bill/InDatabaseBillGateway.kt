@@ -4,9 +4,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Update
 import app.boletinhos.domain.bill.Bill
-import app.boletinhos.domain.bill.ManageBillService
+import app.boletinhos.domain.bill.BillGateway
 
-@Dao internal interface InDatabaseManageBillService : ManageBillService {
+@Dao internal interface InDatabaseBillGateway : BillGateway {
     @Insert(entity = BillEntity::class)
     override suspend fun create(bill: Bill)
 

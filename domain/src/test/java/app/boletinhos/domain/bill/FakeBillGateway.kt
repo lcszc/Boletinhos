@@ -1,6 +1,6 @@
 package app.boletinhos.domain.bill
 
-class FakeManageBillService : ManageBillService {
+class FakeBillGateway : BillGateway {
     private val _bills = mutableMapOf<Long, Bill>()
     val bills: Map<Long, Bill> = _bills
 

@@ -2,7 +2,7 @@ package app.boletinhos.domain.bill
 
 import javax.inject.Inject
 
-class CreateBill @Inject constructor(private val gateway: ManageBillService) {
+class CreateBill @Inject constructor(private val gateway: BillGateway) {
     suspend operator fun invoke(bill: Bill) {
         val newBill = when {
             !bill.isValueValid -> throw BillHasInvalidValueException

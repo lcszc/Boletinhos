@@ -2,13 +2,13 @@ package app.boletinhos.testutil
 
 import app.boletinhos.domain.bill.Bill
 import app.boletinhos.domain.bill.BillStatus
-import app.boletinhos.domain.bill.ManageBillService
+import app.boletinhos.domain.bill.BillGateway
 import app.boletinhos.domain.summary.Summary
 import kotlinx.coroutines.runBlocking
 import java.time.LocalDate
 import javax.inject.Inject
 
-class FakeBillsFactory @Inject constructor(private val manageBillService: ManageBillService) {
+class FakeBillsFactory @Inject constructor(private val billGateway: BillGateway) {
     fun createFakeSummary(): Summary {
         val bill = Bill(
             name = "Some Bill name",
@@ -26,7 +26,7 @@ class FakeBillsFactory @Inject constructor(private val manageBillService: Manage
         val bills = listOf(bill, bill2, bill3, bill4)
 
         runBlocking {
-            bills.forEach { manageBillService.create(it) }
+            bills.forEach { billGateway.create(it) }
         }
 
         return Summary(

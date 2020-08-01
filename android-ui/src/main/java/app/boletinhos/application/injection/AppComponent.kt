@@ -8,9 +8,12 @@ import app.boletinhos.main.MainActivity
 import app.boletinhos.main.injection.ActivityRetainedComponent
 import app.boletinhos.preferences.injection.UserPreferencesModule
 import app.boletinhos.summary.injection.SummaryServiceModule
+import common.AppScope
+import dagger.BindsInstance
+import dagger.Component
 
-@common.AppScope
-@dagger.Component(
+@AppScope
+@Component(
     modules = [
         AppModule::class,
         UserPreferencesModule::class,
@@ -25,7 +28,8 @@ interface AppComponent {
 
     fun activityRetainedComponentFactory(): ActivityRetainedComponent.Factory
 
-    @dagger.Component.Factory interface Factory {
-        fun create(@dagger.BindsInstance app: Application): AppComponent
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance app: Application): AppComponent
     }
 }

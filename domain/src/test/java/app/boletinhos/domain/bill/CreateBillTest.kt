@@ -9,7 +9,7 @@ import org.junit.Test
 import java.time.LocalDate
 
 class CreateBillTest {
-    private val gateway = FakeManageBillService()
+    private val gateway = FakeBillGateway()
     private val createBill = CreateBill(gateway)
 
     private val fakeBill = Bill(
