@@ -9,7 +9,7 @@ class CreateBill @Inject constructor(private val gateway: BillGateway) {
             !bill.isNameValid -> throw BillHasInvalidNameException
             !bill.isDescriptionValid -> throw BillHasInvalidDescriptionException
             else -> {
-                val status = if (bill.isPaid()) BillStatus.OVERDUE else bill.status
+                val status = if (bill.isOverdue()) BillStatus.OVERDUE else bill.status
                 bill.copy(status = status)
             }
         }
