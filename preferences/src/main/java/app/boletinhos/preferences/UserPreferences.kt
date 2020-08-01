@@ -2,9 +2,10 @@ package app.boletinhos.preferences
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import common.AppScope
 import javax.inject.Inject
 
-@common.AppScope
+@AppScope
 class UserPreferences @Inject constructor(
     private val prefs: SharedPreferences
 ) {

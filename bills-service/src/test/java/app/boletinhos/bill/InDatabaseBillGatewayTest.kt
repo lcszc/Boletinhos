@@ -9,13 +9,13 @@ import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 import java.time.LocalDate
 
-class InDatabaseManageBillServiceTest : AppDatabaseTest() {
+class InDatabaseBillGatewayTest : AppDatabaseTest() {
     @Test fun `should create new bill`() = runBlockingTest {
         val expected = BillsFactory
             .pick()
             .first()
 
-        manageBillService.create(expected)
+        billGateway.create(expected)
 
         assertThat(billService.getById(id = 1)).isEqualTo(expected)
     }
@@ -26,14 +26,14 @@ class InDatabaseManageBillServiceTest : AppDatabaseTest() {
             .first()
             .copy(dueDate = LocalDate.now().minusMonths(1), status = BillStatus.OVERDUE)
 
-        manageBillService.create(bill)
-        manageBillService.create(bill.copy(name = "Legal"))
+        billGateway.create(bill)
+        billGateway.create(bill.copy(name = "Legal"))
 
         val billToPay = billService.getById(id = 1)
             .copy(paymentDate = LocalDate.now(), status = BillStatus.PAID)
             .also { it.id = 1 }
 
-        manageBillService.pay(billToPay)
+        billGateway.pay(billToPay)
 
         assertThat(billService.getById(id = 1)).isEqualTo(billToPay)
     }

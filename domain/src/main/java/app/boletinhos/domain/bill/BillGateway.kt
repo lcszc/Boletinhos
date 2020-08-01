@@ -1,6 +1,6 @@
 package app.boletinhos.domain.bill
 
-interface ManageBillService {
+interface BillGateway {
     suspend fun create(bill: Bill)
     suspend fun pay(bill: Bill)
 }

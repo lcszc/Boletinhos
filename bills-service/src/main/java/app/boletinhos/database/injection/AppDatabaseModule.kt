@@ -3,13 +3,17 @@ package app.boletinhos.database.injection
 import android.content.Context
 import androidx.room.Room
 import app.boletinhos.database.AppDatabase
+import common.AppContext
+import common.AppScope
+import dagger.Module
+import dagger.Provides
 
-@dagger.Module
+@Module
 object AppDatabaseModule {
-    @dagger.Provides
-    @common.AppScope
+    @Provides
+    @AppScope
     internal fun provideAppDatabase(
-        @common.AppContext context: Context
+        @AppContext context: Context
     ): AppDatabase {
         return Room
             .databaseBuilder(context, AppDatabase::class.java, AppDatabase.DATABASE_NAME)

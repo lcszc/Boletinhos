@@ -1,11 +1,14 @@
 package app.boletinhos.crashcat.injection
 
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import common.AppScope
+import dagger.Module
+import dagger.Provides
 
-@dagger.Module
+@Module
 object CrashlyticsModule {
-    @dagger.Provides
-    @common.AppScope
+    @Provides
+    @AppScope
     internal fun provideCrashlytics(): FirebaseCrashlytics {
         return FirebaseCrashlytics.getInstance()
     }

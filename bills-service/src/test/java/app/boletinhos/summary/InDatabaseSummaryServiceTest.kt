@@ -4,12 +4,7 @@ import app.boletinhos.fakes.SummaryFactory
 import app.boletinhos.testutil.AppDatabaseTest
 import assertk.assertAll
 import assertk.assertThat
-import assertk.assertions.containsAll
-import assertk.assertions.containsExactly
-import assertk.assertions.hasSize
-import assertk.assertions.isEmpty
-import assertk.assertions.isFalse
-import assertk.assertions.isTrue
+import assertk.assertions.*
 import kotlinx.coroutines.test.runBlockingTest
 import org.junit.Test
 
@@ -17,7 +12,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
     @Test fun `should get summaries for a given batch of bills`() = runBlockingTest {
         val bills = SummaryFactory.bills
 
-        bills.forEach { manageBillService.create(it) }
+        bills.forEach { billGateway.create(it) }
 
         summaryService.getSummaries().test { summaries ->
             assertAll {
@@ -34,7 +29,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
     @Test fun `should check if summaries are correctly ordered by its due date`() = runBlockingTest {
         val bills = SummaryFactory.bills
 
-        bills.forEach { manageBillService.create(it) }
+        bills.forEach { billGateway.create(it) }
 
         summaryService.getSummaries().test { summaries ->
             assertAll {
@@ -60,7 +55,7 @@ class InDatabaseSummaryServiceTest : AppDatabaseTest() {
 
     @Test fun `should be true when there is bill to create a summary`() = runBlockingTest {
         val bills = SummaryFactory.bills
-        bills.forEach { manageBillService.create(it) }
+        bills.forEach { billGateway.create(it) }
 
         assertThat(summaryService.hasSummary()).isTrue()
     }
