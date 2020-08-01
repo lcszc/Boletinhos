@@ -17,7 +17,10 @@ data class Bill(
 ) {
     var id: Long = 0L
 
-    fun isOverdue() = dueDate.isBefore(LocalDate.now())
+    fun isOverdue(): Boolean {
+        if (isPaid()) return false
+        return dueDate.isBefore(LocalDate.now())
+    }
 
     fun isPaid() = paymentDate != null
 
