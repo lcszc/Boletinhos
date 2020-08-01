@@ -2,6 +2,7 @@ package app.boletinhos.preferences.injection
 
 import android.content.Context
 import android.content.SharedPreferences
+import common.AppContext
 import common.AppScope
 import dagger.Module
 import dagger.Provides
@@ -13,7 +14,7 @@ object UserPreferencesModule {
     @Provides
     @AppScope
     internal fun provideSharedPreferences(
-        @common.AppContext context: Context
+        @AppContext context: Context
     ): SharedPreferences {
         return context.getSharedPreferences(NAME, Context.MODE_PRIVATE)
     }
