@@ -25,6 +25,17 @@ Boletinhos is also a playground project we aim to do a lot of experiments here u
  - Room (Android Arch Components)
  - Dagger 2
  - Androidx
+ - Espresso
+ - Junit 4
+ - MocKk
+ - AssertK
+ - Robolectric
+ - Material Design Language
+ - LeakCanary
+ - Detekt
+ - Jacoco
+ - Firebase Test Lab
+ - GitHub Actions (CI)
 
 **Disclaimer**: this project doesn't follow Google's recommended architecture. Feel free to fork the project and apply it or do whatever you want to. If you're expecting too see this project using Jetpack's ViewModel, LiveData, Navigation and Fragments, unfortunately we don't use it.
 
