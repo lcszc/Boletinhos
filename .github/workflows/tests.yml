@@ -6,13 +6,11 @@ on:
       - 'main'
     paths-ignore:
       - '*.md'
-      - '.github/branding/**'
   pull_request:
     branches:
       - 'main'
     paths-ignore:
       - '*.md'
-      - '.github/branding/**'
 
 jobs:
   test:

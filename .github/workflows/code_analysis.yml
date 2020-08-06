@@ -6,7 +6,6 @@ on:
       - 'main'
     paths-ignore:
       - '*.md'
-      - '.github/branding/**'
 
 jobs:
   code_analysis:
