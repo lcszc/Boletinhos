@@ -5,13 +5,13 @@ on:
     branches:
       - 'main'
     paths-ignore:
-      - '*.md',
+      - '*.md'
       - '.github/branding/**'
   pull_request:
     branches:
       - 'main'
     paths-ignore:
-      - '*.md',
+      - '*.md'
       - '.github/branding/**'
 
 jobs:
