@@ -26,7 +26,7 @@ Boletinhos is also a playground project we aim to do a lot of experiments here u
  - Dagger 2
  - Androidx
 
-**Disclaimer**: this project doesn't follow Google's recommend architecture. Feel free to fork the project and apply it or do whatever you want to. If you're expecting too see this project using Jetpack's ViewModel, LiveData, Navigation and Fragments, unfortunately we don't use it. 
+**Disclaimer**: this project doesn't follow Google's recommended architecture. Feel free to fork the project and apply it or do whatever you want to. If you're expecting too see this project using Jetpack's ViewModel, LiveData, Navigation and Fragments, unfortunately we don't use it.
 
 This project's architecture has been built on top of **SOLID** concepts and we also implement **MVVM** using pure reactive _ViewModels_ with _Kotlin Flow_.
 
