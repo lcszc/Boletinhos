@@ -3,6 +3,7 @@ package app.boletinhos.main.injection
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import app.boletinhos.summary.SummaryViewModel
+import app.boletinhos.welcome.WelcomeViewModel
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.ServiceBinder
 import com.zhuinden.simplestackextensions.servicesktx.lookup
@@ -16,6 +17,7 @@ interface ActivityRetainedComponent {
     fun coroutineScope(): LifecycleAwareCoroutineScope
 
     fun summaryViewModel(): SummaryViewModel
+    fun welcomeViewModel(): WelcomeViewModel
 
     @Subcomponent.Factory
     interface Factory {
