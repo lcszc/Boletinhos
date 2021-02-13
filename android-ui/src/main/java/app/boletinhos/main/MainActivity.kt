@@ -9,7 +9,7 @@ import app.boletinhos.application.injection.AppComponent
 import app.boletinhos.main.injection.ActivityRetainedServicesFactory
 import app.boletinhos.navigation.ViewStateChanger
 import app.boletinhos.navigation.viewScope
-import app.boletinhos.welcome.WelcomeViewKey
+import app.boletinhos.summary.SummaryViewKey
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .setStateChanger(stateChanger)
             .setScopedServices(DefaultServiceProvider())
             .setGlobalServices(activityRetainedServicesFactory)
-            .install(this, root, History.single(WelcomeViewKey()))
+            .install(this, root, History.single(SummaryViewKey()))
     }
 
     override fun onBackPressed() {
