@@ -13,9 +13,10 @@ import app.boletinhos.main.MainActivity
 import app.boletinhos.navigation.ViewKey
 import app.boletinhos.testutil.FakeBillsFactory
 import app.boletinhos.testutil.atPositionOnView
-import app.boletinhos.wip.WipViewKey
+import app.boletinhos.welcome.WelcomeViewKey
 import assertk.assertThat
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
@@ -46,8 +47,8 @@ class BadRobot @Inject constructor(
         withScenario.onActivity { activity ->
             val backstack = activity.backstack
 
+            assertThat(backstack.top<ViewKey>()).isInstanceOf(WelcomeViewKey::class.java)
             assertThat(backstack.getHistory<ViewKey>().size).isEqualTo(1)
-            assertThat(backstack.top<ViewKey>()).isEqualTo(WipViewKey("Welcome Screen"))
         }
     }
 

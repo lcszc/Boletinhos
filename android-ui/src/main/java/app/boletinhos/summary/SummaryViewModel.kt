@@ -5,7 +5,7 @@ import app.boletinhos.domain.summary.Summary
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.summary.SummaryItemCardView.Model.Kind
-import app.boletinhos.wip.WipViewKey
+import app.boletinhos.welcome.WelcomeViewKey
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.Bundleable
 import com.zhuinden.simplestack.History
@@ -59,7 +59,7 @@ class SummaryViewModel @Inject constructor(
 
     private fun Flow<Summary>.ifEmptyLaunchWelcomeScreen() = onEmpty {
         backstack.setHistory(
-            History.of(WipViewKey("Welcome Screen")),
+            History.of(WelcomeViewKey()),
             StateChange.BACKWARD
         )
     }
