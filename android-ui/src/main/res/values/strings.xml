@@ -12,4 +12,5 @@
     <string name="text_summary_error_message">Something really bad happened and we didn\'t correctly handled it. Try again later.</string>
     <string name="text_welcome_title">Ooh, looks like it is your first time here… 😏</string>
     <string name="text_welcome_message">What do you think about start adding your first bill? 🚀</string>
+    <string name="text_add_bill">Add bill</string>
 </resources>
