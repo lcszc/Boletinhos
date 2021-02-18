@@ -10,7 +10,8 @@ open class TextInput(
     context: Context,
     attrs: AttributeSet? = null
 ) : TextInputLayout(context, attrs) {
-    private lateinit var inputBinding: TextInputContentBinding
+    internal lateinit var inputBinding: TextInputContentBinding
+        private set
 
     open var value: String
         get() = inputBinding.input.text?.toString().orEmpty()
