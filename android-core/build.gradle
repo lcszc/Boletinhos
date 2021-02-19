@@ -1,6 +1,7 @@
 import config.DI
 import config.Kotlinx
 import config.SimpleStack
+import config.Testing
 import config.UI
 
 apply plugin: 'com.android.library'
@@ -33,5 +34,5 @@ dependencies {
     implementation(DI.dagger)
     kapt(DI.compiler)
 
-    testImplementation(Kotlinx.Coroutines.test,)
+    testImplementation(Kotlinx.Coroutines.test, Testing.robolectric)
 }

@@ -8,11 +8,14 @@ import app.boletinhos.widget.text.TextInput
 import java.text.NumberFormat
 import java.util.Locale
 
-class CurrencyInput(context: Context, attrs: AttributeSet? = null) : TextInput(context, attrs) {
+class CurrencyInput @JvmOverloads constructor(
+    context: Context,
+    attrs: AttributeSet? = null,
+    val locale: Locale = Locale.getDefault()
+) : TextInput(context, attrs) {
     private val textWatcher = CurrencyTextWatcher(this)
 
     internal val input get() = inputBinding.input
-    internal val locale = Locale.getDefault()
 
     var rawValue: Long = 0
         internal set
