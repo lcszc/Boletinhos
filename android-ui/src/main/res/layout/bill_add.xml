@@ -39,46 +39,30 @@
             <app.boletinhos.widget.currency.CurrencyInput
                 android:id="@+id/inputBillValue"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:hint="@string/hint_bill_value"/>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutBillName"
+            <app.boletinhos.widget.text.TextInput
+                android:id="@+id/inputBillName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_margin_1x">
+                android:layout_marginTop="@dimen/app_margin_1x"
+                android:hint="@string/hint_bill_name"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputBillName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutBillDescription"
+            <app.boletinhos.widget.text.TextInput
+                android:id="@+id/inputBillDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/app_margin_1x">
+                android:layout_marginTop="@dimen/app_margin_1x"
+                android:hint="@string/hint_bill_description"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputBillDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/layoutBillDueDate"
+            <app.boletinhos.widget.text.TextInput
+                android:id="@+id/inputBillDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/app_margin_1x">
+                android:layout_marginVertical="@dimen/app_margin_1x"
+                android:hint="@string/hint_bill_due_date"/>
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/inputBillDueDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
