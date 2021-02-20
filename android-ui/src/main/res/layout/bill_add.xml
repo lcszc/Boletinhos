@@ -56,7 +56,7 @@
                 android:layout_marginTop="@dimen/app_margin_1x"
                 android:hint="@string/hint_bill_description"/>
 
-            <app.boletinhos.widget.text.TextInput
+            <app.boletinhos.widget.date.DateInput
                 android:id="@+id/inputBillDueDate"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
