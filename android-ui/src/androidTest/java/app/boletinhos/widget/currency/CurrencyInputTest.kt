@@ -1,4 +1,4 @@
-package app.boletinhos.widget
+package app.boletinhos.widget.currency
 
 import androidx.test.ext.junit.rules.ActivityScenarioRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
@@ -20,45 +20,52 @@ class CurrencyInputTest {
         QuindimRobot(activityRule.scenario)
     }
 
-    @Test fun shouldShowUSDCurrencyInPrefix(): Unit = with(robot) {
+    @Test
+    fun shouldShowUSDCurrencyInPrefix(): Unit = with(robot) {
         launchApp()
         type("1")
         checkIfCurrencySymbolIsShown("$")
     }
 
-    @Test fun shouldShowBrazilianCurrencyInPrefix(): Unit = with(robot) {
+    @Test
+    fun shouldShowBrazilianCurrencyInPrefix(): Unit = with(robot) {
         launchApp(withLocale = brLocale)
         type("1")
         checkIfCurrencySymbolIsShown("R$")
     }
 
-    @Test fun shouldHaveCorrectRawValue(): Unit = with(robot) {
+    @Test
+    fun shouldHaveCorrectRawValue(): Unit = with(robot) {
         launchApp()
         type("120")
         hasText("1.20")
         hasRawValue(120)
     }
 
-    @Test fun shouldHaveCorrectRawValueInDifferentLocale(): Unit = with(robot) {
+    @Test
+    fun shouldHaveCorrectRawValueInDifferentLocale(): Unit = with(robot) {
         launchApp(withLocale = brLocale)
         type("120")
         hasText("1,20")
         hasRawValue(120)
     }
 
-    @Test fun shouldFormatTextInCorrectUSDFormat(): Unit = with(robot) {
+    @Test
+    fun shouldFormatTextInCorrectUSDFormat(): Unit = with(robot) {
         launchApp()
         type("999999")
         hasText("9,999.99")
     }
 
-    @Test fun shouldFormatTextInCorrectBRLFormat(): Unit = with(robot) {
+    @Test
+    fun shouldFormatTextInCorrectBRLFormat(): Unit = with(robot) {
         launchApp(withLocale = brLocale)
         type("999999")
         hasText("9.999,99") // (output is always R$ 0,00 instead of $0.00)
     }
 
-    @Test fun shouldDoNothingWhenTypingInvalidValues(): Unit = with(robot) {
+    @Test
+    fun shouldDoNothingWhenTypingInvalidValues(): Unit = with(robot) {
         launchApp()
         type("1")
         hasText("0.01")
@@ -67,7 +74,8 @@ class CurrencyInputTest {
         hasText("0.01")
     }
 
-    @Test fun shouldDeleteValue(): Unit = with(robot) {
+    @Test
+    fun shouldDeleteValue(): Unit = with(robot) {
         launchApp()
         type("111")
         hasText("1.11")
