@@ -2,6 +2,8 @@ package app.boletinhos.widget.currency
 
 import android.view.Gravity
 import android.view.KeyEvent
+import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
 import android.widget.FrameLayout
 import androidx.test.core.app.ActivityScenario
 import androidx.test.espresso.Espresso
