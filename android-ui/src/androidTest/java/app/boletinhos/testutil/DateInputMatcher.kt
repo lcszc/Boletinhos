@@ -7,7 +7,7 @@ import org.hamcrest.Description
 import org.hamcrest.Matcher
 import java.time.LocalDate
 
-fun dateInputHasDate(date: LocalDate) : Matcher<View?> {
+fun dateInputHasDate(date: LocalDate?) : Matcher<View?> {
     return object : BoundedMatcher<View?, DateInput>(DateInput::class.java) {
         override fun matchesSafely(item: DateInput): Boolean {
             return date == item.date
