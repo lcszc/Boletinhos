@@ -50,7 +50,7 @@ class FifteenthRobot(private val scenario: ActivityScenario<TestActivity>) {
         view().check(ViewAssertions.matches(textInputHasTextValue(text)))
     }
 
-    fun hasDate(date: LocalDate) = apply {
+    fun hasDate(date: LocalDate?) = apply {
         view().check(ViewAssertions.matches(dateInputHasDate(date)))
     }
 
