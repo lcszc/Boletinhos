@@ -6,10 +6,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.get
 import app.boletinhos.application.MainApplication
 import app.boletinhos.application.injection.AppComponent
-import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.main.injection.ActivityRetainedServicesFactory
 import app.boletinhos.navigation.ViewStateChanger
 import app.boletinhos.navigation.viewScope
+import app.boletinhos.summary.SummaryViewKey
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.navigator.Navigator
 import com.zhuinden.simplestackextensions.services.DefaultServiceProvider
@@ -34,7 +34,7 @@ class MainActivity : AppCompatActivity() {
             .setStateChanger(stateChanger)
             .setScopedServices(DefaultServiceProvider())
             .setGlobalServices(activityRetainedServicesFactory)
-            .install(this, root, History.single(AddBillViewKey()))
+            .install(this, root, History.single(SummaryViewKey()))
     }
 
     override fun onBackPressed() {

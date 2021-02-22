@@ -2,6 +2,7 @@ package app.boletinhos.application.injection
 
 import android.app.Application
 import app.boletinhos.application.MainApplication
+import app.boletinhos.bill.injection.BillServiceModule
 import app.boletinhos.crashcat.injection.CrashlyticsModule
 import app.boletinhos.database.injection.AppDatabaseModule
 import app.boletinhos.main.MainActivity
@@ -19,7 +20,8 @@ import dagger.Component
         UserPreferencesModule::class,
         CrashlyticsModule::class,
         AppDatabaseModule::class,
-        SummaryServiceModule::class
+        SummaryServiceModule::class,
+        BillServiceModule::class
     ]
 )
 interface AppComponent {
