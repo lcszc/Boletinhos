@@ -1,5 +1,6 @@
 package app.boletinhos.domain.bill
 
+import app.boletinhos.domain.bill.error.BillsIsAlreadyPaidException
 import assertk.assertThat
 import assertk.assertions.isEqualTo
 import assertk.assertions.isFailure
@@ -10,7 +11,8 @@ import java.time.LocalDate
 
 class PayBillTest {
     private val gateway = FakeBillGateway()
-    private val createBill = CreateBill(gateway)
+    private val validator = BillValidator()
+    private val createBill = CreateBill(gateway, validator)
     private val payBill = PayBill(gateway)
 
     private val fakeBill = Bill(
@@ -22,8 +24,7 @@ class PayBillTest {
         status = BillStatus.UNPAID
     )
 
-    @Test
-    fun `should mark bill as paid`() = runBlocking {
+    @Test fun `should mark bill as paid`() = runBlocking {
         val bill = fakeBill
         bill.id = 100
 
@@ -36,8 +37,7 @@ class PayBillTest {
         assertThat(actual.isPaid()).isTrue()
     }
 
-    @Test
-    fun `should throw exception if try to pay a paid bill`() = runBlocking {
+    @Test fun `should throw exception if try to pay a paid bill`() = runBlocking {
         val bill = fakeBill.copy(paymentDate = LocalDate.now())
         bill.id = 100
 

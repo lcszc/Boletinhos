@@ -2,11 +2,6 @@ package app.boletinhos.domain.bill
 
 import java.time.LocalDate
 
-object BillsIsAlreadyPaidException : IllegalStateException()
-object BillHasInvalidValueException : IllegalArgumentException()
-object BillHasInvalidNameException : IllegalArgumentException()
-object BillHasInvalidDescriptionException : IllegalArgumentException()
-
 data class Bill(
     val name: String,
     val description: String,
@@ -23,12 +18,6 @@ data class Bill(
     }
 
     fun isPaid() = paymentDate != null
-
-    val isValueValid get() = value in MINIMUM_VALUE..MAXIMUM_VALUE
-
-    val isNameValid get() = name.count() in MINIMUM_NAME_COUNT..MAXIMUM_NAME_COUNT
-
-    val isDescriptionValid get() = description.count() in MINIMUM_DESCRIPTION_COUNT..MAXIMUM_DESCRIPTION_COUNT
 
     companion object {
         internal const val MINIMUM_VALUE = 10_00L /* 10 */
