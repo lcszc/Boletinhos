@@ -1,5 +1,6 @@
 package app.boletinhos.domain.bill
 
+import app.boletinhos.domain.bill.error.BillsIsAlreadyPaidException
 import java.time.LocalDate
 import javax.inject.Inject
 
