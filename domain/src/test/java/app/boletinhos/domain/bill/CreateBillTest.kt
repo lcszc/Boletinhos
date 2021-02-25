@@ -1,5 +1,7 @@
 package app.boletinhos.domain.bill
 
+import app.boletinhos.domain.bill.error.BillValidationErrorType
+import app.boletinhos.domain.bill.error.BillValidationException
 import assertk.assertThat
 import assertk.assertions.contains
 import assertk.assertions.isEqualTo
@@ -10,7 +12,8 @@ import java.time.LocalDate
 
 class CreateBillTest {
     private val gateway = FakeBillGateway()
-    private val createBill = CreateBill(gateway)
+    private val validator = BillValidator()
+    private val createBill = CreateBill(gateway, validator)
 
     private val fakeBill = Bill(
         name = "Personal expense",
@@ -21,8 +24,7 @@ class CreateBillTest {
         status = BillStatus.UNPAID
     )
 
-    @Test
-    fun `should create bill`() = runBlocking {
+    @Test fun `should create bill`() = runBlocking {
         val bill = fakeBill
         bill.id =  100
 
@@ -31,33 +33,36 @@ class CreateBillTest {
         assertThat(gateway.bills).contains(key = 100, value = bill)
     }
 
-    @Test
-    fun `should throw bill has invalid value exception`() = runBlocking {
+    @Test fun `should throw bill has invalid value exception`() = runBlocking {
         val bill = fakeBill.copy(value = 1_00L)
         bill.id = 100
 
-        assertThat {
-            createBill(bill)
-        }.isFailure().isEqualTo(BillHasInvalidValueException)
+        val expectedError = BillValidationException(
+            errors = listOf(BillValidationErrorType.VALUE_MIN_REQUIRED)
+        )
+
+        assertThat { createBill(bill) }.isFailure().isEqualTo(expectedError)
     }
 
-    @Test
-    fun `should throw bill has invalid name exception`() = runBlocking {
+    @Test fun `should throw bill has invalid name exception`() = runBlocking {
         val bill = fakeBill.copy(name = "P")
         bill.id = 100
 
-        assertThat {
-            createBill(bill)
-        }.isFailure().isEqualTo(BillHasInvalidNameException)
+        val expectedError = BillValidationException(
+            errors = listOf(BillValidationErrorType.NAME_MIN_REQUIRED)
+        )
+
+        assertThat { createBill(bill) }.isFailure().isEqualTo(expectedError)
     }
 
-    @Test
-    fun `should throw bill has invalid description exception`() = runBlocking {
+    @Test fun `should throw bill has invalid description exception`() = runBlocking {
         val bill = fakeBill.copy(description = "F")
         bill.id = 100
 
-        assertThat {
-            createBill(bill)
-        }.isFailure().isEqualTo(BillHasInvalidDescriptionException)
+        val expectedError = BillValidationException(
+            errors = listOf(BillValidationErrorType.DESCRIPTION_MIN_REQUIRED)
+        )
+
+        assertThat { createBill(bill) }.isFailure().isEqualTo(expectedError)
     }
 }
