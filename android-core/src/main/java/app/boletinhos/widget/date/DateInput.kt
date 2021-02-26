@@ -32,6 +32,10 @@ class DateInput(
         input.addTextChangedListener(textWatcher)
         input.inputType = InputType.TYPE_CLASS_DATETIME
         input.maxLines = 1
-        input.filters = arrayOf(LengthFilter(10))
+        input.filters = arrayOf(LengthFilter(MAX_INPUT_SIZE))
+    }
+
+    companion object {
+        const val MAX_INPUT_SIZE = 10
     }
 }

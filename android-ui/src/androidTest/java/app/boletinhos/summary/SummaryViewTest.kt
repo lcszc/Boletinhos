@@ -82,4 +82,12 @@ class SummaryViewTest {
             checkIfOverdueBillsCountIsShown()
         }
     }
+
+    @Test fun shouldNavigateToAddBillScreenOnClickInAddBill() {
+        badRobot.run {
+            launchView(withScenario = activityRule.scenario)
+            tapOnAddBillAction()
+            checkIfNavigatedToAddBillScreen(withScenario = activityRule.scenario)
+        }
+    }
 }

@@ -30,6 +30,7 @@ class QuindimRobot(private val scenario: ActivityScenario<TestActivity>) {
 
     private fun configureLocale(locale: Locale) {
         this.locale = locale
+        Locale.setDefault(locale)
     }
 
     private fun launchActivityAndShowCurrencyInput(

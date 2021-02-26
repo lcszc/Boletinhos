@@ -24,7 +24,7 @@ repositories {
 }
 
 dependencies {
-    api project(":common")
+    api(project(":common"), project(":domain"))
 
     api(Kotlinx.Coroutines.android)
     api(SimpleStack.navigator, SimpleStack.servicesKtx)

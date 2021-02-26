@@ -6,7 +6,7 @@ import app.boletinhos.widget.text.TextInput
 import org.hamcrest.Description
 import org.hamcrest.Matcher
 
-fun textInputHasTextValue(text: String) : Matcher<View?> {
+fun textInputHasTextValue(text: String): Matcher<View?> {
     return object : BoundedMatcher<View?, TextInput>(TextInput::class.java) {
         override fun matchesSafely(item: TextInput): Boolean {
             return text == item.value.trim()

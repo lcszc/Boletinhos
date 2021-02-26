@@ -4,6 +4,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import java.io.File
 
+@Suppress("MagicNumber")
 class DateTextWatcher(
     private val dateInput: DateInput
 ) : TextWatcher {
@@ -17,7 +18,7 @@ class DateTextWatcher(
 
         val currentText = textInput.text?.toString().orEmpty()
         val newText = currentText
-            .take(10)
+            .take(DateInput.MAX_INPUT_SIZE)
             .putOrRemoveDividerIfNeeded(start, before)
 
         textInput.setText(newText)

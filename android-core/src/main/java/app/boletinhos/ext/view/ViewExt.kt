@@ -18,6 +18,7 @@ fun View.getString(@StringRes resId: Int): String {
     return context.getString(resId)
 }
 
+@Suppress("SpreadOperator")
 fun View.getString(@StringRes resId: Int, vararg value: Any): String {
     return context.getString(resId, *value)
 }

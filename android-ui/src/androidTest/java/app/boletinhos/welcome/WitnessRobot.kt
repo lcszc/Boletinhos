@@ -7,11 +7,11 @@ import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers
 import androidx.test.espresso.matcher.ViewMatchers.isDisplayed
 import app.boletinhos.R
+import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.main.MainActivity
 import app.boletinhos.navigation.ViewKey
-import app.boletinhos.wip.WipViewKey
 import assertk.assertThat
-import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
@@ -19,7 +19,7 @@ import javax.inject.Inject
 
 class WitnessRobot @Inject constructor() {
     private val welcomeViewKey = WelcomeViewKey()
-    private val addBillViewKey = WipViewKey(title = "Add Bill")
+    private val addBillViewKey = AddBillViewKey()
 
     fun launchWelcome(withScenario: ActivityScenario<MainActivity>) = apply {
         withScenario.onActivity { activity ->
@@ -39,10 +39,7 @@ class WitnessRobot @Inject constructor() {
     fun checkIfNavigatedToAddBillScreen(withScenario: ActivityScenario<MainActivity>) = apply {
         withScenario.onActivity { activity ->
             val backstack = activity.backstack
-            val expectedHistory = History.of(welcomeViewKey, addBillViewKey)
-
-            assertThat(backstack.getHistory<ViewKey>()).isEqualTo(expectedHistory)
-            assertThat(backstack.top<ViewKey>()).isEqualTo(addBillViewKey)
+            assertThat(backstack.top<ViewKey>()).isInstanceOf(AddBillViewKey::class.java)
         }
     }
 

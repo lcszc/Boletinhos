@@ -2,10 +2,9 @@ package app.boletinhos.widget.currency
 
 import android.text.Editable
 import android.text.TextWatcher
-import java.math.BigDecimal
-import java.text.DecimalFormat
-import java.text.NumberFormat
+import app.boletinhos.domain.currency.CurrencyMachine
 
+@Suppress("ForbiddenComment")
 class CurrencyTextWatcher(
     private val currencyInput: CurrencyInput,
     private val currencyPattern: Regex = "[^0-9]".toRegex()
@@ -33,11 +32,10 @@ class CurrencyTextWatcher(
         currencyInput.rawValue = rawText.toLong()
 
         val formattedValue = runCatching {
-            val value = BigDecimal(rawText)
-                .setScale(2, BigDecimal.ROUND_FLOOR)
-                .divide(BigDecimal(100), BigDecimal.ROUND_FLOOR)
-
-            value.bigDecimalValueToFormattedCurrencyValue()
+            CurrencyMachine.formatFromRawValueAndRemoveSymbol(
+                rawText.toLong(),
+                currencyInput.locale
+            )
         }.getOrDefault(lastInput)
 
         lastInput = formattedValue
@@ -50,14 +48,4 @@ class CurrencyTextWatcher(
 
     // Todo: adding a text-watcher is expensive. Improve it later.
     private fun reattachWatcher() = currencyInput.input.addTextChangedListener(this)
-
-    private fun BigDecimal.bigDecimalValueToFormattedCurrencyValue(): String {
-        val formatter: DecimalFormat = NumberFormat
-            .getCurrencyInstance(currencyInput.locale) as DecimalFormat
-
-        formatter.decimalFormatSymbols = formatter
-            .decimalFormatSymbols.apply { currencySymbol = "" }
-
-        return formatter.format(this)
-    }
 }

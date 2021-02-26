@@ -4,10 +4,12 @@ import android.app.Application
 import androidx.test.core.app.ActivityScenario
 import androidx.test.core.app.ApplicationProvider
 import androidx.test.espresso.Espresso.onView
+import androidx.test.espresso.action.ViewActions.click
 import androidx.test.espresso.assertion.ViewAssertions.matches
 import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import app.boletinhos.R
+import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.main.MainActivity
 import app.boletinhos.navigation.ViewKey
@@ -49,6 +51,13 @@ class BadRobot @Inject constructor(
 
             assertThat(backstack.top<ViewKey>()).isInstanceOf(WelcomeViewKey::class.java)
             assertThat(backstack.getHistory<ViewKey>().size).isEqualTo(1)
+        }
+    }
+
+    fun checkIfNavigatedToAddBillScreen(withScenario: ActivityScenario<MainActivity>) = apply {
+        withScenario.onActivity { activity ->
+            val backstack = activity.backstack
+            assertThat(backstack.top<ViewKey>()).isInstanceOf(AddBillViewKey::class.java)
         }
     }
 
@@ -151,6 +160,10 @@ class BadRobot @Inject constructor(
                 )
             )
         }
+    }
+
+    fun tapOnAddBillAction() = apply {
+        onView(withId(R.id.action_add_bill)).perform(click())
     }
 
     companion object {

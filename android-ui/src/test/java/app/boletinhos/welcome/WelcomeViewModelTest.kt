@@ -1,9 +1,9 @@
 package app.boletinhos.welcome
 
+import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.navigation.ViewKey
-import app.boletinhos.wip.WipViewKey
 import assertk.assertThat
-import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
 import org.junit.Before
@@ -23,6 +23,6 @@ class WelcomeViewModelTest {
 
     @Test fun `should open add bill screen on add bill click`() {
         viewModel.onAddBillClick()
-        assertThat(backstack.top<ViewKey>()).isEqualTo(WipViewKey("Add Bill"))
+        assertThat(backstack.top<ViewKey>()).isInstanceOf(AddBillViewKey::class.java)
     }
 }

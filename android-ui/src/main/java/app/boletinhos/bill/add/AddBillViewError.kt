@@ -12,8 +12,8 @@ import app.boletinhos.domain.bill.error.BillValidationErrorType.NAME_MIN_REQUIRE
 import app.boletinhos.domain.bill.error.BillValidationErrorType.VALUE_MAX_EXCEEDED
 import app.boletinhos.domain.bill.error.BillValidationErrorType.VALUE_MIN_REQUIRED
 import app.boletinhos.domain.bill.error.BillValidationException
+import app.boletinhos.domain.currency.CurrencyMachine
 import kotlinx.android.parcel.Parcelize
-import java.text.NumberFormat
 import app.boletinhos.R.id as Ids
 import app.boletinhos.R.string as Texts
 
@@ -41,7 +41,7 @@ private val BillValidationErrorType.errorMessage: Int
     companion object {
         operator fun invoke(error: BillValidationErrorType): AddBillInputFieldError {
             val value = if (error in VALUE_MIN_REQUIRED..VALUE_MAX_EXCEEDED) {
-                NumberFormat.getCurrencyInstance().format(error.rawValue)
+                CurrencyMachine.formatFromRawValue(error.rawValue)
             } else error.rawValue.toString()
 
             return AddBillInputFieldError(error.errorMessage, value)

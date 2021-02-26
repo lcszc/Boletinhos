@@ -61,7 +61,7 @@ class CurrencyInputTest {
     fun shouldFormatTextInCorrectBRLFormat(): Unit = with(robot) {
         launchApp(withLocale = brLocale)
         type("999999")
-        hasText("9.999,99") // (output is always R$ 0,00 instead of $0.00)
+        hasText("9.999,99") // (output is always R$ 0,00 instead of R$0.00)
     }
 
     @Test

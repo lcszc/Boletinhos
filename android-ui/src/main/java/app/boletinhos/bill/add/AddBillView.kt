@@ -60,30 +60,26 @@ class AddBillView(context: Context, attrs: AttributeSet? = null) : RelativeLayou
     }
 
     private fun Flow<AddBillViewError?>.handleInputsErrors() {
-        fun showErrors(errors: Map<Int, AddBillInputFieldError>?) {
-            if (errors == null || errors.isEmpty()) {
-                inputs.forEach { it.error = null }
-                return
-            }
+        onEach { viewError -> showErrors(viewError?.errors) }.launchIn(viewScope)
+    }
 
-            errors.forEach { (inputId, fieldError) ->
-                if (inputId == View.NO_ID) {
-                    showSnackbar(fieldError.messageRes)
-                    return@forEach
-                }
-
-                val (messageRes, value) = fieldError
-
-                val message = value?.let { getString(messageRes, it) }
-                    ?: getString(messageRes)
-
-                inputs.first { it.id == inputId }.error = message
-            }
+    private fun showErrors(errors: Map<Int, AddBillInputFieldError>?) {
+        if (errors == null || errors.isEmpty()) {
+            inputs.forEach { it.error = null }
+            return
         }
 
-        onEach { viewError ->
-            println(viewError)
-            showErrors(viewError?.errors) }.launchIn(viewScope)
+        errors.forEach { (inputId, fieldError) ->
+            if (inputId == View.NO_ID) {
+                showSnackbar(fieldError.messageRes)
+                return@forEach
+            }
+
+            val (messageRes, value) = fieldError
+            val message = value?.let { getString(messageRes, it) } ?: getString(messageRes)
+
+            inputs.first { it.id == inputId }.error = message
+        }
     }
 
     private fun Flow<UiEvent.ResourceMessage>.handleUiEvents() {

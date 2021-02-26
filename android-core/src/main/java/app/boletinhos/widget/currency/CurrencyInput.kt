@@ -4,8 +4,8 @@ import android.content.Context
 import android.text.InputFilter.LengthFilter
 import android.text.InputType
 import android.util.AttributeSet
+import app.boletinhos.domain.currency.CurrencyMachine
 import app.boletinhos.widget.text.TextInput
-import java.text.NumberFormat
 import java.util.Locale
 
 class CurrencyInput @JvmOverloads constructor(
@@ -35,19 +35,18 @@ class CurrencyInput @JvmOverloads constructor(
         input.addTextChangedListener(textWatcher)
         input.inputType = InputType.TYPE_CLASS_NUMBER
         input.maxLines = 1
-        input.filters = arrayOf(LengthFilter(16))
+        input.filters = arrayOf(LengthFilter(MAX_INPUT_SIZE))
     }
 
     private fun configureCurrencyPrefix() {
-        val currencySymbol = NumberFormat
-            .getCurrencyInstance(locale)
-            .currency
-            ?.symbol
-
-        prefixText = currencySymbol
+        prefixText = CurrencyMachine.currencySymbol(locale)
     }
 
     private fun detachCurrencyTextWatcher() {
         input.removeTextChangedListener(textWatcher)
+    }
+
+    companion object {
+        const val MAX_INPUT_SIZE = 16
     }
 }

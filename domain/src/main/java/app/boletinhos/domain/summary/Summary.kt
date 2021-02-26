@@ -1,5 +1,6 @@
 package app.boletinhos.domain.summary
 
+import app.boletinhos.domain.currency.CurrencyMachine
 import java.io.Serializable
 import java.text.NumberFormat
 import java.time.Month
@@ -24,13 +25,10 @@ data class Summary(
     }
 
     fun formattedTotalValue(locale: Locale = Locale.getDefault()): String {
-        return NumberFormat.getCurrencyInstance(locale)
-            .format(totalValue / CURRENCY_DIVIDER)
+        return CurrencyMachine.formatFromRawValue(rawValue = totalValue, locale = locale)
     }
 
     companion object {
-        private const val CURRENCY_DIVIDER = 10
-
         fun idFrom(month: Int, year: Int): Long {
             return (month + year).toLong()
         }
