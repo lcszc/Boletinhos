@@ -52,7 +52,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error1() {
+    @Test fun shouldShowInvalidDueDateError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             tapOnCreateBill()
@@ -63,7 +63,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error2() {
+    @Test fun shouldShowMinValueRequiredError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.NAME, text = "Spotify Subscription")
@@ -81,7 +81,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error3() {
+    @Test fun shouldShowMaxValueExceededError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "99999999")
@@ -100,7 +100,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error4() {
+    @Test fun shouldShowNameMinCountRequiredError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "5800")
@@ -119,7 +119,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error5() {
+    @Test fun shouldShowNameMaxCountExceededError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "5800")
@@ -138,7 +138,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error6() {
+    @Test fun shouldShowDescriptionMinCountRequiredError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "5800")
@@ -157,7 +157,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun error7() {
+    @Test fun shouldShowDescriptionMaxCountExceededError() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "5800")
@@ -176,7 +176,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun errors() {
+    @Test fun shouldShowMultipleErrorsOnUi() {
         with(ellaw) {
             launchApp(activityRule.scenario)
             typeTextIn(field = UiField.VALUE, text = "100")
@@ -203,7 +203,7 @@ class AddBillViewTest {
         }
     }
 
-    @Test fun errorsRestored() {
+    @Test fun shouldRestoreErrorsFromPreviousState() {
         with(ellaw) {
             launchApp(activityRule.scenario)
 

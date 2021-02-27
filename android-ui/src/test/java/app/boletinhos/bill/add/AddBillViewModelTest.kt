@@ -199,7 +199,7 @@ class AddBillViewModelTest {
         assertThat(fieldError?.messageRes).isEqualTo(Texts.message_bill_invalid_due_date)
     }
 
-    @Test fun `should output multiples errors given multiples errors on bill input`() {
+    @Test fun `should output multiple errors given multiples errors on bill input`() {
         val input = AddBillViewInput(
             name = "B",
             description = "D",
