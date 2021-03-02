@@ -3,6 +3,7 @@ import config.AppConfig
 import config.Espresso
 import config.Kotlinx
 import config.Testing
+import config.Tools
 
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
@@ -30,6 +31,7 @@ android {
         testInstrumentationRunnerArguments clearPackageData: 'true'
 
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled = true
     }
 
     testOptions {
@@ -44,6 +46,7 @@ android {
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
+        coreLibraryDesugaringEnabled = true
     }
 
     kotlinOptions {
@@ -63,6 +66,8 @@ android {
 }
 
 dependencies {
+    coreLibraryDesugaring(Tools.desugaring)
+
     implementation fileTree(dir: "libs", include: ["*.jar"])
 
     [Androidx.core, Androidx.appCompat, Kotlinx.stbLib].forEach { dependency ->

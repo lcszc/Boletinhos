@@ -2,7 +2,6 @@ import config.Androidx
 import config.DI
 import config.Kotlinx
 import config.Testing
-import config.Tools
 
 apply plugin: 'com.android.library'
 apply from: "$rootDir/build-system/android.gradle"
@@ -10,16 +9,6 @@ apply from: "$rootDir/build-system/android.gradle"
 apply plugin: 'kotlin-kapt'
 
 android {
-    defaultConfig {
-        // Needed to use Java 8 desugaring with minSdk below 20
-        // Maybe I should go up to minSdk 21? 😢😒
-        multiDexEnabled true
-    }
-
-    compileOptions {
-        coreLibraryDesugaringEnabled true
-    }
-
     kotlinOptions {
         // ...
         freeCompilerArgs += [
@@ -30,8 +19,6 @@ android {
 }
 
 dependencies {
-    coreLibraryDesugaring(Tools.desugaring)
-
     api(
         project(":domain"),
         project(":common")
