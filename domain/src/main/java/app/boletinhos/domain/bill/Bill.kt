@@ -20,16 +20,11 @@ data class Bill(
     fun isPaid() = paymentDate != null
 
     companion object {
-        internal const val MINIMUM_VALUE = 10_00L /* 10 */
-
-        internal const val MAXIMUM_VALUE = 250_000_00L /* 250k */
-
-        internal const val MINIMUM_NAME_COUNT = 5
-
-        internal const val MAXIMUM_NAME_COUNT = 48
-
-        internal const val MINIMUM_DESCRIPTION_COUNT = 8
-
-        internal const val MAXIMUM_DESCRIPTION_COUNT = 148
+        const val MINIMUM_VALUE = 10_00L /* 10 */
+        const val MAXIMUM_VALUE = 250_000_00L /* 250k */
+        const val MINIMUM_NAME_COUNT = 5
+        const val MAXIMUM_NAME_COUNT = 48
+        const val MINIMUM_DESCRIPTION_COUNT = 8
+        const val MAXIMUM_DESCRIPTION_COUNT = 148
     }
 }

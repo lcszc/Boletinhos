@@ -23,7 +23,7 @@ repositories {
 }
 
 dependencies {
-    api project(":common")
+    api(project(":common"), project(":domain"))
 
     api(Kotlinx.Coroutines.android)
     api(SimpleStack.navigator, SimpleStack.servicesKtx)
@@ -33,5 +33,5 @@ dependencies {
     implementation(DI.dagger)
     kapt(DI.compiler)
 
-    testImplementation(Kotlinx.Coroutines.test,)
+    testImplementation(Kotlinx.Coroutines.test)
 }

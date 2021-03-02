@@ -12,4 +12,26 @@
     <string name="text_summary_error_message">Something really bad happened and we didn\'t correctly handled it. Try again later.</string>
     <string name="text_welcome_title">Ooh, looks like it is your first time here… 😏</string>
     <string name="text_welcome_message">What do you think about start adding your first bill? 🚀</string>
+    <string name="text_add_bill">Add bill</string>
+
+    <string name="message_bill_name_min_length_required">Name should have at least %s characters.</string>
+    <string name="message_bill_name_max_length_exceeded">Name should not be longer than %s characters.</string>
+
+    <string name="message_bill_description_min_length_required">Description should have at least %s characters.</string>
+    <string name="message_bill_description_max_length_exceeded">Description should not be longer than %s characters.</string>
+
+    <string name="message_bill_value_min_required">Value cannot be lower than %s.</string>
+    <string name="message_bill_value_max_exceeded">Value cannot be higher than %s.</string>
+
+    <string name="message_bill_invalid_due_date">Invalid date. Valid format is dd/mm/yyyy. Please check.</string>
+
+    <string name="message_bill_cannot_be_created">Oh, your bill cannot be created at this moment. We\'re sorry :(</string>
+
+    <string name="message_bill_created">Bill created successfully! Yay 🎉</string>
+
+    <string name="hint_bill_value">Bill value</string>
+    <string name="hint_bill_name">Bill name</string>
+    <string name="hint_bill_description">Bill description</string>
+    <string name="hint_bill_due_date">Bill due date</string>
+
 </resources>

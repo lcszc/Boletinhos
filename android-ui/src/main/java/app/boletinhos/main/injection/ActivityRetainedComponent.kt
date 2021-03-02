@@ -1,5 +1,6 @@
 package app.boletinhos.main.injection
 
+import app.boletinhos.bill.add.AddBillViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import app.boletinhos.summary.SummaryViewModel
@@ -18,6 +19,7 @@ interface ActivityRetainedComponent {
 
     fun summaryViewModel(): SummaryViewModel
     fun welcomeViewModel(): WelcomeViewModel
+    fun addBillViewModel(): AddBillViewModel
 
     @Subcomponent.Factory
     interface Factory {

@@ -47,6 +47,12 @@ class SummaryView(
             setHasFixedSize(true)
             addItemDecoration(summaryDecoration)
         }
+
+        viewBinding.actionAddBill.setOnClickListener {
+            viewScope.launch {
+                viewEvents.send(SummaryViewEvent.OnClickInAddBill)
+            }
+        }
     }
 
     override fun onAttachedToWindow() {

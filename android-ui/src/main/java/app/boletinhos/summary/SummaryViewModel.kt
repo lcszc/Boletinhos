@@ -1,5 +1,6 @@
 package app.boletinhos.summary
 
+import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.domain.summary.FetchSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.error.ErrorViewModel
@@ -42,6 +43,7 @@ class SummaryViewModel @Inject constructor(
 
     operator fun invoke(viewEvents: Flow<SummaryViewEvent>): Flow<SummaryViewState> {
         viewEvents.filterIsInstance<SummaryViewEvent.FetchData>().thenFetch()
+        viewEvents.filterIsInstance<SummaryViewEvent.OnClickInAddBill>().navigate()
         return viewState
     }
 
@@ -55,6 +57,10 @@ class SummaryViewModel @Inject constructor(
                 .ifEmptyLaunchWelcomeScreen()
                 .launchIn(viewModelScope)
         }.launchIn(viewModelScope)
+    }
+
+    private fun Flow<SummaryViewEvent.OnClickInAddBill>.navigate() {
+        onEach { backstack.goTo(AddBillViewKey()) }.launchIn(viewModelScope)
     }
 
     private fun Flow<Summary>.ifEmptyLaunchWelcomeScreen() = onEmpty {
