@@ -304,6 +304,7 @@ class AddBillViewModelTest {
         )
 
         viewModel.onAddBillActionClick(input)
+        runBlocking { viewModel.messages.first() }
 
         assertThat(backstack.getHistory<ViewKey>()).isEqualTo(summaryHistory)
     }
