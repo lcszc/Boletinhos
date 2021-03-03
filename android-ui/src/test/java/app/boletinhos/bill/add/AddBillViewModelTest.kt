@@ -1,11 +1,14 @@
 package app.boletinhos.bill.add
 
+import app.boletinhos.bill.add.AddBillViewModel.OnBillCreatedListener
 import app.boletinhos.domain.bill.Bill
 import app.boletinhos.domain.bill.BillGateway
 import app.boletinhos.domain.bill.BillStatus
 import app.boletinhos.domain.bill.BillValidator
 import app.boletinhos.domain.bill.CreateBill
 import app.boletinhos.lifecycle.viewModelScope
+import app.boletinhos.navigation.ViewKey
+import app.boletinhos.summary.SummaryViewKey
 import assertk.assertThat
 import assertk.assertions.containsAll
 import assertk.assertions.containsExactly
@@ -13,6 +16,7 @@ import assertk.assertions.isEqualTo
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.ScopedServices
+import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestackextensions.servicesktx.add
 import io.mockk.coVerify
 import io.mockk.mockk
@@ -40,11 +44,22 @@ class AddBillViewModelTest {
     private val gateway = mockk<BillGateway>(relaxed = true)
     private val useCase = CreateBill(gateway, BillValidator())
 
+    private val summaryHistory = History.single(SummaryViewKey())
+
+    private val onBillCreatedNavigator = object : OnBillCreatedListener {
+        override fun onBillCreated() {
+            backstack.setHistory(
+                summaryHistory,
+                StateChange.REPLACE
+            )
+        }
+    }
+
     private lateinit var viewModel: AddBillViewModel
 
     private val scopedServices = ScopedServices { serviceBinder ->
         if (scopeTag == serviceBinder.scopeTag) {
-            viewModel = AddBillViewModel(viewModelScope, useCase, serviceBinder.backstack)
+            viewModel = AddBillViewModel(viewModelScope, useCase, serviceBinder.backstack, onBillCreatedNavigator)
             serviceBinder.add(viewModel)
         }
     }
@@ -57,7 +72,7 @@ class AddBillViewModelTest {
         }
     }
 
-        @Test fun `should create a bill given a valid input`() {
+    @Test fun `should create a bill given a valid input`() {
         val input = AddBillViewInput(
             name = "Burger King Subscription",
             description = "Daily Lunch",
@@ -278,5 +293,18 @@ class AddBillViewModelTest {
             .launchIn(viewModelScope)
 
         assertThat(restoredErrors.first()).isEqualTo(viewError)
+    }
+
+    @Test fun `should navigate to summary after successfully creating a bill`() {
+        val input = AddBillViewInput(
+            name = "Burger King Subscription",
+            description = "Daily Lunch",
+            dueDate = LocalDate.of(2020, Month.DECEMBER, 8),
+            value = 58_00L
+        )
+
+        viewModel.onAddBillActionClick(input)
+
+        assertThat(backstack.getHistory<ViewKey>()).isEqualTo(summaryHistory)
     }
 }

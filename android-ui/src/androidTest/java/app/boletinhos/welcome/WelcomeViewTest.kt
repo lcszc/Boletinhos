@@ -40,4 +40,10 @@ class WelcomeViewTest {
         tapOnAddBillAction()
         checkIfNavigatedToAddBillScreen(withScenario = activityRule.scenario)
     }
+
+    @Test fun shouldNavigateToSummaryAfterCreatingFirstBill(): Unit = with(witnessRobot) {
+        launchWelcome(withScenario = activityRule.scenario)
+        simulateBillCreated(withScenario = activityRule.scenario)
+        checkIfNavigatedToSummary(withScenario = activityRule.scenario)
+    }
 }

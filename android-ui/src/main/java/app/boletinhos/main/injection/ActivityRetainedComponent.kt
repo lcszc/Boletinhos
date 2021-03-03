@@ -5,6 +5,7 @@ import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import app.boletinhos.summary.SummaryViewModel
 import app.boletinhos.welcome.WelcomeViewModel
+import app.boletinhos.welcome.injection.WelcomeModule
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.ServiceBinder
 import com.zhuinden.simplestackextensions.servicesktx.lookup
@@ -13,7 +14,7 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 
 @ActivityRetainedScope
-@Subcomponent(modules = [LifecycleCoroutineScopeModule::class])
+@Subcomponent(modules = [LifecycleCoroutineScopeModule::class, WelcomeModule::class])
 interface ActivityRetainedComponent {
     fun coroutineScope(): LifecycleAwareCoroutineScope
 

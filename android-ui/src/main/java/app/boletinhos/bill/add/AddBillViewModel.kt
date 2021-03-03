@@ -21,8 +21,13 @@ import app.boletinhos.R.string as Texts
 class AddBillViewModel @Inject constructor(
     private val coroutineScope: LifecycleAwareCoroutineScope,
     private val createBill: CreateBill,
-    private val backstack: Backstack
+    private val backstack: Backstack,
+    private val onBillCreatedListener: OnBillCreatedListener
 ) : Bundleable, CoroutineScope by coroutineScope {
+    interface OnBillCreatedListener {
+        fun onBillCreated()
+    }
+
     private val inputsErrorsStates = MutableSharedFlow<AddBillViewError?>(replay = 1)
     val inputsErrors: Flow<AddBillViewError?> = inputsErrorsStates
 
@@ -63,6 +68,7 @@ class AddBillViewModel @Inject constructor(
     }
 
     private suspend fun sendSuccessMessageAndGoBack() {
+        onBillCreatedListener.onBillCreated()
         messagesEvents.send(ResourceMessage(Texts.message_bill_created))
         backstack.goBack()
     }
