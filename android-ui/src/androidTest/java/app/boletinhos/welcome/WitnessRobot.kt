@@ -10,16 +10,17 @@ import app.boletinhos.R
 import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.main.MainActivity
 import app.boletinhos.navigation.ViewKey
+import app.boletinhos.summary.SummaryViewKey
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestackextensions.navigatorktx.backstack
+import com.zhuinden.simplestackextensions.servicesktx.lookup
 import javax.inject.Inject
 
 class WitnessRobot @Inject constructor() {
     private val welcomeViewKey = WelcomeViewKey()
-    private val addBillViewKey = AddBillViewKey()
 
     fun launchWelcome(withScenario: ActivityScenario<MainActivity>) = apply {
         withScenario.onActivity { activity ->
@@ -43,7 +44,21 @@ class WitnessRobot @Inject constructor() {
         }
     }
 
+    fun checkIfNavigatedToSummary(withScenario: ActivityScenario<MainActivity>) = apply {
+        withScenario.onActivity { activity ->
+            val backstack = activity.backstack
+            assertThat(backstack.top<ViewKey>()).isInstanceOf(SummaryViewKey::class.java)
+        }
+    }
+
     fun tapOnAddBillAction() = apply {
         onView(ViewMatchers.withId(R.id.action_add_bill)).perform(click())
+    }
+
+    fun simulateBillCreated(withScenario: ActivityScenario<MainActivity>) = apply {
+        withScenario.onActivity { activity ->
+            val welcomeViewModel = activity.backstack.lookup<WelcomeViewModel>()
+            welcomeViewModel.onBillCreated()
+        }
     }
 }

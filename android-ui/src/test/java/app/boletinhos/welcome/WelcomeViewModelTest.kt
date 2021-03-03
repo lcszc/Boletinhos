@@ -2,6 +2,7 @@ package app.boletinhos.welcome
 
 import app.boletinhos.bill.add.AddBillViewKey
 import app.boletinhos.navigation.ViewKey
+import app.boletinhos.summary.SummaryViewKey
 import assertk.assertThat
 import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.Backstack
@@ -24,5 +25,10 @@ class WelcomeViewModelTest {
     @Test fun `should open add bill screen on add bill click`() {
         viewModel.onAddBillClick()
         assertThat(backstack.top<ViewKey>()).isInstanceOf(AddBillViewKey::class.java)
+    }
+
+    @Test fun `should open summary after creating first bill`() {
+        viewModel.onBillCreated()
+        assertThat(backstack.top<ViewKey>()).isInstanceOf(SummaryViewKey::class)
     }
 }
