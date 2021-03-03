@@ -34,7 +34,7 @@ internal fun createItemsFromSummary(summary: Summary) = listOf(
         kind = SummaryItemCardView.Model.Kind.MONTH_SUMMARY
     ),
     SummaryItemCardView.Model(
-        iconRes = Drawables.ic_check,
+        iconRes = Drawables.ic_paid,
         titleRes = Texts.text_bills_paids,
         descriptionRes = Texts.text_bills,
         textValue = summary.paids.toString(),
@@ -50,7 +50,7 @@ internal fun createItemsFromSummary(summary: Summary) = listOf(
     ),
 
     SummaryItemCardView.Model(
-        iconRes = Drawables.ic_check,
+        iconRes = Drawables.ic_calendar,
         titleRes = Texts.text_bills_overdue,
         descriptionRes = Texts.text_bills,
         textValue = summary.overdue.toString(),
