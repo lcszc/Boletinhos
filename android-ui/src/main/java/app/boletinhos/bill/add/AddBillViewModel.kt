@@ -68,8 +68,8 @@ class AddBillViewModel @Inject constructor(
     }
 
     private suspend fun sendSuccessMessageAndGoBack() {
-        onBillCreatedListener.onBillCreated()
         messagesEvents.send(ResourceMessage(Texts.message_bill_created))
+        onBillCreatedListener.onBillCreated()
         backstack.goBack()
     }
 
