@@ -81,7 +81,7 @@ class SummaryViewModel @Inject constructor(
         )
 
         val itemPaids = SummaryItemCardView.Model(
-            iconRes = Drawables.ic_check,
+            iconRes = Drawables.ic_paid,
             titleRes = Texts.text_bills_paids,
             descriptionRes = Texts.text_bills,
             textValue = summary.paids.toString(),
@@ -97,7 +97,7 @@ class SummaryViewModel @Inject constructor(
         )
 
         val itemOverdue = SummaryItemCardView.Model(
-            iconRes = Drawables.ic_check,
+            iconRes = Drawables.ic_calendar,
             titleRes = Texts.text_bills_overdue,
             descriptionRes = Texts.text_bills,
             textValue = summary.overdue.toString(),
