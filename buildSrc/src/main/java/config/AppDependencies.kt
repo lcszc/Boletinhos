@@ -49,7 +49,7 @@ object DI {
 }
 
 object Tools {
-    const val desugaring = "com.android.tools:desugar_jdk_libs:1.0.5"
+    const val desugaring = "com.android.tools:desugar_jdk_libs:1.0.9"
 }
 
 object GoogleServices {
