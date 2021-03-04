@@ -11,6 +11,8 @@ class FetchSummary @Inject constructor(
     private val preferences: SummaryPreferences,
     private val service: SummaryService
 ) {
+    val summaries = service.getSummaries()
+
     operator fun invoke(): Flow<Summary> {
         return checkIfHasSummary().thenFetchSummaryIfTrue()
     }

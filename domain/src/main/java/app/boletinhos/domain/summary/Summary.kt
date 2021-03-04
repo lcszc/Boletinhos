@@ -6,6 +6,7 @@ import java.text.NumberFormat
 import java.time.Month
 import java.time.YearMonth
 import java.time.format.DateTimeFormatter
+import java.time.format.TextStyle
 import java.util.Locale
 
 data class Summary(
@@ -22,6 +23,10 @@ data class Summary(
     fun displayName(locale: Locale = Locale.getDefault()): String {
         return YearMonth.of(year, month)
             .format(DateTimeFormatter.ofPattern("MMMM uuuu", locale))
+    }
+
+    fun monthDisplayName(locale: Locale = Locale.getDefault()): String {
+        return month.getDisplayName(TextStyle.FULL, locale)
     }
 
     fun formattedTotalValue(locale: Locale = Locale.getDefault()): String {
