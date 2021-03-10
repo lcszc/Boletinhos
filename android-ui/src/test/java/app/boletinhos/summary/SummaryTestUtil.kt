@@ -1,6 +1,7 @@
 package app.boletinhos.summary
 
 import app.boletinhos.domain.summary.Summary
+import app.boletinhos.summary.picker.asUiOption
 import java.time.Month
 import app.boletinhos.R.drawable as Drawables
 import app.boletinhos.R.string as Texts
@@ -23,6 +24,10 @@ internal fun createSummaries() = listOf(
         overdue = 0
     )
 ).sortedByDescending { it.id() }
+
+internal fun summariesForPicker() = createSummaries()
+    .map(Summary::asUiOption)
+    .map { it.copy(isSelected = true) }
 
 internal fun createItemsFromSummary(summary: Summary) = listOf(
     SummaryItemCardView.Model(

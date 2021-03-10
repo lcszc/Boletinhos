@@ -5,6 +5,7 @@ import app.boletinhos.domain.summary.Summary
 internal fun Summary.asUiOption(): SummaryOption {
     return SummaryOption(
         monthName = monthDisplayName(),
-        year = year
+        year = year,
+        id = id()
     )
 }

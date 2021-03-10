@@ -17,6 +17,10 @@ class FetchSummary @Inject constructor(
         return checkIfHasSummary().thenFetchSummaryIfTrue()
     }
 
+    fun select(id: Long) {
+        preferences.actualSummary(id)
+    }
+
     private fun checkIfHasSummary() = flow { emit(service.hasSummary()) }
 
     private fun Flow<Boolean>.thenFetchSummaryIfTrue(): Flow<Summary> {
