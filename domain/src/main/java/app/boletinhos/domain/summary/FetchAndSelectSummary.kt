@@ -13,12 +13,12 @@ class FetchAndSelectSummary @Inject constructor(
 ) {
     val summaries = service.getSummaries()
 
-    operator fun invoke(): Flow<Summary> {
+    fun select(): Flow<Summary> {
         return checkIfHasSummary().thenFetchSummaryIfTrue()
     }
 
     fun select(id: Long) {
-        preferences.actualSummary(id)
+        preferences.summaryId(id)
     }
 
     private fun checkIfHasSummary() = flow { emit(service.hasSummary()) }
@@ -26,13 +26,13 @@ class FetchAndSelectSummary @Inject constructor(
     private fun Flow<Boolean>.thenFetchSummaryIfTrue(): Flow<Summary> {
         return flatMapLatest { hasSummary ->
             if (!hasSummary) emptyFlow()
-            else fetchActualSummaryOrReturnEmpty()
+            else fetchCurrentSelectedSummaryOrReturnEmpty()
         }
     }
 
     // one day: move this to service layer (fetchSummaryById -> Room/SQLDelight)
-    private fun fetchActualSummaryOrReturnEmpty(): Flow<Summary> {
-        val id = preferences.actualSummaryId()
+    private fun fetchCurrentSelectedSummaryOrReturnEmpty(): Flow<Summary> {
+        val id = preferences.summaryId()
 
         return service.getSummaries().flatMapLatest { summaries ->
             if (summaries.isEmpty()) return@flatMapLatest emptyFlow<Summary>()
@@ -41,7 +41,7 @@ class FetchAndSelectSummary @Inject constructor(
                 .firstOrNull { summary -> summary.id() == id }
                 ?: summaries.first()
 
-            preferences.actualSummary(id = summary.id())
+            preferences.summaryId(id = summary.id())
             flowOf(summary)
         }
     }

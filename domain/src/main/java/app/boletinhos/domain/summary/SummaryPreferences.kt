@@ -1,11 +1,10 @@
 package app.boletinhos.domain.summary
 
 interface SummaryPreferences {
-    fun actualSummaryId(): Long
-    fun actualSummary(id: Long)
+    fun summaryId(): Long?
+    fun summaryId(id: Long)
 
     companion object {
-        const val NO_SUMMARY: Long = -1
-        const val ACTUAL_SUMMARY_ID = "actual_summary_id"
+        const val CURRENT_SUMMARY_ID = "summary_id"
     }
 }

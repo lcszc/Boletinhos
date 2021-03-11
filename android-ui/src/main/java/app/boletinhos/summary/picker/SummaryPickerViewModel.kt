@@ -38,7 +38,7 @@ class SummaryPickerViewModel @Inject constructor(
         launch {
             loadingState.value = true
 
-            fetchSummaryUseCase.summaries.combine(fetchSummaryUseCase()) { summaries, summary ->
+            fetchSummaryUseCase.summaries.combine(fetchSummaryUseCase.select()) { summaries, summary ->
                 val currentSummary = summary.asUiOption()
                 val currentSummaryAsSelected = currentSummary.copy(isSelected = true)
                 summaries.map(Summary::asUiOption) - currentSummary + currentSummaryAsSelected

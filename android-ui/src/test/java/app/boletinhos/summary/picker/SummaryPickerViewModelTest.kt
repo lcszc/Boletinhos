@@ -30,7 +30,7 @@ class SummaryPickerViewModelTest {
     private val secondSelectedSummary = summaries.last()
 
     private val summaryPreferences: SummaryPreferences = mockk(relaxed = true) {
-        coEvery { actualSummaryId() } returns selectedSummary.id()
+        coEvery { summaryId() } returns selectedSummary.id()
     }
     private val summaryService: SummaryService = mockk(relaxed = true) {
         val summaries = createSummaries()
@@ -54,7 +54,7 @@ class SummaryPickerViewModelTest {
         }
     }
 
-    @Test fun `should emit user's actual selected summary`() {
+    @Test fun `should emit user's selected summary`() {
         setUpBackStack()
 
         val selectedOption = selectedSummary.asUiOption().copy(isSelected = true)
@@ -69,12 +69,12 @@ class SummaryPickerViewModelTest {
 
         val selectedSummaryId = secondSelectedSummary.id()
 
-        coEvery { summaryPreferences.actualSummaryId() } returns secondSelectedSummary.id()
+        coEvery { summaryPreferences.summaryId() } returns secondSelectedSummary.id()
         viewModel.onSummarySelected(selectedSummaryId)
 
         verify {
             useCase.select(id = selectedSummaryId)
-            summaryPreferences.actualSummary(id = selectedSummaryId)
+            summaryPreferences.summaryId(id = selectedSummaryId)
         }
     }
 
@@ -83,7 +83,7 @@ class SummaryPickerViewModelTest {
 
         val selectedSummaryId = secondSelectedSummary.id()
 
-        coEvery { summaryPreferences.actualSummaryId() } returns secondSelectedSummary.id()
+        coEvery { summaryPreferences.summaryId() } returns secondSelectedSummary.id()
         viewModel.onSummarySelected(selectedSummaryId)
 
         val selectedOption = secondSelectedSummary.asUiOption().copy(isSelected = true)

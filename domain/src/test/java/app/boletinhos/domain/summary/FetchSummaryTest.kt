@@ -25,7 +25,7 @@ class FetchSummaryTest {
             val fetchSummary = FetchAndSelectSummary(preferences, service)
 
             var isEmpty = false
-            fetchSummary().onEmpty { isEmpty = true }.launchIn(coroutineScope)
+            fetchSummary.select().onEmpty { isEmpty = true }.launchIn(coroutineScope)
 
             assertThat(isEmpty).isTrue()
         }
@@ -46,11 +46,11 @@ class FetchSummaryTest {
             val march = january.copy(month = Month.MARCH)
 
             val preferences = FakeSummaryPreferences()
-            preferences.actualSummary(february.id())
+            preferences.summaryId(february.id())
             val service = FakeSummaryService(listOf(january, february, march))
             val fetchSummary = FetchAndSelectSummary(preferences, service)
 
-            fetchSummary().onEmpty {
+            fetchSummary.select().onEmpty {
                 fail("This flow should return february's summary.")
             }.onEach { summary ->
                 assertThat(summary).isEqualTo(february)
@@ -76,7 +76,7 @@ class FetchSummaryTest {
             val service = FakeSummaryService(listOf(january, february, march))
             val fetchSummary = FetchAndSelectSummary(preferences, service)
 
-            fetchSummary().onEmpty {
+            fetchSummary.select().onEmpty {
                 fail("This flow should return january's summary.")
             }.onEach { summary ->
                 assertThat(summary).isEqualTo(january)
@@ -84,7 +84,7 @@ class FetchSummaryTest {
         }
     }
 
-    @Test fun `should mark fetched summary as the actual summary  on preferences`() {
+    @Test fun `should mark fetched summary as the selected summary on preferences`() {
         runBlocking {
             val january = Summary(
                 month = Month.NOVEMBER,
@@ -102,9 +102,9 @@ class FetchSummaryTest {
             val service = FakeSummaryService(listOf(january, february, march))
             val fetchSummary = FetchAndSelectSummary(preferences, service)
 
-            fetchSummary().launchIn(coroutineScope)
+            fetchSummary.select().launchIn(coroutineScope)
 
-            assertThat(preferences.actualSummaryId()).isEqualTo(january.id())
+            assertThat(preferences.summaryId()).isEqualTo(january.id())
         }
     }
 }

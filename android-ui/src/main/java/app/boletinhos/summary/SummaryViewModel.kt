@@ -50,7 +50,7 @@ class SummaryViewModel @Inject constructor(
     private fun Flow<SummaryViewEvent.FetchData>.thenFetch() {
         onEach {
             viewState.value = SummaryViewState(isLoading = true)
-            fetchAndSelectSummary()
+            fetchAndSelectSummary.select()
                 .flowOn(viewModelScope.io)
                 .ifSuccessRenderOnUi()
                 .onErrorRenderOnUi()

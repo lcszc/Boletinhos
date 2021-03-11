@@ -7,7 +7,12 @@ import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.viewModelScope
 import app.boletinhos.welcome.WelcomeViewKey
 import assertk.assertThat
-import assertk.assertions.*
+import assertk.assertions.contains
+import assertk.assertions.containsExactly
+import assertk.assertions.hasSize
+import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
+import assertk.assertions.isNull
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.ScopedServices
@@ -17,7 +22,11 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.asFlow
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import org.junit.Before
 import org.junit.Rule
@@ -65,12 +74,12 @@ class SummaryViewModelTest {
         assertThat(backstack.getHistory<DefaultViewKey>()).hasSize(1)
     }
 
-    @Test fun `should emit user's actual selected summary`() {
+    @Test fun `should emit user's selected summary`() {
         val summaries = createSummaries()
         val selectedSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns selectedSummary.id()
+        coEvery { summaryPreferences.summaryId() } returns selectedSummary.id()
         coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
@@ -93,7 +102,7 @@ class SummaryViewModelTest {
         val mostRecentSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryPreferences.summaryId() } returns null
         coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
@@ -112,7 +121,7 @@ class SummaryViewModelTest {
 
     @Test fun `should emit null summary if fetching throws any error`() {
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryPreferences.summaryId() } returns null
         coEvery { summaryService.getSummaries() } throws IllegalStateException("god knows why")
 
         val states = mutableListOf<SummaryViewState>()
@@ -128,7 +137,7 @@ class SummaryViewModelTest {
 
     @Test fun `should emit error if summary has not found due to some exception`() {
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryPreferences.summaryId() } returns null
         coEvery { summaryService.getSummaries() } throws IllegalStateException("god knows why")
 
         val states = mutableListOf<SummaryViewState>()
@@ -151,7 +160,7 @@ class SummaryViewModelTest {
         val mostRecentSummary = summaries.first()
 
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryPreferences.summaryId() } returns null
         coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
@@ -174,7 +183,7 @@ class SummaryViewModelTest {
         val summaries = createSummaries()
 
         coEvery { summaryService.hasSummary() } returns true
-        coEvery { summaryPreferences.actualSummaryId() } returns SummaryPreferences.NO_SUMMARY
+        coEvery { summaryPreferences.summaryId() } returns null
         coEvery { summaryService.getSummaries() } returns flowOf(summaries)
 
         val states = mutableListOf<SummaryViewState>()
