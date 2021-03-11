@@ -1,6 +1,6 @@
 package app.boletinhos.summary.picker
 
-import app.boletinhos.domain.summary.FetchSummary
+import app.boletinhos.domain.summary.FetchAndSelectSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import com.zhuinden.simplestack.ScopedServices.Registered
@@ -15,7 +15,7 @@ import javax.inject.Inject
 
 class SummaryPickerViewModel @Inject constructor(
     private val coroutineScope: LifecycleAwareCoroutineScope,
-    private val fetchSummaryUseCase: FetchSummary
+    private val fetchSummaryUseCase: FetchAndSelectSummary
 ) : Registered, CoroutineScope by coroutineScope {
     private val summariesState = MutableStateFlow<List<SummaryOption>>(emptyList())
     val summaries = summariesState.asStateFlow()

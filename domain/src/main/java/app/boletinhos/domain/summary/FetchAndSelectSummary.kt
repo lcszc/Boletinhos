@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.flowOf
 import javax.inject.Inject
 
-class FetchSummary @Inject constructor(
+class FetchAndSelectSummary @Inject constructor(
     private val preferences: SummaryPreferences,
     private val service: SummaryService
 ) {

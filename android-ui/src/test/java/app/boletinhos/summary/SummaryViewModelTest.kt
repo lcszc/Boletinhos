@@ -1,6 +1,6 @@
 package app.boletinhos.summary
 
-import app.boletinhos.domain.summary.FetchSummary
+import app.boletinhos.domain.summary.FetchAndSelectSummary
 import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
 import app.boletinhos.error.ErrorViewModel
@@ -30,7 +30,7 @@ class SummaryViewModelTest {
 
     private val summaryPreferences: SummaryPreferences = mockk(relaxed = true)
     private val summaryService: SummaryService = mockk(relaxed = true)
-    private val useCase = FetchSummary(summaryPreferences, summaryService)
+    private val useCase = FetchAndSelectSummary(summaryPreferences, summaryService)
     private val viewEvents = BroadcastChannel<SummaryViewEvent>(Channel.BUFFERED)
 
     private val backstack: Backstack = Backstack()

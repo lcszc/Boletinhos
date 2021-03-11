@@ -1,7 +1,7 @@
 package app.boletinhos.summary
 
 import app.boletinhos.bill.add.AddBillViewKey
-import app.boletinhos.domain.summary.FetchSummary
+import app.boletinhos.domain.summary.FetchAndSelectSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
@@ -28,7 +28,7 @@ import app.boletinhos.R.string as Texts
 @ActivityRetainedScope
 class SummaryViewModel @Inject constructor(
     private val viewModelScope: LifecycleAwareCoroutineScope,
-    private val fetchSummary: FetchSummary,
+    private val fetchAndSelectSummary: FetchAndSelectSummary,
     private val backstack: Backstack
 ) : Bundleable {
     private val viewState = MutableStateFlow(SummaryViewState())
@@ -50,7 +50,7 @@ class SummaryViewModel @Inject constructor(
     private fun Flow<SummaryViewEvent.FetchData>.thenFetch() {
         onEach {
             viewState.value = SummaryViewState(isLoading = true)
-            fetchSummary()
+            fetchAndSelectSummary()
                 .flowOn(viewModelScope.io)
                 .ifSuccessRenderOnUi()
                 .onErrorRenderOnUi()

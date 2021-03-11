@@ -2,8 +2,6 @@ package app.boletinhos.domain.summary
 
 import assertk.assertThat
 import assertk.assertions.isEqualTo
-import assertk.assertions.isFalse
-import assertk.assertions.isNotEqualTo
 import assertk.assertions.isTrue
 import assertk.fail
 import kotlinx.coroutines.flow.launchIn
@@ -24,7 +22,7 @@ class FetchSummaryTest {
         runBlocking {
             val preferences = FakeSummaryPreferences()
             val service = FakeSummaryService(emptyList())
-            val fetchSummary = FetchSummary(preferences, service)
+            val fetchSummary = FetchAndSelectSummary(preferences, service)
 
             var isEmpty = false
             fetchSummary().onEmpty { isEmpty = true }.launchIn(coroutineScope)
@@ -50,7 +48,7 @@ class FetchSummaryTest {
             val preferences = FakeSummaryPreferences()
             preferences.actualSummary(february.id())
             val service = FakeSummaryService(listOf(january, february, march))
-            val fetchSummary = FetchSummary(preferences, service)
+            val fetchSummary = FetchAndSelectSummary(preferences, service)
 
             fetchSummary().onEmpty {
                 fail("This flow should return february's summary.")
@@ -76,7 +74,7 @@ class FetchSummaryTest {
 
             val preferences = FakeSummaryPreferences()
             val service = FakeSummaryService(listOf(january, february, march))
-            val fetchSummary = FetchSummary(preferences, service)
+            val fetchSummary = FetchAndSelectSummary(preferences, service)
 
             fetchSummary().onEmpty {
                 fail("This flow should return january's summary.")
@@ -102,7 +100,7 @@ class FetchSummaryTest {
 
             val preferences = FakeSummaryPreferences()
             val service = FakeSummaryService(listOf(january, february, march))
-            val fetchSummary = FetchSummary(preferences, service)
+            val fetchSummary = FetchAndSelectSummary(preferences, service)
 
             fetchSummary().launchIn(coroutineScope)
 

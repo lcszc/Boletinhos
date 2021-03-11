@@ -1,6 +1,6 @@
 package app.boletinhos.summary.picker
 
-import app.boletinhos.domain.summary.FetchSummary
+import app.boletinhos.domain.summary.FetchAndSelectSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
@@ -38,7 +38,7 @@ class SummaryPickerViewModelTest {
         coEvery { hasSummary() } returns true
         coEvery { getSummaries() } returns flowOf(summaries)
     }
-    private val useCase = FetchSummary(summaryPreferences, summaryService)
+    private val useCase = FetchAndSelectSummary(summaryPreferences, summaryService)
 
     private val viewKey = SummaryViewKey()
     private val scopeTag = viewKey.scopeTag
