@@ -20,6 +20,9 @@ class SummaryPickerViewModel @Inject constructor(
     private val summariesState = MutableStateFlow<List<SummaryOption>>(emptyList())
     val summaries = summariesState.asStateFlow()
 
+    private val loadingState = MutableStateFlow(false)
+    val isLoading = loadingState.asStateFlow()
+
     override fun onServiceRegistered() {
         fetchSummaries()
     }
@@ -33,6 +36,8 @@ class SummaryPickerViewModel @Inject constructor(
 
     private fun fetchSummaries() {
         launch {
+            loadingState.value = true
+
             fetchSummaryUseCase.summaries.combine(fetchSummaryUseCase()) { summaries, summary ->
                 val currentSummary = summary.asUiOption()
                 val currentSummaryAsSelected = currentSummary.copy(isSelected = true)
@@ -41,6 +46,7 @@ class SummaryPickerViewModel @Inject constructor(
                 options.sortedByDescending(SummaryOption::isSelected)
             }.collect { options ->
                 summariesState.value = options.sortedByDescending(SummaryOption::isSelected)
+                loadingState.value = false
             }
         }
     }

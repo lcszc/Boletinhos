@@ -8,6 +8,7 @@ import app.boletinhos.lifecycle.viewModelScope
 import app.boletinhos.summary.SummaryViewKey
 import app.boletinhos.summary.createSummaries
 import assertk.assertThat
+import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
@@ -17,7 +18,8 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import org.junit.Before
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import org.junit.Test
 
 class SummaryPickerViewModelTest {
@@ -41,24 +43,20 @@ class SummaryPickerViewModelTest {
     private val viewKey = SummaryViewKey()
     private val scopeTag = viewKey.scopeTag
 
-    private lateinit var viewModel: SummaryPickerViewModel
+    private val viewModel: SummaryPickerViewModel = SummaryPickerViewModel(
+        viewModelScope,
+        useCase
+    )
 
     private val scopedServices = ScopedServices { serviceBinder ->
         if (scopeTag == serviceBinder.scopeTag) {
-            viewModel = SummaryPickerViewModel(viewModelScope, useCase)
             serviceBinder.add(viewModel)
         }
     }
 
-    @Before fun setUp() {
-        backstack.setScopedServices(scopedServices)
-        backstack.setup(History.single(viewKey))
-        backstack.setStateChanger { _, completionCallback ->
-            completionCallback.stateChangeComplete()
-        }
-    }
-
     @Test fun `should emit user's actual selected summary`() {
+        setUpBackStack()
+
         val selectedOption = selectedSummary.asUiOption().copy(isSelected = true)
         val items = ((summaries - selectedSummary).map(Summary::asUiOption) + selectedOption)
             .sortedByDescending(SummaryOption::isSelected)
@@ -67,6 +65,8 @@ class SummaryPickerViewModelTest {
     }
 
     @Test fun `should update preferences when new summary selected`() {
+        setUpBackStack()
+
         val selectedSummaryId = secondSelectedSummary.id()
 
         coEvery { summaryPreferences.actualSummaryId() } returns secondSelectedSummary.id()
@@ -79,6 +79,8 @@ class SummaryPickerViewModelTest {
     }
 
     @Test fun `should emit new selected summary`() {
+        setUpBackStack()
+
         val selectedSummaryId = secondSelectedSummary.id()
 
         coEvery { summaryPreferences.actualSummaryId() } returns secondSelectedSummary.id()
@@ -89,5 +91,26 @@ class SummaryPickerViewModelTest {
             .sortedByDescending(SummaryOption::isSelected)
 
         assertThat(viewModel.summaries.value).isEqualTo(items)
+    }
+
+    @Test fun `should emit loading states`() {
+        val loadingStates = mutableListOf<Boolean>()
+        viewModel.isLoading.onEach { loadingStates += it }.launchIn(viewModelScope)
+
+        setUpBackStack()
+
+        assertThat(loadingStates).containsExactly(
+            false,
+            true,
+            false
+        )
+    }
+
+    private fun setUpBackStack() {
+        backstack.setScopedServices(scopedServices)
+        backstack.setup(History.single(viewKey))
+        backstack.setStateChanger { _, completionCallback ->
+            completionCallback.stateChangeComplete()
+        }
     }
 }
