@@ -5,6 +5,7 @@ import com.zhuinden.simplestack.navigator.DefaultViewKey
 import com.zhuinden.simplestack.navigator.ViewChangeHandler
 import com.zhuinden.simplestack.navigator.changehandlers.FadeViewChangeHandler
 
+@SuppressWarnings("MagicNumber")
 interface ViewKey : DefaultViewKey, Parcelable {
     override fun viewChangeHandler(): ViewChangeHandler {
         return FadeViewChangeHandler()

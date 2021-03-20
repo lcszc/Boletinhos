@@ -15,7 +15,11 @@ import app.boletinhos.core.R
 import app.boletinhos.navigation.ViewKey.ModalBottomSheet
 import com.zhuinden.simplestack.StateChange
 import com.zhuinden.simplestack.StateChanger
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineName
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
 import app.boletinhos.core.R.id as Ids
 
 class ModalBottomSheetViewStateChanger(
