@@ -5,11 +5,13 @@ import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
+import app.boletinhos.R
 import app.boletinhos.databinding.SummaryViewBinding
 import app.boletinhos.databinding.SummaryViewErrorBinding
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.ext.view.service
 import app.boletinhos.navigation.viewScope
+import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -49,8 +51,12 @@ class SummaryView(
         }
 
         viewBinding.actionAddBill.setOnClickListener {
+            val dw = BottomSheetDialog(context)
+            dw.setContentView(R.layout.summary_picker)
+            dw.show()
+
             viewScope.launch {
-                viewEvents.send(SummaryViewEvent.OnClickInAddBill)
+                //viewEvents.send(SummaryViewEvent.OnClickInAddBill)
             }
         }
     }

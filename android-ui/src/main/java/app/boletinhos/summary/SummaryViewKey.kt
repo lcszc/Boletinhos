@@ -17,5 +17,6 @@ class SummaryViewKey : ViewKey, DefaultServiceProvider.HasServices {
     override fun bindServices(serviceBinder: ServiceBinder) {
         val activityRetainedComponent = serviceBinder.activityRetainedComponent
         serviceBinder.add(activityRetainedComponent.summaryViewModel())
+        serviceBinder.add(activityRetainedComponent.summaryPickerViewModel())
     }
 }

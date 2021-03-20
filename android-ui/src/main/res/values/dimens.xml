@@ -4,10 +4,17 @@
     <dimen name="app_margin_1x">8dp</dimen>
     <dimen name="app_margin_2x">16dp</dimen>
 
+    <dimen name="app_padding_1x">@dimen/app_margin_1x</dimen>
     <dimen name="app_padding_2x">@dimen/app_margin_2x</dimen>
 
     <!-- icons alpha -->
     <dimen name="app_status_icon_alpha">0.3</dimen>
     <dimen name="app_status_icon_background_alpha">0.16</dimen>
+
+    <!-- Summary Picker -->
+    <dimen name="summary_picker_card_width">130dp</dimen>
+    <dimen name="summary_picker_card_height">80dp</dimen>
+    <dimen name="summary_picker_card_corner_radius">4dp</dimen>
+    <dimen name="summary_picker_card_stroke_width">1dp</dimen>
 
 </resources>

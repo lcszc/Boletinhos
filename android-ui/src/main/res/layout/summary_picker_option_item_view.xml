@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<app.boletinhos.summary.picker.SummaryOptionView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/summary_picker_card_width"
+    android:layout_height="@dimen/summary_picker_card_height"
+    app:strokeColor="?colorOnSurface"
+    app:strokeWidth="@dimen/summary_picker_card_stroke_width"
+    app:cardCornerRadius="@dimen/summary_picker_card_corner_radius"
+    app:cardBackgroundColor="@color/summary_option_card_state"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <TextView
+        android:id="@+id/text_summary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginHorizontal="@dimen/app_margin_2x"
+        android:textColor="@color/summary_option_text_state"
+        tools:text="December\n2019"
+        />
+
+</app.boletinhos.summary.picker.SummaryOptionView>

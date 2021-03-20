@@ -4,6 +4,7 @@ import app.boletinhos.bill.add.AddBillViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import app.boletinhos.summary.SummaryViewModel
+import app.boletinhos.summary.picker.SummaryPickerViewModel
 import app.boletinhos.welcome.WelcomeViewModel
 import app.boletinhos.welcome.injection.WelcomeModule
 import com.zhuinden.simplestack.Backstack
@@ -21,6 +22,7 @@ interface ActivityRetainedComponent {
     fun summaryViewModel(): SummaryViewModel
     fun welcomeViewModel(): WelcomeViewModel
     fun addBillViewModel(): AddBillViewModel
+    fun summaryPickerViewModel(): SummaryPickerViewModel
 
     @Subcomponent.Factory
     interface Factory {

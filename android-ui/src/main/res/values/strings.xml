@@ -13,6 +13,8 @@
     <string name="text_welcome_title">Ooh, looks like it is your first time here… 😏</string>
     <string name="text_welcome_message">What do you think about start adding your first bill? 🚀</string>
     <string name="text_add_bill">Add bill</string>
+    <string name="text_pick_summary">Pick a summary</string>
+    <string name="text_pick_summary_message">See paid, unpaid and overdue bills for the selected summary.</string>
 
     <string name="message_bill_name_min_length_required">Name should have at least %s characters.</string>
     <string name="message_bill_name_max_length_exceeded">Name should not be longer than %s characters.</string>

@@ -9,4 +9,6 @@ data class SummaryOption(
     val monthName: String,
     val year: Int,
     val isSelected: Boolean = false
-): Parcelable
+): Parcelable {
+    override fun toString(): String = "$monthName\n$year"
+}
