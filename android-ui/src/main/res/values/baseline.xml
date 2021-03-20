@@ -46,5 +46,6 @@
         <item name="appBarLayoutStyle">@style/Widget.App.AppBarLayout</item>
         <item name="toolbarStyle">@style/Widget.App.Toolbar</item>
         <item name="progressBarStyle">@style/Widget.App.Progress</item>
+        <item name="bottomSheetStyle">@style/Widget.App.BottomSheet</item>
     </style>
 </resources>
