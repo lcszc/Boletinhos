@@ -18,4 +18,11 @@
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">@dimen/largeComponentCornerSize</item>
     </style>
+
+    <style name="ShapeAppearance.App.BottomSheet" parent="@style/ShapeAppearance.App.Large">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">0dp</item>
+        <item name="cornerSizeTopLeft">@dimen/largeComponentCornerSize</item>
+        <item name="cornerSizeTopRight">@dimen/largeComponentCornerSize</item>
+    </style>
 </resources>
