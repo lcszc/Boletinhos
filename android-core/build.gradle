@@ -1,6 +1,8 @@
+import config.Androidx
 import config.DI
 import config.Kotlinx
 import config.SimpleStack
+import config.Testing
 import config.UI
 
 apply plugin: 'com.android.library'
@@ -29,9 +31,10 @@ dependencies {
     api(SimpleStack.navigator, SimpleStack.servicesKtx)
 
     implementation(UI.material)
+    implementation(Androidx.lifeCycle)
 
     implementation(DI.dagger)
     kapt(DI.compiler)
 
-    testImplementation(Kotlinx.Coroutines.test)
+    testImplementation(Kotlinx.Coroutines.test, Testing.mockK)
 }

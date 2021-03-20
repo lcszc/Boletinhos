@@ -3,6 +3,7 @@ package config
 object Androidx {
     const val core = "androidx.core:core-ktx:1.2.0"
     const val appCompat = "androidx.appcompat:appcompat:1.1.0"
+    const val lifeCycle = "androidx.lifecycle:lifecycle-runtime-ktx:2.3.0"
 
     object Room {
         const val core = "androidx.room:room-ktx:2.2.5"

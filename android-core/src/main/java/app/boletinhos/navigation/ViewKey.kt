@@ -9,4 +9,12 @@ interface ViewKey : DefaultViewKey, Parcelable {
     override fun viewChangeHandler(): ViewChangeHandler {
         return FadeViewChangeHandler()
     }
+
+    interface ModalBottomSheet : ViewKey {
+        val dimAmount: Float get() = 0.8f
+
+        override fun viewChangeHandler(): ViewChangeHandler {
+            return ModalBottomSheetChangeHandler()
+        }
+    }
 }
