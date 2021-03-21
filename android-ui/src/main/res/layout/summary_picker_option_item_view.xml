@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<app.boletinhos.summary.picker.SummaryOptionView
+<app.boletinhos.summary.picker.SummaryPickerItemView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="@dimen/summary_picker_card_width"
     android:layout_height="@dimen/summary_picker_card_height"
@@ -20,4 +20,4 @@
         tools:text="December\n2019"
         />
 
-</app.boletinhos.summary.picker.SummaryOptionView>
+</app.boletinhos.summary.picker.SummaryPickerItemView>

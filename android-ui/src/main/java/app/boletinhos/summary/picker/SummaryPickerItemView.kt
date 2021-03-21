@@ -5,11 +5,13 @@ import android.util.AttributeSet
 import app.boletinhos.databinding.SummaryPickerOptionItemViewBinding
 import com.google.android.material.card.MaterialCardView
 
-class SummaryOptionView(
+class SummaryPickerItemView(
     context: Context,
     attrs: AttributeSet? = null
 ) : MaterialCardView(context, attrs) {
-    private val binding = SummaryPickerOptionItemViewBinding.bind(this)
+    private val binding by lazy {
+        SummaryPickerOptionItemViewBinding.bind(this)
+    }
 
     fun bindOption(option: SummaryOption) {
         isSelected = option.isSelected

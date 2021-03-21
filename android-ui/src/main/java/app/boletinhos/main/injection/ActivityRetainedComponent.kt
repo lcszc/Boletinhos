@@ -4,6 +4,7 @@ import app.boletinhos.bill.add.AddBillViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.lifecycle.injection.LifecycleCoroutineScopeModule
 import app.boletinhos.summary.SummaryViewModel
+import app.boletinhos.summary.injection.SummaryModule
 import app.boletinhos.summary.picker.SummaryPickerViewModel
 import app.boletinhos.welcome.WelcomeViewModel
 import app.boletinhos.welcome.injection.WelcomeModule
@@ -15,7 +16,11 @@ import dagger.BindsInstance
 import dagger.Subcomponent
 
 @ActivityRetainedScope
-@Subcomponent(modules = [LifecycleCoroutineScopeModule::class, WelcomeModule::class])
+@Subcomponent(modules = [
+    LifecycleCoroutineScopeModule::class,
+    WelcomeModule::class,
+    SummaryModule::class
+])
 interface ActivityRetainedComponent {
     fun coroutineScope(): LifecycleAwareCoroutineScope
 

@@ -5,11 +5,13 @@ import app.boletinhos.domain.summary.Summary
 import app.boletinhos.domain.summary.SummaryPreferences
 import app.boletinhos.domain.summary.SummaryService
 import app.boletinhos.lifecycle.viewModelScope
+import app.boletinhos.navigation.ViewKey
 import app.boletinhos.summary.SummaryViewKey
 import app.boletinhos.summary.createSummaries
+import app.boletinhos.summary.picker.SummaryPickerViewModel.OnSummarySelectionChange
 import assertk.assertThat
-import assertk.assertions.containsExactly
 import assertk.assertions.isEqualTo
+import assertk.assertions.isInstanceOf
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.History
 import com.zhuinden.simplestack.ScopedServices
@@ -18,8 +20,7 @@ import io.mockk.coEvery
 import io.mockk.mockk
 import io.mockk.verify
 import kotlinx.coroutines.flow.flowOf
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
+import org.junit.Before
 import org.junit.Test
 
 class SummaryPickerViewModelTest {
@@ -32,20 +33,26 @@ class SummaryPickerViewModelTest {
     private val summaryPreferences: SummaryPreferences = mockk(relaxed = true) {
         coEvery { summaryId() } returns selectedSummary.id()
     }
+
     private val summaryService: SummaryService = mockk(relaxed = true) {
         val summaries = createSummaries()
 
         coEvery { hasSummary() } returns true
         coEvery { getSummaries() } returns flowOf(summaries)
     }
+
     private val useCase = FetchAndSelectSummary(summaryPreferences, summaryService)
+
+    private val summarySelectionChangeHandler = mockk<OnSummarySelectionChange>(relaxed = true)
 
     private val viewKey = SummaryViewKey()
     private val scopeTag = viewKey.scopeTag
 
     private val viewModel: SummaryPickerViewModel = SummaryPickerViewModel(
         viewModelScope,
-        useCase
+        useCase,
+        summarySelectionChangeHandler,
+        backstack
     )
 
     private val scopedServices = ScopedServices { serviceBinder ->
@@ -54,9 +61,12 @@ class SummaryPickerViewModelTest {
         }
     }
 
-    @Test fun `should emit user's selected summary`() {
+    @Before fun setUp() {
         setUpBackStack()
+        backstack.goTo(SummaryPickerViewKey())
+    }
 
+    @Test fun `should emit user's selected summary`() {
         val selectedOption = selectedSummary.asUiOption().copy(isSelected = true)
         val items = ((summaries - selectedSummary).map(Summary::asUiOption) + selectedOption)
             .sortedByDescending(SummaryOption::isSelected)
@@ -65,8 +75,6 @@ class SummaryPickerViewModelTest {
     }
 
     @Test fun `should update preferences when new summary selected`() {
-        setUpBackStack()
-
         val selectedSummaryId = secondSelectedSummary.id()
 
         coEvery { summaryPreferences.summaryId() } returns secondSelectedSummary.id()
@@ -78,32 +86,29 @@ class SummaryPickerViewModelTest {
         }
     }
 
-    @Test fun `should emit new selected summary`() {
-        setUpBackStack()
-
+    @Test fun `should notify summary has been selected`() {
         val selectedSummaryId = secondSelectedSummary.id()
 
         coEvery { summaryPreferences.summaryId() } returns secondSelectedSummary.id()
         viewModel.onSummarySelected(selectedSummaryId)
 
-        val selectedOption = secondSelectedSummary.asUiOption().copy(isSelected = true)
-        val items = ((summaries - secondSelectedSummary).map(Summary::asUiOption) + selectedOption)
-            .sortedByDescending(SummaryOption::isSelected)
-
-        assertThat(viewModel.summaries.value).isEqualTo(items)
+        verify {
+            summarySelectionChangeHandler.onSummarySelected()
+        }
     }
 
-    @Test fun `should emit loading states`() {
-        val loadingStates = mutableListOf<Boolean>()
-        viewModel.isLoading.onEach { loadingStates += it }.launchIn(viewModelScope)
+    @Test fun `should go back after selecting new summary`() {
+        val selectedSummaryId = secondSelectedSummary.id()
 
-        setUpBackStack()
+        coEvery { summaryPreferences.summaryId() } returns secondSelectedSummary.id()
+        viewModel.onSummarySelected(selectedSummaryId)
 
-        assertThat(loadingStates).containsExactly(
-            false,
-            true,
-            false
-        )
+        assertThat(backstack.top<ViewKey>()).isInstanceOf(SummaryViewKey::class)
+    }
+
+    @Test fun `should go back after clicking on close`() {
+        viewModel.onCloseClicked()
+        assertThat(backstack.top<ViewKey>()).isInstanceOf(SummaryViewKey::class)
     }
 
     private fun setUpBackStack() {

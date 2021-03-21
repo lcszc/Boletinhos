@@ -7,19 +7,20 @@ import app.boletinhos.databinding.SummaryPickerOptionItemViewBinding
 import app.boletinhos.ext.view.inflater
 import app.boletinhos.widget.recyclerview.BindableViewHolder
 
-class SummaryOptionAdapter : ListAdapter<SummaryOption, SummaryOptionViewHolder>(Diff) {
+class SummaryOptionAdapter(
+    private val onItemClick: (itemId: Long) -> Unit
+) : ListAdapter<SummaryOption, SummaryOptionViewHolder>(Diff) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
     ): SummaryOptionViewHolder {
-        val binding = SummaryPickerOptionItemViewBinding.inflate(parent.inflater)
-        return SummaryOptionViewHolder(binding)
+        val binding = SummaryPickerOptionItemViewBinding.inflate(parent.inflater, parent, false)
+        return SummaryOptionViewHolder(binding, onItemClick)
     }
 
     override fun onBindViewHolder(holder: SummaryOptionViewHolder, position: Int) {
         holder.bind(getItem(position))
     }
-
 
     private companion object Diff : DiffUtil.ItemCallback<SummaryOption>() {
         override fun areItemsTheSame(oldItem: SummaryOption, newItem: SummaryOption): Boolean {
@@ -33,9 +34,13 @@ class SummaryOptionAdapter : ListAdapter<SummaryOption, SummaryOptionViewHolder>
 }
 
 class SummaryOptionViewHolder(
-    private val viewBinding: SummaryPickerOptionItemViewBinding
+    private val viewBinding: SummaryPickerOptionItemViewBinding,
+    private val onItemClick: (itemId: Long) -> Unit
 ) : BindableViewHolder<SummaryOption>(viewBinding) {
     override fun bind(model: SummaryOption) {
+        viewBinding.root.setOnClickListener {
+            onItemClick(model.id)
+        }
         viewBinding.root.bindOption(model)
     }
 }

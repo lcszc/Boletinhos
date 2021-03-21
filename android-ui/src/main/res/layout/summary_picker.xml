@@ -32,20 +32,23 @@
         android:text="@string/text_pick_summary_message"
         android:textColor="@color/onSurfaceLowEmphasis"
         android:textAppearance="?textAppearanceBody2"
-        android:layout_marginVertical="@dimen/app_margin_1x"
         android:layout_marginHorizontal="@dimen/app_margin_2x"
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/summaries"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/app_margin_1x"
-        android:paddingVertical="@dimen/app_padding_1x"
+        android:layout_height="@dimen/summary_picker_card_height"
         android:paddingHorizontal="@dimen/app_margin_2x"
+        android:layout_marginTop="@dimen/app_margin_2x"
         android:clipToPadding="false"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:listitem="@layout/summary_picker_option_item_view"
+        />
+
+    <Space
+        android:layout_width="0dp"
+        android:layout_height="@dimen/app_margin_2x"
         />
 </app.boletinhos.summary.picker.SummaryPickerView>

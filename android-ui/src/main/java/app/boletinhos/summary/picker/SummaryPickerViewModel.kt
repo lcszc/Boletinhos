@@ -3,6 +3,7 @@ package app.boletinhos.summary.picker
 import app.boletinhos.domain.summary.FetchAndSelectSummary
 import app.boletinhos.domain.summary.Summary
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
+import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.ScopedServices.Registered
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,13 +16,16 @@ import javax.inject.Inject
 
 class SummaryPickerViewModel @Inject constructor(
     private val coroutineScope: LifecycleAwareCoroutineScope,
-    private val fetchSummaryUseCase: FetchAndSelectSummary
+    private val fetchSummaryUseCase: FetchAndSelectSummary,
+    private val onSummarySelectionChange: OnSummarySelectionChange,
+    private val backstack: Backstack
 ) : Registered, CoroutineScope by coroutineScope {
+    interface OnSummarySelectionChange {
+        fun onSummarySelected()
+    }
+
     private val summariesState = MutableStateFlow<List<SummaryOption>>(emptyList())
     val summaries = summariesState.asStateFlow()
-
-    private val loadingState = MutableStateFlow(false)
-    val isLoading = loadingState.asStateFlow()
 
     override fun onServiceRegistered() {
         fetchSummaries()
@@ -31,13 +35,16 @@ class SummaryPickerViewModel @Inject constructor(
 
     fun onSummarySelected(id: Long) {
         fetchSummaryUseCase.select(id)
-        fetchSummaries()
+        backstack.goBack()
+        onSummarySelectionChange.onSummarySelected()
+    }
+
+    fun onCloseClicked() {
+        backstack.goBack()
     }
 
     private fun fetchSummaries() {
         launch {
-            loadingState.value = true
-
             fetchSummaryUseCase.summaries.combine(fetchSummaryUseCase.select()) { summaries, summary ->
                 val currentSummary = summary.asUiOption()
                 val currentSummaryAsSelected = currentSummary.copy(isSelected = true)
@@ -46,7 +53,6 @@ class SummaryPickerViewModel @Inject constructor(
                 options.sortedByDescending(SummaryOption::isSelected)
             }.collect { options ->
                 summariesState.value = options.sortedByDescending(SummaryOption::isSelected)
-                loadingState.value = false
             }
         }
     }

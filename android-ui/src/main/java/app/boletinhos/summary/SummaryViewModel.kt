@@ -6,6 +6,8 @@ import app.boletinhos.domain.summary.Summary
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.lifecycle.LifecycleAwareCoroutineScope
 import app.boletinhos.summary.SummaryItemCardView.Model.Kind
+import app.boletinhos.summary.picker.SummaryPickerViewKey
+import app.boletinhos.summary.picker.SummaryPickerViewModel.OnSummarySelectionChange
 import app.boletinhos.welcome.WelcomeViewKey
 import com.zhuinden.simplestack.Backstack
 import com.zhuinden.simplestack.Bundleable
@@ -30,7 +32,7 @@ class SummaryViewModel @Inject constructor(
     private val viewModelScope: LifecycleAwareCoroutineScope,
     private val fetchAndSelectSummary: FetchAndSelectSummary,
     private val backstack: Backstack
-) : Bundleable {
+) : Bundleable, OnSummarySelectionChange {
     private val viewState = MutableStateFlow(SummaryViewState())
 
     override fun fromBundle(bundle: StateBundle?) {
@@ -43,24 +45,35 @@ class SummaryViewModel @Inject constructor(
 
     operator fun invoke(viewEvents: Flow<SummaryViewEvent>): Flow<SummaryViewState> {
         viewEvents.filterIsInstance<SummaryViewEvent.FetchData>().thenFetch()
-        viewEvents.filterIsInstance<SummaryViewEvent.OnClickInAddBill>().navigate()
+        viewEvents.filterIsInstance<SummaryViewEvent.OnClickInAddBill>().openAddBill()
+        viewEvents.filterIsInstance<SummaryViewEvent.OnClickInPickSummary>().openPickSummary()
         return viewState
     }
 
-    private fun Flow<SummaryViewEvent.FetchData>.thenFetch() {
-        onEach {
-            viewState.value = SummaryViewState(isLoading = true)
-            fetchAndSelectSummary.select()
-                .flowOn(viewModelScope.io)
-                .ifSuccessRenderOnUi()
-                .onErrorRenderOnUi()
-                .ifEmptyLaunchWelcomeScreen()
-                .launchIn(viewModelScope)
-        }.launchIn(viewModelScope)
+    override fun onSummarySelected() {
+        fetchSummary()
     }
 
-    private fun Flow<SummaryViewEvent.OnClickInAddBill>.navigate() {
+    private fun Flow<SummaryViewEvent.FetchData>.thenFetch() {
+        onEach { fetchSummary() }.launchIn(viewModelScope)
+    }
+
+    private fun fetchSummary() {
+        viewState.value = SummaryViewState(isLoading = true)
+        fetchAndSelectSummary.select()
+            .flowOn(viewModelScope.io)
+            .ifSuccessRenderOnUi()
+            .onErrorRenderOnUi()
+            .ifEmptyLaunchWelcomeScreen()
+            .launchIn(viewModelScope)
+    }
+
+    private fun Flow<SummaryViewEvent.OnClickInAddBill>.openAddBill() {
         onEach { backstack.goTo(AddBillViewKey()) }.launchIn(viewModelScope)
+    }
+
+    private fun Flow<SummaryViewEvent.OnClickInPickSummary>.openPickSummary() {
+        onEach { backstack.goTo(SummaryPickerViewKey()) }.launchIn(viewModelScope)
     }
 
     private fun Flow<Summary>.ifEmptyLaunchWelcomeScreen() = onEmpty {

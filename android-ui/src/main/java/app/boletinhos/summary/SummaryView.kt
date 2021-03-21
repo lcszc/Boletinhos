@@ -5,13 +5,11 @@ import android.util.AttributeSet
 import androidx.coordinatorlayout.widget.CoordinatorLayout
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.GridLayoutManager
-import app.boletinhos.R
 import app.boletinhos.databinding.SummaryViewBinding
 import app.boletinhos.databinding.SummaryViewErrorBinding
 import app.boletinhos.error.ErrorViewModel
 import app.boletinhos.ext.view.service
 import app.boletinhos.navigation.viewScope
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.coroutines.channels.BroadcastChannel
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.Flow
@@ -19,6 +17,7 @@ import kotlinx.coroutines.flow.asFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
+import app.boletinhos.R.id as Ids
 
 class SummaryView(
     context: Context,
@@ -51,13 +50,18 @@ class SummaryView(
         }
 
         viewBinding.actionAddBill.setOnClickListener {
-            val dw = BottomSheetDialog(context)
-            dw.setContentView(R.layout.summary_picker)
-            dw.show()
-
             viewScope.launch {
-                //viewEvents.send(SummaryViewEvent.OnClickInAddBill)
+                viewEvents.send(SummaryViewEvent.OnClickInAddBill)
             }
+        }
+
+        viewBinding.toolbar.setOnMenuItemClickListener { menuItem ->
+            if (menuItem.itemId == Ids.action_pick_summary) {
+                viewEvents.offer(SummaryViewEvent.OnClickInPickSummary)
+                return@setOnMenuItemClickListener true
+            }
+
+            true
         }
     }
 
